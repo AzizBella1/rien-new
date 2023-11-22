@@ -546,7 +546,7 @@ testerMarrakech:any=[]
       cnt='01'
     }else{
       last= this.lastRec.ident.split("/")
-      if (parseInt(last[3])<10) {
+      if (parseInt(last[3])<9) {
         cnt='0'+(parseInt(last[3])+1)
       } else {
         cnt=parseInt(last[3])+1

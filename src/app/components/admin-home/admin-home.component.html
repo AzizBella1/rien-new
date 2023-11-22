@@ -108,7 +108,7 @@
     <br>
     <div *ngIf="load == 0"  class="container reload" [style]="style">
         <button title="Export" mat-button (click)="exportArrayToExcel(this.dataToExport)"><i class="fa fa-download" aria-hidden="true"></i></button>
-        <button title="Refresh"  mat-button (click)="reload()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        <button title="Refresh" [style]="this.btnReload"  mat-button (click)="reload()"><i [style]="this.iconReload" class="fa fa-refresh" aria-hidden="true"></i></button>
 
         <!-- <a style="width: 100px;" class="btn btn-primary" (click)="reload()"><mat-icon>restore_page</mat-icon></a> -->
     </div>

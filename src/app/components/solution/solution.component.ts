@@ -28,13 +28,13 @@ export class SolutionComponent implements OnInit {
   valueEx: any=[]
   add(){
     this.getSolution()
-    this.addButton=true
     this.Solution = {
       name:''
     }
-
-   
+    
+    
     this.hideAdd=!this.hideAdd
+    this.addButton=true
     window.scrollTo(0,0)
     
   }

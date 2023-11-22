@@ -24,9 +24,9 @@ export class DashComponent implements OnInit {
   ngOnInit(): void {
     
     this.getVilles()
+    this.reclamationFun()
     this.vehecule()
     this.getProduit()
-    this.test()
 
    
     
@@ -62,7 +62,7 @@ export class DashComponent implements OnInit {
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]
   dMonth:any=[]
 
-  test(){
+  reclamationFun(){
     
     this.dataservice.getReclamation().subscribe(
       (data:any) => {

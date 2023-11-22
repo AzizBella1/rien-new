@@ -341,63 +341,7 @@ export class AdminHomeComponent implements OnInit {
       data.sort((a: any, b: any) => b.id - a.id); // Sort data based on 'id' in descending order
       
       this.data = [];
-      // data.filter((l:any)=> !l.istodo).map((l:any) =>{
-        
-      //     let problemes:any=''
-      //     let solutions:any=''
-      //     let references:any=''
-      //     const exten = (l.imgurl+'').split('.');
-      //     let cp=0
-      //     l.problemes.forEach((p:any) => {
-      //       if (cp==0) {
-      //         problemes = problemes+p.name
-      //       } else {
-      //         problemes = problemes+' + '+p.name
-      //       }
-           
-      //       cp++
-      //     });
-      //     cp=0
-      //     l.solutions.forEach((s:any) => {
-      //       if (cp==0) {
-      //         solutions = solutions+s.name
-      //       } else {
-      //         solutions = solutions+' + '+s.name
-      //       }
-           
-      //       cp++
-            
-      //     });
-      //     cp=0
-      //     l.references.forEach((r:any) => {
-      //       if (cp==0) {
-      //         references = references+r.name
-      //       } else {
-      //         references = references+' + '+r.name
-      //       }
-      //       cp++
-      //     });
-      //     const item = {
-      //       num: l.ident,
-      //       imei: l.device.uniqueid,
-      //       ext: exten[exten.length - 1],
-      //       ref: references,
-      //       img: l.imgurl,
-      //       id: l.id,
-      //       solution: solutions,
-      //       probleme: problemes,
-      //       product: l.product.name,
-      //       statut: l.statut,
-      //       ville: l.device.ville.name,
-      //       description: l.description,
-      //       vehicule: l.device.name,
-      //       user: l.client.name,
-      //       dateCreation: l.date_creation,
-      //       dateModification: l.date_modification
-      //     };
-      //     this.data.push(item);
-        
-      // })
+     
       for (const l of data) {
         if (!l.istodo) {
           let problemes:any=''
@@ -461,7 +405,13 @@ export class AdminHomeComponent implements OnInit {
       this.dataToExport = this.dataSource.filteredData
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.load = 0
+     
+      },
+      ()=>{},
+      ()=>{
+        this.load = 0
+        this.btnReload = 'pointer-events: all'
+        this.iconReload = ''
       }
 
       ); 
@@ -548,13 +498,19 @@ export class AdminHomeComponent implements OnInit {
 
   }
 
+  btnReload:any = 'pointer-events: all'
+  iconReload:any = ''
+
   reload(){
     this.message=''
     this.style='opacity:1;'
+    this.btnReload = 'background: #80808017;pointer-events: none'
+    this.iconReload = 'transform: rotate(180deg);transition: 3s ease-in-out;'
     if (this.inputField) {
       this.inputField.nativeElement.value = ''; 
     }
     this.searcheIcon=true
+    
 
     this.showAll()
   }

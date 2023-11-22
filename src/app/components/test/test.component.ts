@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/sevices/data.service';
 import { MatTableDataSource} from '@angular/material/table';
@@ -7,6 +7,8 @@ import { MatInputModule} from '@angular/material/input';
 import { MatSort } from '@angular/material/sort';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Vehicule } from 'src/app/models/vehicule';
+
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-test',
@@ -221,6 +223,12 @@ export class TestComponent implements OnInit{
           this.traite=0
         }
        
+      },
+      ()=>{},
+      ()=>{
+        this.style='opacity:1;pointer-events:all;'
+        this.btnReload = 'pointer-events: all'
+        this.iconReload = ''
       })
 
       // let i=0
@@ -272,10 +280,28 @@ export class TestComponent implements OnInit{
   }
 
   
-
+  dataToExport:any=[]
+  searcheIcon:boolean=true
+  @ViewChild('inputField') inputField!: ElementRef;
 
   filter(event:any){
     this.dataSource.filter = event.value
+
+    if (event.value == '') {
+      this.searcheIcon=true
+    } else {
+      this.searcheIcon=false
+    }
+    
+    this.dataToExport = this.dataSource.filteredData
+  }
+
+  clearSearcheInput(){
+    if (this.inputField) {
+      this.inputField.nativeElement.value = ''; 
+    }
+    this.filter('')
+    this.searcheIcon=true
   }
 
   async ffdhgff(){
@@ -283,15 +309,37 @@ export class TestComponent implements OnInit{
     this.showAll(0)
     
   }
-  
+
+  btnReload:any = 'pointer-events: all'
+  iconReload:any = ''
+
   reload(){
+    
+    this.style='opacity:1;'
+    this.btnReload = 'background: #80808017;pointer-events: none'
+    this.iconReload = 'transform: rotate(180deg);transition: 3s ease-in-out;'
+    if (this.inputField) {
+      this.inputField.nativeElement.value = ''; 
+    }
+    this.searcheIcon=true
+    
+
     if (this.tous==true) {
       this.showAll(0)
     } else {
       this.showAll(1)
     }
-    
   }
+
+  exportArrayToExcel(arr: any[]) {
+    
+    var wb = XLSX.utils.book_new();
+    var ws = XLSX.utils.json_to_sheet(arr);
+    XLSX.utils.book_append_sheet(wb, ws, 'test');
+    XLSX.writeFile(wb, `exp.xlsx`);
+  }
+  
+  
 
   
 
@@ -347,6 +395,7 @@ export class TestComponent implements OnInit{
 
  
   all(s:any){
+    this.style='opacity:0.3;pointer-events:none;'
     if (s==0) {
       this.tous=false
       this.mes=true

@@ -9,8 +9,10 @@
     </div>
     <div class="container">
         <h1>Liste Reclamations</h1>
-            <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
-        
+        <input class="form-control"  #inputField id="filterInput" (keyup)="filter($event.target)" placeholder="Filter">
+        <i *ngIf="searcheIcon" class="fa fa-search" id="filterInputIconeSearche" aria-hidden="true"></i>
+        <i *ngIf="!searcheIcon" style="cursor: pointer;" (click)="clearSearcheInput()" class="fa fa-times-circle" id="filterInputIconeCancel" aria-hidden="true"></i>
+    
     </div>
 
     <div  *ngIf="traite != 0">
@@ -38,8 +40,12 @@
     </div>
     <br>
     <div class="container reload">
-        <button style="width: 100px;height: 40px;" class="btn btn-secondary" [disabled]="tous" (click)="all(1)">all</button>&nbsp;<button style="width: 100px;height: 40px;" [disabled]="mes" (click)="all(0)" class="btn btn-secondary">my</button>&nbsp;
-        <a style="width: 100px;height: 40px;" class="btn btn-primary" (click)="reload()"><mat-icon>restore_page</mat-icon></a>
+        <button title="Export" mat-button (click)="exportArrayToExcel(this.dataToExport)"><i class="fa fa-download" aria-hidden="true"></i></button>
+        <button title="Refresh" [style]="this.btnReload"  mat-button (click)="reload()"><i [style]="this.iconReload" class="fa fa-refresh" aria-hidden="true"></i></button>
+
+        <button style="width: 100px;height: 40px;" class="btn btn-secondary" [disabled]="tous" (click)="all(1)">all</button>&nbsp;
+        <button style="width: 100px;height: 40px;" [disabled]="mes" (click)="all(0)" class="btn btn-secondary">my</button>&nbsp;
+        <!-- <a style="width: 100px;height: 40px;" class="btn btn-primary" (click)="reload()"><mat-icon>restore_page</mat-icon></a> -->
     </div>
     <div  *ngIf="traite != 1" class="container col-md-12  table-responsive" [style]="style">
        

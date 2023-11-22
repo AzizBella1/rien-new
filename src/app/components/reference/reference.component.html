@@ -4,36 +4,44 @@
 
     <div *ngIf="hideAdd" class="container py-4"> 
         
-        <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button>
+        <button type="button" style="width: 150px;" (click)="add()" data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-primary">new</button>
     </div>
-   
-<div *ngIf="!hideAdd" class="container mt-5">
-    <form [formGroup]="addRef">
-        <div class="col-md-6 ml-md-auto">
-            
-            <div class="form-group md-5 py-2">
-                <label for="ref">Composant </label>
-                <input [(ngModel)]="referenceSelected.name" (keyup)="chercher($event.target)" formControlName="ref" type="text" name="ref" class="form-control" >
-                <small *ngIf="ref.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                <small *ngIf="deja" id="fileHelpId" style="color: red;" class="form-text"> * existe deja  </small>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 *ngIf="addButton"  class="modal-title" id="exampleModalLabel">Ajouter Composant</h2>
+              <h2 *ngIf="!addButton"  class="modal-title" id="exampleModalLabel">Modifier Composant</h2>
+              <button type="button" style="border: 1px solid red;border-radius: 3px; background-color: red;"(click)="add()" class="close" data-dismiss="modal" aria-label="Close">
+                <span style="color: white;" aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col">
-                        <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNew()" [disabled]="addRef.invalid " type="submit">Ajouter</button>
-                        <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modRef(referenceSelected)" [disabled]="addRef.invalid" type="submit">Modifier</button>
+            <div class="modal-body">
+                <form [formGroup]="addRef">
+                    <div class="col-md-6 ml-md-auto">
+                        
+                        <div class="form-group md-5 py-2">
+                            <label for="ref">Composant </label>
+                            <input [(ngModel)]="referenceSelected.name" (keyup)="chercher($event.target)" formControlName="ref" type="text" name="ref" class="form-control" >
+                            <small *ngIf="ref.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                            <small *ngIf="deja" id="fileHelpId" style="color: red;" class="form-text"> * existe deja  </small>
+                        </div>
+                        
                     </div>
-                    <div class="col">
-                        <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
-                    </div>
-                </div>
-                
-                
-            </div> 
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="add()" data-dismiss="modal">Annuler</button>
+              
+              <button type="button" *ngIf="addButton"  (click)="addNew()" [disabled]="addRef.invalid " data-dismiss="modal"  class="btn btn-success">Ajouter</button>
+              <button type="button" *ngIf="!addButton" class="btn btn-warning" (click)="modRef(referenceSelected)" [disabled]="addRef.invalid" data-dismiss="modal">Modifier</button>
+            </div>
+          </div>
         </div>
-    </form>
-    <hr>
-</div>
+      </div>
+   
+
 
 
 
@@ -61,7 +69,7 @@
         </ng-container>
         <ng-container matColumnDef="mod">
             <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <button *ngIf="element.id!=3" (click)="onMod(element)" class="btn btn-primary" >mod</button> </mat-cell>
+            <mat-cell *matCellDef="let element"> <button *ngIf="element.id!=3" (click)="onMod(element)" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary" >mod</button> </mat-cell>
         </ng-container>
         <ng-container matColumnDef="supp">
             <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>

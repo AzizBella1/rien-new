@@ -228,8 +228,8 @@
     <div class="form-group mt-5 row text-center">
        
         <div class="col-sm-5">
-            <!-- <a  *ngIf="!allValid || !fileValid" [ngClass]="{'disabled':'disabled'}" style="width: 150px;margin-top: 5px;" type="submit" class="btn btn-outline-success" >Enregistrer</a> -->
-            <a  (click)="addReclamation()" style="width: 150px;margin-top: 5px;" type="submit" class="btn btn-success" >Enregistrer</a>
+            <a  *ngIf="!allValid || !fileValid" [ngClass]="{'disabled':'disabled'}" style="width: 150px;margin-top: 5px;" type="submit" class="btn btn-outline-success" >Enregistrer</a>
+            <a *ngIf="allValid && fileValid" (click)="addReclamation()" style="width: 150px;margin-top: 5px;" type="submit" class="btn btn-success" >Enregistrer</a>
         </div>
         <div class="col-sm-1">
             <a  type="submit" class="btn btn-danger" style="width: 150px;margin-top: 5px;margin-bottom: 20px;" href="/home" >Annuler</a>

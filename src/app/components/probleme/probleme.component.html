@@ -4,60 +4,53 @@
         
         <div *ngIf="hideAdd" class="container py-4"> 
             
-            <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button>
+            <button type="button" style="width: 150px;" data-toggle="modal" data-target="#exampleModal" (click)="add()" class="btn btn-outline-primary">new</button>
         </div>
-        
-        <div *ngIf="!hideAdd" class="container mt-5">
-            <form [formGroup]="addProbleme">
-               <!-- {{Probleme | json}}-->
-                <div class="col-md-4 ml-md-auto">
-                    <mat-form-field>
-                        <mat-select placeholder="Solutions"  [(ngModel)]="solutions" formControlName="Solution" multiple>
-                            <mat-option>
-                                <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
-                            </mat-option>
-                          <mat-option *ngFor="let item of solution" [value]="item.id" >{{item.name}}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    <!--<div class="form-group py-2">
-                        
-                        <div class="col-sm-8">
-                            <select [(ngModel)]="selectedProduit.id" multiple="multiple" formControlName="produit" required (change)="onChange($event.target)" class="form-control" name="produit" id="">
-                                <option value="0">-</option>
-                                <option value="0">-</option>
-                                <option value="0">-</option>
-                                <option  [value]="item.id">{{item.title}}</option>
-                            </select>
-                            <small *ngIf="selectedProduit.id==0" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire </small>
-                        </div>
-                            
-                        
-                    </div>-->
-                    <div class="form-group py-2">
-                        <label for="vehicule">Probleme</label>
-                        <input [(ngModel)]="Probleme.name" (keyup)="chercher($event.target)" formControlName="probleme" type="text" name="probleme" class="form-control" >
-                        <small *ngIf="probleme.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                        <small *ngIf="deja" id="fileHelpId" style="color: red;" class="form-text"> * existe deja  </small>
-                        
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNew()" [disabled]="addProbleme.invalid" type="submit">Ajouter</button>
-                                <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modProbleme(Probleme)" [disabled]="addProbleme.invalid" type="submit">Modifier</button>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
-                            </div>
-                        </div>
-                        
-                        
-                    </div> 
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h2 *ngIf="addButton"  class="modal-title" id="exampleModalLabel">Ajouter Probléme</h2>
+                  <h2 *ngIf="!addButton"  class="modal-title" id="exampleModalLabel">Modifier Probléme</h2>
+                  <button type="button" style="border: 1px solid red;border-radius: 3px; background-color: red;"(click)="add()" class="close" data-dismiss="modal" aria-label="Close">
+                    <span style="color: white;" aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-            </form>
-            <hr>
-            
-        </div>
+                <div class="modal-body">
+                    <form [formGroup]="addProbleme">
+                        <!-- {{Probleme | json}}-->
+                         <div class="col-md">
+                            <mat-form-field style="width: 100%;">
+                                <mat-select placeholder="Solutions"  [(ngModel)]="solutions" formControlName="Solution" multiple>
+                                    <mat-option>
+                                        <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
+                                    </mat-option>
+                                <mat-option *ngFor="let item of solution" [value]="item.id" >{{item.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                           
+                            <div class="form-group py-2">
+                                <label for="vehicule">Probleme</label>
+                                <input [(ngModel)]="Probleme.name" (keyup)="chercher($event.target)" formControlName="probleme" type="text" name="probleme" class="form-control" >
+                                <small *ngIf="probleme.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                                <small *ngIf="deja" id="fileHelpId" style="color: red;" class="form-text"> * existe deja  </small>
+                                
+                            </div>
+                            
+                         </div>
+                     </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="add()" data-dismiss="modal">Annuler</button>
+                  <button *ngIf="addButton" class="btn btn-success " (click)="addNew()" data-dismiss="modal" [disabled]="addProbleme.invalid" type="submit">Ajouter</button>
+                  <button *ngIf="!addButton" class="btn btn-warning " (click)="modProbleme(Probleme)" data-dismiss="modal" [disabled]="addProbleme.invalid" type="submit">Modifier</button>
+             
+                 </div>
+              </div>
+            </div>
+          </div>
+        
         
         
         
@@ -85,7 +78,7 @@
                 </ng-container>
                 <ng-container matColumnDef="mod">
                     <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <button (click)="onMod(element)" class="btn btn-primary" >mod</button> </mat-cell>
+                    <mat-cell *matCellDef="let element"> <button (click)="onMod(element)" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary" >mod</button> </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="supp">
                     <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>
