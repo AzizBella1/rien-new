@@ -1,0 +1,52 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+.Div{
+  height: auto;
+  width: auto;
+  border: 2px solid rgb(209, 202, 202);
+  border-radius: 5px;
+  
+}
+
+.graph{
+  height: 100%;
+  width: 100%;
+}
+
+table{
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 10px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td,th{
+  text-align: center;
+}
+
+
+.icon{
+  font-size: 40px;
+
+}

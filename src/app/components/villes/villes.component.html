@@ -1,0 +1,21 @@
+<p>villes works!</p>
+
+<input [(ngModel)]="testVille.name" type="text">
+{{testVille | json}}
+<input ngModel="file" (change)="onFileSelected($event)" type="file">
+<input (click)="fun()" type="button" value="okkkk">
+
+ville
+<select [(ngModel)]="selectedville.id" (change)="onSelect($event.target)">
+    <option value="0">-</option>
+    <option *ngFor="let v of ville?.ville" [value]="v.id">{{v.title}}</option>
+</select>
+véhicule
+<select >
+    <option value="0">-</option>
+    <option *ngFor="let veh of vehicule" [value]="veh.id">{{veh.title}}</option>
+</select>
+<img [src]="imageData" >
+<input [(ngModel)]="testVille.id" type="text" name="id">
+<input [(ngModel)]="testVille.name" type="text" name="title">
+<input (click)="persistVille(97)" type="button" value="ok">

@@ -1,0 +1,160 @@
+<app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
+
+<div *ngIf="idUser!=null && is_admin=='ADMIN'" class="container mt-5">
+  <h2>Dashboard</h2>
+  <div class="row" style="padding-bottom: 8px;">
+    <!--<div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb totale des référence </h2></div>
+        <div>
+          <p style="text-align: center;font-size: 50px;padding-top: 8px;padding-bottom: 10px;color: blue;"><mat-icon style="color: black;">memory</mat-icon> {{reclamation?.length}} </p>
+
+        </div>
+        
+      </div>
+      
+    </div>-->
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb totale des reclamations </h2></div>
+        <div>
+          <p style="text-align: center;font-size: 50px;padding-top: 8px;padding-bottom: 10px;color: blue;"><mat-icon>report_problem</mat-icon>{{reclamation?.length}} </p>
+
+        </div>
+        
+      </div>
+      
+    </div>
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb totale des produits </h2></div>
+        <div>
+          <p style="text-align: center;font-size: 50px;padding-top: 8px;padding-bottom: 10px;color: blue;"><mat-icon>devices_other</mat-icon> {{produit?.length}} </p>
+
+        </div>
+        
+      </div>
+      
+    </div>
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb totale des véhicules </h2></div>
+        <div>
+          <p style="text-align: center;font-size: 50px;padding-top: 8px;padding-bottom: 10px;color: blue;"><mat-icon> directions_car</mat-icon> {{vehicule?.length}} </p>
+
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <div class="row" style="padding-bottom: 8px;">
+    <div class="col mt-1">
+ 
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Les 5 Produit les plus en Panne</h2></div>
+        <div class="row">
+          <div >
+
+            <table class="table table-bordered ">
+             
+                <tr>
+                  <th >No</th>
+                  <th>Produit</th>
+                  <th>Nb de panne</th>
+                </tr>
+                <tr *ngFor="let p of pro">
+                  <td>{{p?.id}}</td>
+                  <td scope="row">{{p?.name}}</td>
+                  <td>{{p?.rec}}</td>
+                </tr>
+               
+            </table>
+          </div>
+        </div>
+      </div>
+            
+       
+      
+    </div>
+  </div>
+  <div class="row " style="padding-bottom: 8px;">
+    
+    <div class="col mt-1">
+ 
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb de Reclamation par Mois</h2></div>
+        <div class="row graph">
+          <canvas id="line"></canvas>
+        </div>
+      </div>
+            
+       
+      
+    </div>
+  </div>
+  <div class="row " style="padding-bottom: 8px;">
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb de Reclamation par ville</h2></div>
+        <div class="row  graph">
+          <canvas id="bar"></canvas>
+        </div>
+        
+        
+      </div>
+    </div>
+  </div>
+  
+  <div class="row" style="padding-bottom: 20px;">
+    
+    
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Statut des Reclamation</h2></div>
+        <div class="row graph">
+          <canvas id="doughnut"></canvas>
+        </div>
+      </div>
+      
+    </div>
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb Véhicule par ville</h2></div>
+        <div class="row graph">
+          <canvas id="radar"></canvas>
+        </div>
+      </div>
+      
+            
+       
+      
+    </div>
+  </div>
+  <!--<div class="row">
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Polar</h2></div>
+        <div class="row graph">
+          <canvas id="polarArea"></canvas>
+        </div>
+      </div>
+      
+    </div>
+    <div class="col mt-1">
+ 
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Radar</h2></div>
+        <div class="row graph">
+          <canvas id=""></canvas>
+        </div>
+      </div>
+            
+       
+      
+    </div>
+  </div>-->
+
+  
+  
+</div>

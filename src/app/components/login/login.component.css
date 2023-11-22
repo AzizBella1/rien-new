@@ -1,0 +1,19 @@
+#div{
+    border: 2px solid rgb(233, 233, 233);
+    border-radius: 5px;
+    padding: 20px;
+    padding-top: 10px;
+}
+
+#body{
+    position: absolute;
+    right: 50%;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%,-50%);
+}
+
+#btn{
+    display: grid;
+    place-content: center;
+}

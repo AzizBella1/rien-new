@@ -1,0 +1,95 @@
+<app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
+
+<div *ngIf="idUser!=null && is_admin=='ADMIN'" >
+
+    <div *ngIf="hideAdd" class="container py-4"> 
+        
+        <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button>
+    </div>
+   
+<div *ngIf="!hideAdd" class="container mt-5">
+    <form [formGroup]="addProduit">
+        <div class="col-md-6 ml-md-auto">
+            <mat-form-field>
+                <mat-select placeholder="Probleme"  [(ngModel)]="problemes" formControlName="Probleme" multiple>
+                    <mat-option>
+                        <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probleme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
+                    </mat-option>
+                  <mat-option *ngFor="let item of probleme" [value]="item.id" >{{item.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            <div class="form-group md-5 py-2">
+                <label for="produit">Produit</label>
+                <input [(ngModel)]="produitSelected.name" (keyup)="chercher($event.target)" formControlName="produit" type="text" name="produit" class="form-control" >
+                <small *ngIf="produit.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                <small *ngIf="deja" id="fileHelpId" style="color: red;" class="form-text"> * existe deja  </small>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNew()" [disabled]="addProduit.invalid " type="submit">Ajouter</button>
+                        <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modProduit(produitSelected)" [disabled]="addProduit.invalid" type="submit">Modifier</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
+                    </div>
+                </div>
+                
+                
+            </div> 
+        </div>
+    </form>
+    <hr>
+</div>
+
+
+
+<div class="container">
+    <h1>Liste Produits</h1>
+        <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
+    
+</div>
+
+<div class="container col-md-12  table-responsive">
+    
+    <br>
+    <mat-table class="tt" #table matSort [dataSource]="dataSource">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="num">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> No </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.num}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Produit </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="mod">
+            <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
+            <mat-cell *matCellDef="let element"> <button (click)="onMod(element)" class="btn btn-primary" >mod</button> </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="supp">
+            <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>
+            <mat-cell *matCellDef="let element"> <button (click)="onDelete(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
+        </ng-container>
+
+        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator
+    [pageSize]="15"
+    [showFirstLastButtons]="true">
+    </mat-paginator>
+
+    
+    
+    
+    
+</div>
+
+
+</div>

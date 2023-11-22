@@ -1,0 +1,106 @@
+.encours{
+    background-color: rgb(255, 255, 159);
+}
+
+.traite{
+    background-color: rgb(212, 233, 200);
+}
+
+.tt{
+    width: 1000px;
+}
+
+mat-table{
+    border: 1px solid rgb(182, 180, 180);
+    border-radius: 5px;
+}
+
+.reload{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.detail{
+    z-index: 1;
+    position: fixed;
+    right: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border: 2px solid rgb(44, 41, 41);
+    border-radius: 5px;
+    background-color:rgb(253, 252, 250) ;
+    width: 30%;
+    height: auto;
+    opacity: 1;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    
+}
+.detail button{
+    border: 1px solid red;
+    border-radius: 3px;
+    background-color: red;
+    position: absolute;
+    right: 0;
+}
+.mat-column-num {
+    flex: 0 0 12%;
+}
+
+.mat-column-journal {
+    display: flex;
+    justify-content: center;
+}
+
+.mat-column-mod {
+    display: flex;
+    justify-content: flex-start;
+}
+.mat-column-description {
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 480px) {
+    .detail{
+        z-index: 1;
+        position: fixed;
+        right: 50%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        border: 2px solid rgb(10, 10, 10);
+        border-radius: 5px;
+        background-color: rgb(253, 252, 250);
+        width: 300px;
+        height: auto;
+        padding-bottom: 5px;
+    }
+    .mat-column-num {
+        flex: 0 0 15%;
+    }
+    .mat-column-dateCreation {
+        flex: 0 0 12%;
+    }
+    .mat-column-dateModification {
+        flex: 0 0 12%;
+    }
+    
+}
+
+
+
+#loading{
+    position: absolute;
+    right: 50%;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%,-50%);
+}
+
+.reload{
+    position: relative;
+    align-items: flex-end;
+    justify-content: flex-end;
+}

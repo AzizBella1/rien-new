@@ -1,0 +1,156 @@
+mat-form-field{
+    width: 100%;
+}
+
+mat-checkbox{
+    /*pointer-events:none;*/
+}
+
+#loading{
+    position: absolute;
+    right: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.div{
+    padding-left: 20%;
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 10px;
+    margin-top: 5%;
+   
+}
+.div h2{
+    padding-top: 20px;
+    padding-left: 10%;
+    
+}
+
+
+#delete{
+    z-index: 1;
+    position: fixed;
+    right: 50%;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%,-50%);
+    width: 30%;
+}
+
+#addVehicule{
+    z-index: 5;
+    position: fixed;
+    right: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border: 2px solid rgb(44, 41, 41);
+    border-radius: 5px;
+    background-color:rgb(253, 252, 250) ;
+    width: 50%;
+    height: auto;
+    opacity: 1;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    
+
+    
+}
+
+.divAdd{
+    width: 300px;
+}
+
+#addVehiculeDiv{
+    padding-left: 30%;
+}
+
+.buttonClass{
+    width: 100%;
+    margin-top: 5px;
+}
+
+.buttonDivClass{
+    width: 350px;
+}
+
+@media only screen and (max-width: 1272px) and (min-width: 827px){
+    .divAdd{
+        width: 250px;
+    }
+
+    #addVehiculeDiv{
+        padding-left: 20%;
+    }
+
+    .buttonDivClass{
+        width: 300px;
+    }
+}
+
+@media only screen and (max-width: 826px) and (min-width: 577px){
+    .divAdd{
+        width: 230px;
+    }
+
+    #addVehiculeDiv{
+        padding-left: 12%;
+    }
+
+    .buttonDivClass{
+        width: 250px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .div{
+        padding-left: 5%;
+        width: 95%;
+    }
+    .div h2{
+        display: flex;justify-content: center;
+    }
+
+    #delete{
+        z-index: 1;
+        position: fixed;
+        right: 50%;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%,-50%);
+        width: 80%;
+    }
+
+    #addVehicule{
+        z-index: 1;
+        position: fixed;
+        right: 50%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        border: 2px solid rgb(44, 41, 41);
+        border-radius: 5px;
+        background-color:rgb(253, 252, 250) ;
+        width: 90%;
+        height: auto;
+        opacity: 1;
+        padding-left: 10px;
+        padding-bottom: 5px;
+        
+    
+        
+    }
+
+    .divAdd{
+        width: 80%;
+    }
+
+    #addVehiculeDiv{
+        padding-left: 10%;
+    }
+
+    .buttonDivClass{
+        width: 90%;
+    }
+}

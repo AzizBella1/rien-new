@@ -1,0 +1,249 @@
+<app-navbar *ngIf="idUser!=null && is_admin!='ADMIN'"></app-navbar>
+
+<div *ngIf="idUser!=null " class="container div" >
+  <div  *ngIf="message!=''" id="delete">
+    <!--<img id="loading" src="../../../assets/loading.gif.gif" width="40px" height="40px">-->
+    <div class="alert alert-success" role="alert">
+        <strong>{{message}}</strong>
+    </div>
+  </div>
+  <div  *ngIf="error!=''" id="delete">
+   
+    <div class="alert alert-danger" role="alert">
+        <strong>{{error}}</strong>
+    </div>
+  </div>
+  <div  *ngIf="encour!=''" id="delete">
+    <img #loading id="loading" src="../../../assets/loading.gif.gif" width="20px" height="20px">
+  </div>
+
+  <div *ngIf="!hideAdd" id="addVehicule" class="container mt-5">
+    <div id="addVehiculeDiv">
+      <h2 >Ajouter Réclamation</h2>
+
+      <form [formGroup]="addVehiculeForm">
+          <!-- {{selectedville | json}} -->
+          <div class="col-md-4 ml-md-auto">
+              
+            <div class="form-group  py-2">
+                <label for="vehicule">Nom véhicule</label>
+                <input [(ngModel)]="device.name" formControlName="name" type="text" name="name" class="form-control divAdd">
+                <small *ngIf="name.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                
+            </div>
+
+            <div class="form-group  py-2">
+              <label for="vehicule">Imei</label>
+              <input [(ngModel)]="device.uniqueid" formControlName="uniqueid" type="text" name="uniqueid" class="form-control divAdd">
+              <small *ngIf="uniqueid.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+              
+            </div>
+              <div class="form-group  py-2">
+                <label class="col-sm-2  col-form-label" for="fonction">Fonction</label><br>
+                <mat-form-field class="divAdd">
+                    <mat-select [(ngModel)]="device.fonction" [formControl]="fonction"  name="Fonction"  placeholder="Fonction" >
+                      <mat-option>
+                        <ngx-mat-select-search noEntriesFoundLabel="'Aucun Fonction'" placeholderLabel="Cherche" (keyup)="fFonction($event)"></ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let item of fonctions" [value]="item">
+                        {{item}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+               
+              </div>
+              
+              
+              
+
+                <div  class="row buttonDivClass">
+                    <button *ngIf="addButton" class="btn btn-primary buttonClass" style="height: 50px;"  (click)="addNewVehicule()" [disabled]="addVehiculeForm.invalid " type="submit">Ajouter</button>
+                    <button class="btn btn-secondary buttonClass"  (click)="add()" type="submit">Annuler</button>
+                </div>
+                    
+                
+                
+                  
+                  
+              
+          </div>
+      </form>
+    </div>
+  </div>
+<br>
+<div [style]="style">
+
+
+  <h2 >Modifier Réclamation</h2>
+
+    <div class="form-group m-8 row">
+        <label class="col-sm-4  col-form-label" for="ville"><b>Ville <small *ngIf="newForm.villeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+        <div  class="col-sm-5">
+            <mat-form-field  >
+                <mat-select [(ngModel)]="newForm.villeId"  [formControl]="selected"  (selectionChange)="onSelectVille($event.value);valider()"  name="ville" placeholder="ville" >
+                  <mat-option>
+                    <ngx-mat-select-search noEntriesFoundLabel="'Aucun Ville'" placeholderLabel="Cherche" (keyup)="fVille($event)"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let item of ville" [value]="item.id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            
+            
+        </div>
+     
+      </div>  
+      <div class="form-group m-8 row">
+          
+          <label class="col-sm-4  col-form-label" for=""><b>Véhicule <small *ngIf="newForm.vehiculeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b> &nbsp; &nbsp;<button *ngIf="showAddDevice" class="btn btn-sm btn-primary" (click)="addVehicule(newForm.villeId)">+</button></label>
+          <div class="col-sm-5">
+              <mat-form-field >
+                  <mat-select [(ngModel)]="newForm.vehiculeId" [formControl]="selectedVehicule" (selectionChange)="valider()" name="vehicule" placeholder="Véhicule" >
+                    <mat-option>
+                      <ngx-mat-select-search noEntriesFoundLabel="'Aucun Véhicule'" placeholderLabel="Cherche" (keyup)="fVehicule($event)"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of vehicule" [value]="item.id" >
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          
+          </div>
+          
+      </div>
+  
+      <!--{{newForm | json}}-->
+  
+      <div class="form-group m-8 row">
+          <label class="col-sm-4  col-form-label" for=""><b>Produit <small *ngIf="newForm.produitId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+          <div class="col-sm-5">
+              <mat-form-field >
+                  <mat-select [(ngModel)]="newForm.produitId" [formControl]="selectedProduit" (selectionChange)="onSelectProduit($event.value);valider()" name="produit" placeholder="Produit" >
+                    <mat-option>
+                      <ngx-mat-select-search noEntriesFoundLabel="'Aucun Produit'" placeholderLabel="Cherche" (keyup)="fProduit($event)"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of produit" [value]="item.id">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          
+        </div>
+      </div>
+      
+      <div class="form-group m-8 row">
+          <label class="col-sm-4  col-form-label" for=""><b>Probleme/Panne <small *ngIf="newForm.problemeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+          <div class="col-sm-5">
+              <mat-form-field >
+                  <mat-select [(ngModel)]="newForm.problemeId" [formControl]="selectedProbleme" (selectionChange)="onSelectProbleme($event.value);valider()" multiple  name="probleme" placeholder="Probleme" >
+                    <mat-option>
+                      <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probleme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of probleme" [value]="item.id">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+             
+              
+          </div>
+          
+      </div>
+      <div class="form-group m-8 row">
+          <label class="col-sm-4  col-form-label" for=""><b>Solution <small *ngIf="newForm.statut==1 && !Traite" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+          <div class="col-sm-5">
+              <mat-form-field >
+                  <mat-select [(ngModel)]="newForm.solutionId" [formControl]="selectedSolution" (selectionChange)="valider()" multiple name="solution" placeholder="Solution" >
+                    <mat-option>
+                      <ngx-mat-select-search noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of solution" [value]="item.id">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+              
+              
+          </div>
+          
+      </div>
+      <div  class="form-group m-8 row">
+        <p >
+          Changement du composant ? <mat-checkbox  [formControl]="disableSelect" (change)="check();valider()"></mat-checkbox>
+        </p>
+        <label class="col-sm-4  col-form-label" for=""><b>Composant <small *ngIf="newForm.refId==0 && disableSelect.value==true" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+        <div class="col-sm-5">
+            <mat-form-field >
+                <mat-select [(ngModel)]="newForm.refId" [formControl]="selectedRef" [disabled]="disableSelect.value==false" (selectionChange)="valider()" multiple name="ref" placeholder="Référence" >
+                  <mat-option>
+                    <ngx-mat-select-search noEntriesFoundLabel="'Aucun Référence'" placeholderLabel="Cherche" (keyup)="fRef($event)"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let item of ref" [value]="item.id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            
+        </div>
+        
+      </div>
+      <div class="form-group m-8 row">
+              <label class="col-sm-4  col-form-label" for="description"><b>Description</b></label>
+              <div class="col-sm-5">
+                  <textarea [(ngModel)]="newForm.description" class="form-control" placeholder="Description de panne" name="description" id="" rows="3"></textarea>
+              </div>
+      </div>
+      <div class="form-group m-8 row">
+          <label class="col-sm-4  col-form-label" for=""><b>Statut</b></label>
+          <table class="table col-sm">
+              <tr>
+                  <td class="col-sm-2">en cours</td>
+                  <td [ngSwitch]="newForm.statut">
+                      <input *ngSwitchCase="0" (change)="clearSol(0)"   checked [(ngModel)]="newForm.statut" type="radio" [value]="0" name="statut" id="">
+                      <input *ngSwitchCase="1" (change)="clearSol(0)"  [(ngModel)]="newForm.statut" type="radio" [value]="0" name="statut" id="">
+                  </td>
+              </tr>
+              <tr >
+                  <td class="col-sm-2">traité</td>
+                  <td [ngSwitch]="newForm.statut">
+                      <input *ngSwitchCase="0" (change)="clearSol(1)"  [(ngModel)]="newForm.statut" type="radio" [value]="1" name="statut" id="">
+                      <input *ngSwitchCase="1" (change)="clearSol(1)"  checked [(ngModel)]="newForm.statut" type="radio" [value]="1" name="statut" id="">
+                  </td>
+              </tr>
+          </table>
+          
+         
+          
+      </div>
+      <div class="form-group m-8 row">
+          <label class="col-sm-2  col-form-label" for=""><b>Photo</b></label>
+          <div class="col-sm-5">
+            <!--accept=".png,.jpg, .jpeg,.jfif,.doc,.docx,.zip,.rar,.pdf"-->
+              <input type="file" #inputFile  style="margin-bottom: 5px;" (click)="charge()" (cancel)="cancel()" (change)="onFileSelected($event)" id="file" class="form-control" name="file">
+              <img style="visibility:hidden;" #loading id="loadin" src="../../../assets/loading.gif.gif" width="20px" height="20px"> <h5 *ngIf="newForm.file" style="color: blue;">File: '{{newForm.file}}' <mat-icon (click)="cancel()">cancel</mat-icon></h5>
+          </div>
+          
+      </div>
+      <small *ngIf="!issetId && !allValid || (newForm.statut==1 && !Traite)" id="fileHelpId" style="color: red;" class="form-text"> nb:(*) champ obligatoire</small>
+      
+    <div class="form-group mt-5 row text-center">
+        
+        <div class="col-sm-5">
+            <a  *ngIf="issetId && !allValid" [ngClass]="{'disabled':'disabled'}" style="width: 150px;margin-top: 5px;" (click)="mod(newForm)"  type="button" class="btn btn-outline-warning" >Modifier</a>
+            <a  *ngIf="issetId && allValid" (click)="mod(newForm)" style="width: 150px;margin-top: 5px;" type="button" class="btn btn-warning" >Modifier</a>
+        </div>
+        <div class="col-sm-1">
+            <a *ngIf="is_admin!='ADMIN'"  type="submit" class="btn btn-danger" style="width: 150px;margin-top: 5px; margin-bottom: 20px;" href="/home" >Annuler</a>
+            <a *ngIf="is_admin=='ADMIN'"  type="submit" class="btn btn-danger" style="width: 150px;margin-top: 5px; margin-bottom: 20px;" href="/acceuil" >Annuler</a>
+        
+        </div>
+    </div>
+  </div>
+</div>
+
+<div style="height: 20px;"></div>
+
+ 

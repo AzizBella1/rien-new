@@ -1,0 +1,122 @@
+<app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
+
+<div *ngIf="idUser!=null && is_admin=='ADMIN'" >
+
+    <!--<div *ngIf="hideAdd" class="container py-4"> 
+       
+        <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button>
+    </div>
+<div *ngIf="!hideAdd" class="container mt-5">
+    <form [formGroup]="addVehicule">
+        {{selectedville | json}}
+        <div class="col-md-4 ml-md-auto">
+            <div class="form-group py-2">
+                <label class="col-sm-2  col-form-label" for="ville">Ville</label>
+                <div class="col-sm-8">
+                    <select [(ngModel)]="device.ville.id" formControlName="ville" required (change)="onChange($event.target)" class="form-control" name="ville" id="">
+                        <option value="0">-</option>
+                        <option *ngFor="let item of Ville" [value]="item.id">{{item.name}}</option>
+                    </select>
+                    <small *ngIf="selectedville.id==0" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire choisir une ville </small>
+                </div>
+                    
+                
+            </div>
+            <div class="form-group py-2">
+                <label for="vehicule">Nom</label>
+                <input [(ngModel)]="device.name" formControlName="name" type="text" name="name" class="form-control" >
+                <small *ngIf="name.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                
+            </div>
+            
+            <div class="form-group md-5 py-2">
+                
+                <div class="row">
+                    <div class="col">
+                        <label for="disabled">Disabled</label>
+                    </div>
+                    <div class="col"  [ngSwitch]="device.disabled">
+                        <input *ngSwitchCase="1" checked [(ngModel)]="device.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="1">
+                        <input *ngSwitchCase="0" [(ngModel)]="device.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="1">Oui
+                    </div>
+                    <div class="col"  [ngSwitch]="device.disabled">
+                        <input *ngSwitchCase="1" [(ngModel)]="device.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="0">
+                        <input *ngSwitchCase="0" [(ngModel)]="device.disabled" checked formControlName="disabled" type="radio" name="disabled" [value]="0">Non
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNewVehicule()" [disabled]="addVehicule.invalid || selectedville.id==0" type="submit">Ajouter</button>
+                        <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modVehicule(device)" [disabled]="addVehicule.invalid || selectedville.id==0" type="submit">Modifier</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
+                    </div>
+                </div>
+                
+                
+            </div> 
+        </div>
+    </form>
+    <hr>
+</div>-->
+<div class="container" style="margin-top: 30px;">
+    <h1>Liste Vehicules</h1>
+        <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
+    
+</div>
+
+<div class="container col-md-12  table-responsive">
+    
+    <br>
+    <mat-table class="tt" #table matSort [dataSource]="dataSource">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="num">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.num}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="ime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Ime </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.uniqueid}} </mat-cell>
+            </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="ville">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.ville}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="disabled">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Disabled </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.disabled}}</mat-cell>
+        </ng-container>
+       
+        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator
+    [pageSize]="15"
+    [showFirstLastButtons]="true">
+    </mat-paginator>
+
+    
+    
+    
+    
+</div>
+
+
+</div>

@@ -1,0 +1,115 @@
+<app-navbar *ngIf="User!=null && is_admin!='ADMIN'"></app-navbar>
+
+<div *ngIf="User!=null && is_admin!='ADMIN'" class="container mt-5">
+
+    
+    <div class="container py-4"> 
+        
+        <a type="button" style="width: 150px;" href="/forms" class="btn btn-outline-primary">New</a>
+    </div>
+    <div class="container">
+        <h1>Liste Reclamations</h1>
+            <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
+        
+    </div>
+
+    <div  *ngIf="traite != 0">
+        <img id="loading" src="../../../assets/loading.gif.gif" width="40px" height="40px">
+    </div>
+
+    <div  *ngIf="!hide"  class="detail" #llll>
+        <button  (click)="hideDetail()">X</button>
+        <br><br>
+        <div style="word-wrap: break-word;" class="container">
+            <p><b>Imei &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{description.imei}}</p>
+            <p><b>Produit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{description.product}}</p>
+            <p><b>Panne &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{description.probleme}}</p>
+            <p><b>Solution &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{description.solution}}</p>
+            <p><b>Composant &nbsp;: </b>{{description.ref}}</p>
+            <p><b>Description &nbsp;: </b>{{description.description}}</p>
+            <p><b>Statut &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{description.statut}}</p>
+            
+        
+        </div>
+       
+        
+         
+        
+    </div>
+    <br>
+    <div class="container reload">
+        <button style="width: 100px;height: 40px;" class="btn btn-secondary" [disabled]="tous" (click)="all(1)">all</button>&nbsp;<button style="width: 100px;height: 40px;" [disabled]="mes" (click)="all(0)" class="btn btn-secondary">my</button>&nbsp;
+        <a style="width: 100px;height: 40px;" class="btn btn-primary" (click)="reload()"><mat-icon>restore_page</mat-icon></a>
+    </div>
+    <div  *ngIf="traite != 1" class="container col-md-12  table-responsive" [style]="style">
+       
+        <br>
+        <mat-table class="tt" #table matSort  [dataSource]="dataSource">
+
+        
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="num">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.num}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="user">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Utilisateur </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}" > {{element.user}} <mat-icon *ngIf="element.istodo==true && element.user==User" style="color: red;">assignment_late</mat-icon> </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="ville">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.ville}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="vehicule">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Véhicule </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.vehicule}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="dateCreation">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Date de creation </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.dateCreation | date:'yyyy-MM-dd HH:mm'}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="dateModification">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Date de modification </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.dateModification | date:'yyyy-MM-dd HH:mm'}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}">  <button (click)="detail(element)"  class="btn btn-primary btn-sm" ><mat-icon>description</mat-icon></button></mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="mod">
+            <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> <a  type="button" *ngIf="element.statut != 'valider'" class="btn btn-warning" href="mod/{{element.id}}" >Modifier</a></mat-cell>
+        </ng-container>
+        <!-- <ng-container matColumnDef="journal">
+            <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}">  <button *ngIf="element.j=='0'" (click)="journal(element)"  class="btn btn-success btn-sm" ><mat-icon>calendar_today</mat-icon></button></mat-cell>
+        </ng-container> -->
+       
+
+        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator
+    [pageSize]="15"
+    [showFirstLastButtons]="true">
+    </mat-paginator>
+
+    
+    
+    
+    
+</div>
+
+   
+
+    
+</div>
+
+<div style="height: 20px;"></div>
+

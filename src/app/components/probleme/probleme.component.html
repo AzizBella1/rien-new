@@ -1,0 +1,114 @@
+<app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
+
+    <div *ngIf="idUser!=null && is_admin=='ADMIN'" >
+        
+        <div *ngIf="hideAdd" class="container py-4"> 
+            
+            <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button>
+        </div>
+        
+        <div *ngIf="!hideAdd" class="container mt-5">
+            <form [formGroup]="addProbleme">
+               <!-- {{Probleme | json}}-->
+                <div class="col-md-4 ml-md-auto">
+                    <mat-form-field>
+                        <mat-select placeholder="Solutions"  [(ngModel)]="solutions" formControlName="Solution" multiple>
+                            <mat-option>
+                                <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
+                            </mat-option>
+                          <mat-option *ngFor="let item of solution" [value]="item.id" >{{item.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <!--<div class="form-group py-2">
+                        
+                        <div class="col-sm-8">
+                            <select [(ngModel)]="selectedProduit.id" multiple="multiple" formControlName="produit" required (change)="onChange($event.target)" class="form-control" name="produit" id="">
+                                <option value="0">-</option>
+                                <option value="0">-</option>
+                                <option value="0">-</option>
+                                <option  [value]="item.id">{{item.title}}</option>
+                            </select>
+                            <small *ngIf="selectedProduit.id==0" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire </small>
+                        </div>
+                            
+                        
+                    </div>-->
+                    <div class="form-group py-2">
+                        <label for="vehicule">Probleme</label>
+                        <input [(ngModel)]="Probleme.name" (keyup)="chercher($event.target)" formControlName="probleme" type="text" name="probleme" class="form-control" >
+                        <small *ngIf="probleme.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                        <small *ngIf="deja" id="fileHelpId" style="color: red;" class="form-text"> * existe deja  </small>
+                        
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNew()" [disabled]="addProbleme.invalid" type="submit">Ajouter</button>
+                                <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modProbleme(Probleme)" [disabled]="addProbleme.invalid" type="submit">Modifier</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
+                            </div>
+                        </div>
+                        
+                        
+                    </div> 
+                </div>
+            </form>
+            <hr>
+            
+        </div>
+        
+        
+        
+        <div class="container">
+            <h1>Liste Problemes</h1>
+                <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
+            
+        </div>
+        
+        <div class="container col-md-12  table-responsive">
+            
+            <br>
+            <mat-table class="tt" #table matSort [dataSource]="dataSource">
+        
+                <!-- Position Column -->
+                <ng-container matColumnDef="num">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.num}} </mat-cell>
+                </ng-container>
+        
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Probleme </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="mod">
+                    <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <button (click)="onMod(element)" class="btn btn-primary" >mod</button> </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="supp">
+                    <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <button (click)="onDelete(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
+                </ng-container>
+        
+                
+        
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator #paginator
+            [pageSize]="15"
+            [showFirstLastButtons]="true">
+            </mat-paginator>
+        
+            
+            
+            
+            
+        </div>
+        
+        
+</div>
+        
+    
