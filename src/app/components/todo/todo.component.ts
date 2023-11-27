@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,8 +15,7 @@ export class TodoComponent implements OnInit{
   is_admin:any = sessionStorage.getItem('is_admin');
   curDate=new Date();
 
-
-  constructor(private dataservice:DataService ){}
+  constructor(private dataservice:DataService){}
   ngOnInit(): void {
     this.showAllProduit()
     this.showVille()
@@ -133,6 +132,8 @@ export class TodoComponent implements OnInit{
   data:any=[]
   rec:any=[]
   lastRec:any
+  load:any = 1
+
   showVille(){
     
     this.dataservice.getVille().subscribe(
@@ -143,8 +144,8 @@ export class TodoComponent implements OnInit{
     )
 
     this.dataservice.getReclamation().subscribe((data:any)=>{
-      data.sort((a:any, b:any) => b.id - a.id)
-      this.rec = data.filter((res:any)=>res.istodo==true)
+      //data.sort((a:any, b:any) => b.id - a.id)
+      this.rec = data.filter((res:any)=>res.istodo==true).sort((a:any, b:any) => b.id - a.id)
       
       this.lastRec=data[0]
       if (this.lastRec.date_creation.substring(8,10)==this.curDate.getDate()) {
@@ -183,16 +184,8 @@ export class TodoComponent implements OnInit{
           cp++
           
         });
-        cp=0
-        l.references.forEach((r:any) => {
-          if (cp==0) {
-            references = references+r.name
-          } else {
-            references = references+' + '+r.name
-          }
-          cp++
-        });
-         var val={num:l.ident,ref:references,solution:solutions,description:l.description,probleme:problemes,product:l.product.name,id:l.id,statut:l.statut,ville:l.device.ville.name,vehicule:l.device.name,user:l.client.name,dateCreation:l.date_creation,dateModification:l.date_modification}
+        
+         var val={num:l.ident,solution:solutions,description:l.description,probleme:problemes,product:l.product.name,id:l.id,statut:l.statut,ville:l.device.ville.name,vehicule:l.device.name,user:l.client.name,dateCreation:l.date_creation,dateModification:l.date_modification}
          this.data[i]=val
           i++
       });
@@ -204,7 +197,9 @@ export class TodoComponent implements OnInit{
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort
       
-     })
+     },()=>{},()=>{
+      this.load = 0
+    })
 
     this.dataservice.getUser().subscribe((res:any)=>{
       this.User=this.userCopy= res
@@ -318,6 +313,13 @@ export class TodoComponent implements OnInit{
 
   hideAdd:boolean=true
   addButton:boolean=true
+  
+  bodyStyle:any = ''
+
+  
+  closePopup(){
+    this.bodyStyle='opacity:1;pointer-events:all;'
+  }
 
   add(){
     this.todo.get('user')!.setValue('')
@@ -329,6 +331,14 @@ export class TodoComponent implements OnInit{
     this.todo.get('description')!.setValue('')
     this.addButton=true
 
+    if (this.style=='') {
+      this.style='opacity:0.5;pointer-events:none;'
+    } else {
+      this.style=''
+    }
+
+
+   
    
     this.hideAdd=!this.hideAdd
     window.scrollTo(0,0)
@@ -378,7 +388,7 @@ export class TodoComponent implements OnInit{
 
   addNew(){
     // reclamation => response.id
-    
+    this.load = 1
       let data:any={}
       
       //console.log(this.todo.get('vehicule')!.value);
@@ -497,6 +507,7 @@ export class TodoComponent implements OnInit{
   
   userId:any
   modTodo(){
+    this.load = 1
     this.hideAdd=!this.hideAdd
     let data:any={}
     //console.log(this.todo.get('solution')!.value);
@@ -545,7 +556,7 @@ export class TodoComponent implements OnInit{
 
   Description:any
   hide:boolean=true
-  style:any
+  style:any = ''
   traite:boolean=true
 
   detail(recl:any){
@@ -562,9 +573,12 @@ export class TodoComponent implements OnInit{
   }
 
   hideDetail(){
-    this.style='opacity:1;'
+    this.style=''
     this.hide=true
   }
+
+
+ 
 
   onDelete(id:any){
     // this.dataservice.deleteUser(id).subscribe(

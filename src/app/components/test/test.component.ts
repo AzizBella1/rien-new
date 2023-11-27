@@ -61,7 +61,7 @@ export class TestComponent implements OnInit{
       
     //}
     
-    this.ffdhgff()
+    this.reloadAll()
     //this.showAll(0)
     //console.log(this.cnt);
   }
@@ -228,6 +228,7 @@ export class TestComponent implements OnInit{
       ()=>{
         this.style='opacity:1;pointer-events:all;'
         this.btnReload = 'pointer-events: all'
+        this.style=''
         this.iconReload = ''
       })
 
@@ -304,7 +305,7 @@ export class TestComponent implements OnInit{
     this.searcheIcon=true
   }
 
-  async ffdhgff(){
+  async reloadAll(){
     await this.getJournal()
     this.showAll(0)
     
@@ -315,7 +316,7 @@ export class TestComponent implements OnInit{
 
   reload(){
     
-    this.style='opacity:1;'
+    this.style='opacity:0.5;pointer-events: none'
     this.btnReload = 'background: #80808017;pointer-events: none'
     this.iconReload = 'transform: rotate(180deg);transition: 3s ease-in-out;'
     if (this.inputField) {

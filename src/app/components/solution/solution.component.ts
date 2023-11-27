@@ -21,6 +21,8 @@ export class SolutionComponent implements OnInit {
 
   probleme: any;
   villeTrue:boolean=true
+
+  style:any = ''
   
 
   hideAdd:boolean=true
@@ -30,6 +32,12 @@ export class SolutionComponent implements OnInit {
     this.getSolution()
     this.Solution = {
       name:''
+    }
+
+    if (this.style=='') {
+      this.style='opacity:0.5;pointer-events:none;'
+    } else {
+      this.style=''
     }
     
     
@@ -134,7 +142,7 @@ export class SolutionComponent implements OnInit {
           
         }
       )
-      this.hideAdd=!this.hideAdd
+      this.add()
     }
   }
 
@@ -165,16 +173,38 @@ export class SolutionComponent implements OnInit {
         solution = this.Solution
         this.getSolution()
       })
-      this.hideAdd=!this.hideAdd
+      this.add()
     }
     
     
+  }
+
+  
+
+
+  // supp
+
+  idd:any
+  Sup:boolean = false
+
+  toSupp(id:any){
+    this.style='opacity:0.5;pointer-events:none;'
+    this.Sup=true
+    this.idd=id
+  }
+
+  hideDetail(){
+    this.style=''
+    
+    this.Sup=false
   }
 
   onDelete(id:any){
     this.dataservice.deleteSolution(id).subscribe(
       ()=>{ this.getSolution()}
     )
-   
+    this.hideDetail()
   }
+
+
 }

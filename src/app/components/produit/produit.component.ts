@@ -31,12 +31,20 @@ export class ProduitComponent implements OnInit {
   addButton:boolean=true
   problemeCopy: any=[]
 
+  style:any = ''
+
   add(){
     this.showAll()
     this.addButton=true
     this.problemes=[]
     this.produitSelected = {
       name:'',problemes:[]
+    }
+
+    if (this.style=='') {
+      this.style='opacity:0.5;pointer-events:none;'
+    } else {
+      this.style=''
     }
 
    
@@ -171,7 +179,7 @@ export class ProduitComponent implements OnInit {
         }
       )
       
-      this.hideAdd=!this.hideAdd
+      this.add()
     }
 
     
@@ -268,18 +276,36 @@ export class ProduitComponent implements OnInit {
       this.dataservice.editProduit(this.produitSelected).subscribe(()=>{
       this.showAll()
       })
-      this.hideAdd=!this.hideAdd
+      this.add()
     }
 
     
     
   }
 
+
+  // supp
+
+  idd:any
+  Sup:boolean = false
+
+  toSupp(id:any){
+    this.style='opacity:0.5;pointer-events:none;'
+    this.Sup=true
+    this.idd=id
+  }
+
+  hideDetail(){
+    this.style=''
+    
+    this.Sup=false
+  }
+
   onDelete(id:any){
     this.dataservice.deleteProduit(id).subscribe(
       ()=>{this.showAll()}
     )
-    
+    this.hideDetail()
   }
 
  

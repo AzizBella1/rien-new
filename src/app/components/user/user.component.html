@@ -1,5 +1,100 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
 
+<div *ngIf="!hideAdd" class="popup">
+    <button class="btnCancel" (click)="add()">X</button>
+    <br>
+    <div  class="popupHeader">
+        <h2 *ngIf="addButton"  >Ajouter User</h2>
+        <h2 *ngIf="!addButton"  >Modifier User</h2>
+        
+    </div>
+    <hr>
+    <div class="popupBody">
+        <form [formGroup]="addUser">
+            <div class="col-md">
+                <div class="form-group md-5 py-2">
+                    <label for="username"><b>Username</b></label>
+                    <input [(ngModel)]="userSelected.username" formControlName="username" type="text" name="username" class="form-control" >
+                    <small *ngIf="username.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                    
+                </div>
+                <!--{{userSelected | json}}-->
+                <div class="form-group  py-2">
+                    <label for="name"><b>Name</b></label>
+                    <input [(ngModel)]="userSelected.name" formControlName="name" type="text" name="name" class="form-control" >
+                    <small *ngIf="name.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                    
+                </div>
+                <div class="form-group  py-2">
+                    <label for="password"><b>Password</b></label>
+                    <input [(ngModel)]="userSelected.password" formControlName="password" type="text" name="password" class="form-control" >
+                    <small *ngIf="password.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                    
+                </div>
+                <div class="form-group  py-2">
+                    <label for="email"><b>Email</b></label>
+                    <input [(ngModel)]="userSelected.email" formControlName="email" type="text" name="email" class="form-control" >
+                    <small *ngIf="email.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                    
+                </div>
+                <div class="form-group  py-2">
+                    <label for="phone"><b>Phone</b></label>
+                    <input [(ngModel)]="userSelected.phone" formControlName="phone" type="text" name="phone" class="form-control" >
+                    <small *ngIf="phone.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                    
+                </div>
+                <div class="form-group  py-2">
+                    <label for="adress"><b>Adresse</b></label>
+                    <input [(ngModel)]="userSelected.adress" formControlName="adress" type="text" name="adress" class="form-control" >
+                    <small *ngIf="adress.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                    
+                </div>
+                <div class="form-group py-2">
+                    
+                    <div class="row">
+                        <div class="col">
+                            <label for="admin"><b>Admin</b></label>
+                        </div>
+                        <div class="col"  [ngSwitch]="userSelected.appRoles[0].id">
+                            <input *ngSwitchCase="1" checked [(ngModel)]="userSelected.appRoles[0].id"  formControlName="admin" type="radio" name="admin" [value]="1">
+                            <input *ngSwitchCase="2" [(ngModel)]="userSelected.appRoles[0].id"  formControlName="admin" type="radio" name="admin" [value]="1">Oui
+                        </div>
+                        <div class="col"  [ngSwitch]="userSelected.appRoles[0].id">
+                            <input *ngSwitchCase="1" [(ngModel)]="userSelected.appRoles[0].id"  formControlName="admin" type="radio" name="admin" [value]="2">
+                            <input *ngSwitchCase="2" [(ngModel)]="userSelected.appRoles[0].id" checked formControlName="admin" type="radio" name="admin" [value]="2">Non
+                        </div>
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+       
+
+    </div>
+    <hr>
+    <div class="popupFouter">
+        <button type="button" style="margin-right: 10px" class="btn btn-secondary" (click)="add()" >Annuler</button>
+
+        <button type="button" *ngIf="addButton"  (click)="addNew()" [disabled]="addUser.invalid || userSelected.id==0"  class="btn btn-success">Ajouter</button>
+        <button type="button" *ngIf="!addButton" class="btn btn-warning" (click)="modUser()" [disabled]="addUser.invalid">Modifier</button>
+    
+    
+    </div>
+</div>
+
+<div *ngIf="!hideAdd || Sup" class="backgroundBody">
+
+</div>
+
+<div *ngIf="Sup" id="supp">
+    <p><b>Confirmer la suppression !</b></p>
+    <button (click)="onDelete(idd)" class="btn btn-danger" style="width: 200px;">Supp</button><br>
+    <button (click)="hideDetail()" class="btn btn-warning" style="width: 200px;">Annuler</button>
+</div>
 <div *ngIf="idUser!=null && is_admin=='ADMIN'" >
 
     <div *ngIf="hideAdd" class="container py-4"> 
@@ -9,89 +104,7 @@
         
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2 *ngIf="addButton"  class="modal-title" id="exampleModalLabel">Ajouter User</h2>
-              <h2 *ngIf="!addButton"  class="modal-title" id="exampleModalLabel">Modifier User</h2>
-              <button type="button" style="border: 1px solid red;border-radius: 3px; background-color: red;"(click)="add()" class="close" data-dismiss="modal" aria-label="Close">
-                <span style="color: white;" aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="addUser">
-                    <div class="col-md">
-                        <div class="form-group md-5 py-2">
-                            <label for="username"><b>Username</b></label>
-                            <input [(ngModel)]="userSelected.username" formControlName="username" type="text" name="username" class="form-control" >
-                            <small *ngIf="username.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                            
-                        </div>
-                        <!--{{userSelected | json}}-->
-                        <div class="form-group  py-2">
-                            <label for="name"><b>Name</b></label>
-                            <input [(ngModel)]="userSelected.name" formControlName="name" type="text" name="name" class="form-control" >
-                            <small *ngIf="name.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                            
-                        </div>
-                        <div class="form-group  py-2">
-                            <label for="password"><b>Password</b></label>
-                            <input [(ngModel)]="userSelected.password" formControlName="password" type="text" name="password" class="form-control" >
-                            <small *ngIf="password.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                            
-                        </div>
-                        <div class="form-group  py-2">
-                            <label for="email"><b>Email</b></label>
-                            <input [(ngModel)]="userSelected.email" formControlName="email" type="text" name="email" class="form-control" >
-                            <small *ngIf="email.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                            
-                        </div>
-                        <div class="form-group  py-2">
-                            <label for="phone"><b>Phone</b></label>
-                            <input [(ngModel)]="userSelected.phone" formControlName="phone" type="text" name="phone" class="form-control" >
-                            <small *ngIf="phone.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                            
-                        </div>
-                        <div class="form-group  py-2">
-                            <label for="adress"><b>Adresse</b></label>
-                            <input [(ngModel)]="userSelected.adress" formControlName="adress" type="text" name="adress" class="form-control" >
-                            <small *ngIf="adress.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                            
-                        </div>
-                        <div class="form-group py-2">
-                            
-                            <div class="row">
-                                <div class="col">
-                                    <label for="admin"><b>Admin</b></label>
-                                </div>
-                                <div class="col"  [ngSwitch]="userSelected.appRoles[0].id">
-                                    <input *ngSwitchCase="1" checked [(ngModel)]="userSelected.appRoles[0].id"  formControlName="admin" type="radio" name="admin" [value]="1">
-                                    <input *ngSwitchCase="2" [(ngModel)]="userSelected.appRoles[0].id"  formControlName="admin" type="radio" name="admin" [value]="1">Oui
-                                </div>
-                                <div class="col"  [ngSwitch]="userSelected.appRoles[0].id">
-                                    <input *ngSwitchCase="1" [(ngModel)]="userSelected.appRoles[0].id"  formControlName="admin" type="radio" name="admin" [value]="2">
-                                    <input *ngSwitchCase="2" [(ngModel)]="userSelected.appRoles[0].id" checked formControlName="admin" type="radio" name="admin" [value]="2">Non
-                                </div>
-                                <div class="col">
-                                </div>
-                                <div class="col">
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="add()" data-dismiss="modal">Annuler</button>
-              
-                <button type="button" *ngIf="addButton"  (click)="addNew()" [disabled]="addUser.invalid || userSelected.id==0" data-dismiss="modal"  class="btn btn-success">Ajouter</button>
-                <button type="button" *ngIf="!addButton" class="btn btn-warning"  (click)="modUser()" [disabled]="addUser.invalid" data-dismiss="modal">Modifier</button>
-            </div>
-          </div>
-        </div>
-      </div>
+   
     
 
 
@@ -137,11 +150,11 @@
         
         <ng-container matColumnDef="mod">
             <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <button (click)="onMod(element)" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary" >mod</button> </mat-cell>
+            <mat-cell *matCellDef="let element"> <button (click)="add();onMod(element)" class="btn btn-primary" >mod</button> </mat-cell>
         </ng-container>
         <ng-container matColumnDef="supp">
             <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <button *ngIf="element.username!=idUser" (click)="onDelete(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
+            <mat-cell *matCellDef="let element"> <button *ngIf="element.username!=idUser" (click)="toSupp(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
         </ng-container>
 
         

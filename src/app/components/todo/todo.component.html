@@ -1,18 +1,167 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
 
-<div *ngIf="idUser!=null && is_admin=='ADMIN' " class="container mt-5">
+<div id="lamalm" *ngIf="idUser!=null && is_admin=='ADMIN' " class="container mt-5">
 
    
     <div class="container">
         <h1>To Do</h1>
+
+        <input class="form-control" #inputField id="filterInput" (keyup)="filter($event.target)" placeholder="Filter">
             
         
     </div>
-    <div *ngIf="hideAdd" class="container py-4"> 
+
+
+
+    <div *ngIf="!hideAdd" class="popup">
+      <button class="btnCancel" (click)="add()">X</button>
+      <br>
+      <div  class="popupHeader">
+        <h2 *ngIf="addButton"  >Ajouter ToDo</h2>
+        <h2 *ngIf="!addButton" >Modifier ToDo</h2>
         
-        <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button>
+      </div>
+      <hr>
+      <div class="popupBody">
+        <form style="margin-left: 10px" [formGroup]="todo">
+            
+          <div class="col-md">
+              <div class="form-group row">
+                  <label class="col-sm-4  col-form-label" for="ville"><b>Technicien <small *ngIf="todo.get('user')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small> </b></label>
+                  <div class="col-sm-5">
+                      <mat-form-field  style="width: 100%;">
+                          <mat-select formControlName="user" name="user" placeholder="technicien" >
+                            <mat-option>
+                              <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Technicien'" placeholderLabel="Cherche" (keyup)="fUser($event)"></ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of User" [value]="item.id">
+                              {{item.name}}
+                            </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      
+                  </div>
+                
+              </div>
+              <div class="form-group  row">
+                  <label class="col-sm-4  col-form-label" for="ville"><b>Ville <small *ngIf="todo.get('ville')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+                  <div class="col-sm-5">
+                      <mat-form-field  style="width: 100%;">
+                          <mat-select formControlName="ville" (selectionChange)="onSelectVille($event.value)" name="ville" placeholder="ville" >
+                            <mat-option>
+                              <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Ville'" placeholderLabel="Cherche" (keyup)="fVille($event)"></ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of Ville" [value]="item.id">
+                              {{item.name}}
+                            </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      
+                  </div>
+                
+                </div>
+                <div class="form-group row">
+                    
+                    <label class="col-sm-4  col-form-label" for=""><b>Véhicule <small *ngIf="todo.get('vehicule')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+                    <div class="col-sm-5">
+                        <mat-form-field style="width: 100%;">
+                            <mat-select formControlName="vehicule" name="vehicule" placeholder="Véhicule" >
+                              <mat-option>
+                                <ngx-mat-select-search noEntriesFoundLabel="'Aucun Véhicule'" placeholderLabel="Cherche" (keyup)="fVehicule($event)"></ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let item of Vehicule" [value]="item.id">
+                                {{item.name}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    
+                    </div>
+                    
+                </div>
+            
+                <!--{{newForm | json}}-->
+            
+                <div class="form-group row">
+                    <label class="col-sm-4  col-form-label" for=""><b>Produit <small *ngIf="todo.get('produit')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+                    <div class="col-sm-5">
+                        <mat-form-field style="width: 100%;">
+                            <mat-select formControlName="produit" (selectionChange)="onSelectProduit($event.value)" name="produit" placeholder="Produit" >
+                              <mat-option>
+                                <ngx-mat-select-search noEntriesFoundLabel="'Aucun Produit'" placeholderLabel="Cherche" (keyup)="fProduit($event)"></ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let item of Produit" [value]="item.id">
+                                {{item.name}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4  col-form-label" for=""><b>Probleme/Panne </b></label>
+                  <div class="col-sm-5">
+                      <mat-form-field style="width: 100%;">
+                          <mat-select formControlName="probleme" (selectionChange)="onSelectProbleme($event.value)" multiple name="probleme" placeholder="Probleme" >
+                            <mat-option>
+                              <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probleme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of Probleme" [value]="item.id">
+                              {{item.name}}
+                            </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                     
+                      
+                  </div>
+                  
+              </div>
+              <!-- <div class="form-group m-8 row">
+                  <label class="col-sm-4  col-form-label" for=""><b>Solution </b></label>
+                  <div class="col-sm-5">
+                      <mat-form-field >
+                          <mat-select  formControlName="solution"  name="solution"  multiple placeholder="Solution" >
+                            <mat-option>
+                              <ngx-mat-select-search noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche"  (keyup)="fSolution($event)"></ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of Solution" [value]="item.id">
+                              {{item.name}}
+                            </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      
+                      
+                  </div>
+                  
+              </div> -->
+              <div class="form-group row py-2">
+                  <label class="col-sm-4  col-form-label" for="description"><b>Description</b></label>
+                  <div class="col-sm-5">
+                      <textarea formControlName="description" class="form-control" placeholder="Description de panne" name="description" id="" rows="3"></textarea>
+                  </div>
+              </div>
+             
+          </div>
+      </form>
+          
      
+      </div>
+      <hr>
+      <div class="popupFouter">
+        <button type="button" style="margin-right: 10px" class="btn btn-secondary" (click)="add()" >Annuler</button>
+              
+        <button type="button" *ngIf="addButton"  (click)="addNew()" [disabled]="todo.invalid "  class="btn btn-success">Ajouter</button>
+        <button type="button" *ngIf="!addButton" class="btn btn-warning"  (click)="modTodo()" [disabled]="todo.invalid" >Modifier</button>
+      </div>
+    </div>
+
+    <div  *ngIf="load != 0" id="delete">
+      <img id="loading" src="../../../assets/loading.gif.gif" width="40px" height="40px">
+    </div>
+
+    <div *ngIf="hideAdd && hide" class="container py-4"> 
         
+      <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button>
+     
     </div>
     <div *ngIf="!hide"  class="detail" #llll>
       <button (click)="hideDetail()">X</button>
@@ -22,15 +171,13 @@
           <p><b>Produit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{Description.product}}</p>
           <p><b>Panne &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{Description.probleme}}</p>
           <p><b>Solution &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{Description.solution}}</p>
-          <p><b>Composant &nbsp;&nbsp;: </b>{{Description.ref}}</p>
           <p><b>description &nbsp;&nbsp;: </b>{{Description.description}}</p>
      
       </div>
      
       
        
-      
-  </div>
+    </div>
     <div  *ngIf="error!=''" id="delete">
       <!--<img id="loading" src="../../../assets/loading.gif.gif" width="40px" height="40px">-->
       <div class="alert alert-danger" role="alert">
@@ -45,148 +192,12 @@
   </div>
   <br>
 
-    <div *ngIf="!hideAdd" class="container mt-5">
-  
-        <form [formGroup]="todo">
-            
-            <div class="col-md-6 ml-md-auto">
-                <div class="form-group m-8 row">
-                    <label class="col-sm-4  col-form-label" for="ville"><b>Technicien <small *ngIf="todo.get('user')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small> </b></label>
-                    <div class="col-sm-5">
-                        <mat-form-field  >
-                            <mat-select formControlName="user" name="user" placeholder="technicien" >
-                              <mat-option>
-                                <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Technicien'" placeholderLabel="Cherche" (keyup)="fUser($event)"></ngx-mat-select-search>
-                              </mat-option>
-                              <mat-option *ngFor="let item of User" [value]="item.id">
-                                {{item.name}}
-                              </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        
-                    </div>
-                  
-                </div>
-                <div class="form-group m-8 row">
-                    <label class="col-sm-4  col-form-label" for="ville"><b>Ville <small *ngIf="todo.get('ville')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
-                    <div class="col-sm-5">
-                        <mat-form-field  >
-                            <mat-select formControlName="ville" (selectionChange)="onSelectVille($event.value)" name="ville" placeholder="ville" >
-                              <mat-option>
-                                <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Ville'" placeholderLabel="Cherche" (keyup)="fVille($event)"></ngx-mat-select-search>
-                              </mat-option>
-                              <mat-option *ngFor="let item of Ville" [value]="item.id">
-                                {{item.name}}
-                              </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        
-                    </div>
-                  
-                  </div>
-                  <div class="form-group m-8 row">
-                      
-                      <label class="col-sm-4  col-form-label" for=""><b>Véhicule <small *ngIf="todo.get('vehicule')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
-                      <div class="col-sm-5">
-                          <mat-form-field >
-                              <mat-select formControlName="vehicule" name="vehicule" placeholder="Véhicule" >
-                                <mat-option>
-                                  <ngx-mat-select-search noEntriesFoundLabel="'Aucun Véhicule'" placeholderLabel="Cherche" (keyup)="fVehicule($event)"></ngx-mat-select-search>
-                                </mat-option>
-                                <mat-option *ngFor="let item of Vehicule" [value]="item.id">
-                                  {{item.name}}
-                                </mat-option>
-                              </mat-select>
-                          </mat-form-field>
-                      
-                      </div>
-                      
-                  </div>
-              
-                  <!--{{newForm | json}}-->
-              
-                  <div class="form-group m-8 row">
-                      <label class="col-sm-4  col-form-label" for=""><b>Produit <small *ngIf="todo.get('produit')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
-                      <div class="col-sm-5">
-                          <mat-form-field >
-                              <mat-select formControlName="produit" (selectionChange)="onSelectProduit($event.value)" name="produit" placeholder="Produit" >
-                                <mat-option>
-                                  <ngx-mat-select-search noEntriesFoundLabel="'Aucun Produit'" placeholderLabel="Cherche" (keyup)="fProduit($event)"></ngx-mat-select-search>
-                                </mat-option>
-                                <mat-option *ngFor="let item of Produit" [value]="item.id">
-                                  {{item.name}}
-                                </mat-option>
-                              </mat-select>
-                          </mat-form-field>
-                      
-                    </div>
-                  </div>
-                  <div class="form-group m-8 row">
-                    <label class="col-sm-4  col-form-label" for=""><b>Probleme/Panne </b></label>
-                    <div class="col-sm-5">
-                        <mat-form-field >
-                            <mat-select formControlName="probleme" (selectionChange)="onSelectProbleme($event.value)" multiple name="probleme" placeholder="Probleme" >
-                              <mat-option>
-                                <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probleme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
-                              </mat-option>
-                              <mat-option *ngFor="let item of Probleme" [value]="item.id">
-                                {{item.name}}
-                              </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                       
-                        
-                    </div>
-                    
-                </div>
-                <!-- <div class="form-group m-8 row">
-                    <label class="col-sm-4  col-form-label" for=""><b>Solution </b></label>
-                    <div class="col-sm-5">
-                        <mat-form-field >
-                            <mat-select  formControlName="solution"  name="solution"  multiple placeholder="Solution" >
-                              <mat-option>
-                                <ngx-mat-select-search noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche"  (keyup)="fSolution($event)"></ngx-mat-select-search>
-                              </mat-option>
-                              <mat-option *ngFor="let item of Solution" [value]="item.id">
-                                {{item.name}}
-                              </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        
-                        
-                    </div>
-                    
-                </div> -->
-                <div class="form-group m-8 row py-2">
-                    <label class="col-sm-4  col-form-label" for="description"><b>Description</b></label>
-                    <div class="col-sm-5">
-                        <textarea formControlName="description" class="form-control" placeholder="Description de panne" name="description" id="" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNew()" [disabled]="todo.invalid" type="submit">Ajouter</button>
-                            <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modTodo()" [disabled]="todo.invalid" type="submit">Modifier</button>
-                        </div>
-                        <div class="col">
-                            <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
-                        </div>
-                    </div>
-                    
-                    
-                </div> 
-            </div>
-        </form>
-        <hr>
-    </div>
+    
 
+  
     
-    <br>
-    
-     <div  *ngIf="traite" class="container col-md-12  table-responsive" [style]="style">
-       
-        <br>
+     <div  *ngIf="traite && load == 0" class="container col-md-12  table-responsive" [style]="style">
+      
         <mat-table class="tt" #table matSort  [dataSource]="dataSource">
 
         
@@ -228,7 +239,7 @@
         </ng-container>
         <ng-container matColumnDef="mod">
             <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> <button (click)="onMod(element.id)" class="btn btn-primary" >mod</button></mat-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> <button (click)="add();onMod(element.id)" class="btn btn-primary" >mod</button></mat-cell>
         </ng-container>
        
 

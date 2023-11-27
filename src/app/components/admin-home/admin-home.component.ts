@@ -410,6 +410,7 @@ export class AdminHomeComponent implements OnInit {
       ()=>{},
       ()=>{
         this.load = 0
+        this.style=''
         this.btnReload = 'pointer-events: all'
         this.iconReload = ''
       }
@@ -503,7 +504,7 @@ export class AdminHomeComponent implements OnInit {
 
   reload(){
     this.message=''
-    this.style='opacity:1;'
+    this.style='opacity:0.5;pointer-events: none'
     this.btnReload = 'background: #80808017;pointer-events: none'
     this.iconReload = 'transform: rotate(180deg);transition: 3s ease-in-out;'
     if (this.inputField) {
@@ -602,7 +603,7 @@ export class AdminHomeComponent implements OnInit {
     //console.log(desc);
     //this.description=d
     this.style='opacity:0.5;pointer-events:none;'
-    console.log(d);
+    //console.log(d);
     
     this.historique(d)
     

@@ -6,3 +6,129 @@ mat-table{
     border: 1px solid rgb(182, 180, 180);
     border-radius: 5px;
 }
+
+
+
+/*    popup    */
+
+.popup{
+    z-index: 2;
+    position: fixed;
+    right: 50%;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%,-50%);
+    border: 2px solid rgb(44, 41, 41);
+    border-radius: 5px;
+    background-color:rgb(253, 252, 250) ;
+    width: 500px;
+    max-width: 500px;
+    height: auto;
+    opacity: 1;
+    display: grid;
+}
+
+#delete{
+    z-index: 1;
+    position: fixed;
+    left: 61%;
+    top: 310px;
+    transform: translate(-50%,-50%);
+    width: 30%;
+}
+
+.btnCancel{
+    border: 1px solid red;
+    border-radius: 3px;
+    background-color: red;
+    position: absolute;
+    right: 11px;
+    top: 20px;
+}
+
+
+.popupFouter{
+    width: auto;
+    text-align-last: end;
+    padding: 5px;
+    padding-right: 11px;
+}
+
+.popupHeader{
+    margin-bottom: -15px;
+    margin-left: 10px;
+}
+
+.popupBody{
+    width: 90%;
+    margin-left: 20px;
+}
+
+.backgroundBody{
+    position: fixed;
+    top: 0px;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background: #000000ad;
+}
+
+/*         supp        */
+
+@media only screen and (max-width: 575px) {
+    .popup{
+        z-index: 2;
+        position: fixed;
+        right: 50%;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%,-50%);
+        border: 2px solid rgb(44, 41, 41);
+        border-radius: 5px;
+        background-color: rgb(253, 252, 250);
+        width: 90%;
+        max-width: 500px;
+        opacity: 1;
+        display: grid;
+        overflow-y: auto;
+    }
+    
+}
+
+
+@media only screen and (max-width: 656px) {
+    #supp{
+     
+        width: 80%;
+    }
+
+    
+}
+
+@media only screen and (max-width: 480px) {
+    #supp{
+        
+        width: 90% !important;
+       
+    }
+}
+
+#supp{
+    z-index: 1;
+    position: fixed;
+    right: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid rgb(44, 41, 41);
+    border-radius: 5px;
+    background-color:rgb(253, 252, 250) ;
+    width: 40%;
+    height: auto;
+    opacity: 1;
+    padding-left: 10px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    display: grid;
+    place-content: center;
+}

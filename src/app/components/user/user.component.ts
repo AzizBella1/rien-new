@@ -26,6 +26,9 @@ export class UserComponent implements OnInit{
   hideAdd:boolean=true
   addButton:boolean=true
   data: any=[]
+
+  style:any = ''
+
   add(){
     this.addButton=true
     this.userSelected = {
@@ -36,6 +39,12 @@ export class UserComponent implements OnInit{
     }
 
    
+    if (this.style=='') {
+      this.style='opacity:0.5;pointer-events:none;'
+    } else {
+      this.style=''
+    }
+
     this.hideAdd=!this.hideAdd
     window.scrollTo(0,0)
     
@@ -172,11 +181,30 @@ export class UserComponent implements OnInit{
     
   }
 
+  
+  // supp
+
+  idd:any
+  Sup:boolean = false
+
+  toSupp(id:any){
+    this.style='opacity:0.5;pointer-events:none;'
+    this.Sup=true
+    this.idd=id
+  }
+
+  hideDetail(){
+    this.style=''
+    
+    this.Sup=false
+  }
+
+
   onDelete(id:any){
     this.dataservice.deleteUser(id).subscribe(
       ()=>{this.showAll()}
     )
-    
+    this.hideDetail()
   }
 
   

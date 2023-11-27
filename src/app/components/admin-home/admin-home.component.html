@@ -1,5 +1,13 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
 
+<div *ngIf="!hideLog || !hide || Sup" class="backgroundBody">
+
+</div>
+<div *ngIf="Sup" id="supp">
+    <p><b>Confirmer la suppression !</b></p>
+    <button (click)="supp()" class="btn btn-danger" style="width: 200px;">Supp</button><br>
+    <button (click)="hideDetail()" class="btn btn-warning" style="width: 200px;">Annuler</button>
+</div>
 <div *ngIf="idUser!=null && is_admin=='ADMIN'" class="container py-4">
 
     
@@ -112,11 +120,7 @@
 
         <!-- <a style="width: 100px;" class="btn btn-primary" (click)="reload()"><mat-icon>restore_page</mat-icon></a> -->
     </div>
-    <div *ngIf="Sup" id="supp">
-        <p><b>Confirmer la suppression !</b></p>
-        <button (click)="supp()" class="btn btn-danger" style="width: 200px;">Supp</button><br>
-        <button (click)="hideDetail()" class="btn btn-warning" style="width: 200px;">Annuler</button>
-    </div>
+    
     <div *ngIf="load != 1" class="container col-md-12  table-responsive body" [style]="style">
         
         

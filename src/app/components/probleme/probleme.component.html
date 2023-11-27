@@ -1,55 +1,66 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
+    <div *ngIf="!hideAdd" class="popup">
+        <button class="btnCancel" (click)="add()">X</button>
+        <br>
+        <div  class="popupHeader">
+            <h2 *ngIf="addButton"  >Ajouter Probléme</h2>
+            <h2 *ngIf="!addButton"  >Modifier Probléme</h2>
+        </div>
+        <hr>
+        <div class="popupBody">
+            <form [formGroup]="addProbleme">
+                <!-- {{Probleme | json}}-->
+                 <div class="col-md">
+                    <mat-form-field style="width: 100%;">
+                        <mat-select placeholder="Solutions"  [(ngModel)]="solutions" formControlName="Solution" multiple>
+                            <mat-option>
+                                <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
+                            </mat-option>
+                        <mat-option *ngFor="let item of solution" [value]="item.id" >{{item.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                   
+                    <div class="form-group py-2">
+                        <label for="vehicule">Probleme</label>
+                        <input [(ngModel)]="Probleme.name" (keyup)="chercher($event.target)" formControlName="probleme" type="text" name="probleme" class="form-control" >
+                        <small *ngIf="probleme.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                        <small *ngIf="deja" id="fileHelpId" style="color: red;" class="form-text"> * existe deja  </small>
+                        
+                    </div>
+                    
+                 </div>
+             </form>
+           
 
-    <div *ngIf="idUser!=null && is_admin=='ADMIN'" >
+        </div>
+        <hr>
+        <div class="popupFouter">
+        <button type="button" style="margin-right: 10px" class="btn btn-secondary" (click)="add()" >Annuler</button>
+        <button *ngIf="addButton" class="btn btn-success " (click)="addNew()"  [disabled]="addProbleme.invalid" type="submit">Ajouter</button>
+        <button *ngIf="!addButton" class="btn btn-warning " (click)="modProbleme(Probleme)" [disabled]="addProbleme.invalid" type="submit">Modifier</button>
+   
+      
+        
+        </div>
+    </div>
+
+    <div *ngIf="!hideAdd || Sup" class="backgroundBody">
+
+    </div>
+
+    <div *ngIf="Sup" id="supp">
+        <p><b>Confirmer la suppression !</b></p>
+        <button (click)="onDelete(idd)" class="btn btn-danger" style="width: 200px;">Supp</button><br>
+        <button (click)="hideDetail()" class="btn btn-warning" style="width: 200px;">Annuler</button>
+    </div>
+    <div *ngIf="idUser!=null && is_admin=='ADMIN'" [style]="style">
         
         <div *ngIf="hideAdd" class="container py-4"> 
             
             <button type="button" style="width: 150px;" data-toggle="modal" data-target="#exampleModal" (click)="add()" class="btn btn-outline-primary">new</button>
         </div>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h2 *ngIf="addButton"  class="modal-title" id="exampleModalLabel">Ajouter Probléme</h2>
-                  <h2 *ngIf="!addButton"  class="modal-title" id="exampleModalLabel">Modifier Probléme</h2>
-                  <button type="button" style="border: 1px solid red;border-radius: 3px; background-color: red;"(click)="add()" class="close" data-dismiss="modal" aria-label="Close">
-                    <span style="color: white;" aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="addProbleme">
-                        <!-- {{Probleme | json}}-->
-                         <div class="col-md">
-                            <mat-form-field style="width: 100%;">
-                                <mat-select placeholder="Solutions"  [(ngModel)]="solutions" formControlName="Solution" multiple>
-                                    <mat-option>
-                                        <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
-                                    </mat-option>
-                                <mat-option *ngFor="let item of solution" [value]="item.id" >{{item.name}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                           
-                            <div class="form-group py-2">
-                                <label for="vehicule">Probleme</label>
-                                <input [(ngModel)]="Probleme.name" (keyup)="chercher($event.target)" formControlName="probleme" type="text" name="probleme" class="form-control" >
-                                <small *ngIf="probleme.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                                <small *ngIf="deja" id="fileHelpId" style="color: red;" class="form-text"> * existe deja  </small>
-                                
-                            </div>
-                            
-                         </div>
-                     </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" (click)="add()" data-dismiss="modal">Annuler</button>
-                  <button *ngIf="addButton" class="btn btn-success " (click)="addNew()" data-dismiss="modal" [disabled]="addProbleme.invalid" type="submit">Ajouter</button>
-                  <button *ngIf="!addButton" class="btn btn-warning " (click)="modProbleme(Probleme)" data-dismiss="modal" [disabled]="addProbleme.invalid" type="submit">Modifier</button>
-             
-                 </div>
-              </div>
-            </div>
-          </div>
+        
         
         
         
@@ -78,11 +89,11 @@
                 </ng-container>
                 <ng-container matColumnDef="mod">
                     <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <button (click)="onMod(element)" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary" >mod</button> </mat-cell>
+                    <mat-cell *matCellDef="let element"> <button (click)="add();onMod(element)"  class="btn btn-primary" >mod</button> </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="supp">
                     <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <button (click)="onDelete(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
+                    <mat-cell *matCellDef="let element"> <button (click)="toSupp(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
                 </ng-container>
         
                 

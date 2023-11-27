@@ -153,7 +153,7 @@ export class ModifierFormComponent implements OnInit {
     this.changeButton()
     //this.valider()
     //this.editReclamation();
-    this.getReclamation()
+    
     
     
   }
@@ -334,6 +334,7 @@ export class ModifierFormComponent implements OnInit {
     
     this.dataservice.getProbleme().subscribe((res:any)=>{
      
+      //console.warn(res);
       
       
       this.produit.forEach((p:any) => {
@@ -427,6 +428,7 @@ export class ModifierFormComponent implements OnInit {
       (data:any) => {
         this.produit = data,
         this.produitCopy=data
+        this.getReclamation()
         //console.log(this.produit)
       }
     )

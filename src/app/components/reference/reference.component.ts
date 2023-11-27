@@ -18,6 +18,7 @@ export class ReferenceComponent implements OnInit {
     name:''
   }
   
+  style:any = ''
   reference: any;
   references: any=[]
   hideAdd:boolean=true
@@ -29,6 +30,12 @@ export class ReferenceComponent implements OnInit {
       name:''
     }
 
+    if (this.style=='') {
+      this.style='opacity:0.5;pointer-events:none;'
+    } else {
+      this.style=''
+    }
+    
    
     this.hideAdd=!this.hideAdd
     window.scrollTo(0,0)
@@ -66,6 +73,9 @@ export class ReferenceComponent implements OnInit {
         
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort
+      },()=>{},
+      ()=>{
+        //this.style = ''
       }
     )
 
@@ -115,7 +125,7 @@ export class ReferenceComponent implements OnInit {
         }
       )
       
-      this.hideAdd=!this.hideAdd
+      this.add()
     }
     
     
@@ -126,6 +136,7 @@ export class ReferenceComponent implements OnInit {
     this.hideAdd=false
     this.referenceSelected.name = produit.name
     this.referenceSelected.id = produit.id
+   
     
     window.scrollTo(0,0)
     
@@ -148,16 +159,34 @@ export class ReferenceComponent implements OnInit {
       this.dataservice.editReference(this.referenceSelected).subscribe(()=>{
         this.showAll()
       })
-      this.hideAdd=!this.hideAdd
+      this.add()
     }
     
     
+  }
+
+  
+  // supp
+
+  idd:any
+  Sup:boolean = false
+
+  toSupp(id:any){
+    this.style='opacity:0.5;pointer-events:none;'
+    this.Sup=true
+    this.idd=id
+  }
+
+  hideDetail(){
+    this.style=''
+    
+    this.Sup=false
   }
 
   onDelete(id:any){
     this.dataservice.deleteReference(id).subscribe(
       ()=>{this.showAll()}
     )
-    
+    this.hideDetail()
   }
 }
