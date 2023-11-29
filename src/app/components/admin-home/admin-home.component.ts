@@ -407,7 +407,16 @@ export class AdminHomeComponent implements OnInit {
       this.dataSource.sort = this.sort;
      
       },
-      ()=>{},
+      (error)=>{
+        if (error.error.status==500) {
+          sessionStorage.removeItem('user'); 
+          sessionStorage.removeItem('tokenExp')
+          sessionStorage.removeItem('token'); 
+          sessionStorage.removeItem('is_admin')
+          
+          window.location.href='/'
+        }
+      },
       ()=>{
         this.load = 0
         this.style=''
@@ -435,15 +444,19 @@ export class AdminHomeComponent implements OnInit {
       this.logData = res.filter((f:any)=>f.reclamation_id == id)
       //
       //this.logData.befor=data
-      let i = 0
-      res.forEach((l:any) => {
-        const data=(l.befor).split("|")
+      // let i = 0
+      // res.forEach((l:any) => {
+      //   const data=(l.befor).split("|")
        
         
-        l.befor=data
-        i++
-      });
+      //   l.befor=data
+      //   i++
+      // });
       //console.log(this.logData[0]);
+      
+      res.forEach((item: any) => {
+        item.befor = item.befor.split("|");
+      });
       
     })
   }
@@ -596,9 +609,12 @@ export class AdminHomeComponent implements OnInit {
     
   }
 
+
+ 
   hideLog:boolean=true
   log(d:any){
     this.hideLog=false
+   
     //let desc=d
     //console.log(desc);
     //this.description=d

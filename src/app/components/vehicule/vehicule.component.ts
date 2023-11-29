@@ -63,6 +63,16 @@ export class VehiculeComponent implements OnInit {
     this.dataservice.getVille().subscribe(
       (data:any) => {
         this.Ville = data
+      },
+      (error:any)=>{
+        if (error.error.status==500) {
+          sessionStorage.removeItem('user'); 
+          sessionStorage.removeItem('tokenExp')
+          sessionStorage.removeItem('token'); 
+          sessionStorage.removeItem('is_admin')
+          
+          window.location.href='/'
+        }
       }
     )
 

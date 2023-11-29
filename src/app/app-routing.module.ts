@@ -35,6 +35,7 @@ const routes: Routes = [
   //{ path:'ville' ,component:VillesComponent},
   { path:'home' ,component:TestComponent},
   { path:'todo' ,component:TodoComponent},
+  { path:'er' ,component:EreurComponent},
   { path:'mod/:form' ,component:ModifierFormComponent},
   {
     path: '**',

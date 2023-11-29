@@ -1,0 +1,11 @@
+h1{
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    right: 20%;
+    color: blue;
+    border: solid;
+    border-radius: 10px;
+    padding: 19px;
+    text-align: center;
+}

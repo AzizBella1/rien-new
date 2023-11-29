@@ -64,38 +64,50 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('tokenExp',this.dateExp); 
           sessionStorage.setItem('check','in')
           sessionStorage.setItem('cnt','0')
-          //sessionStorage.setItem('load','0')
-          if (result.role!='ADMIN') {
-            this.router.navigate(['/home'])
-          } else {
-            this.router.navigate(['/acceuil'])
-          }
-          /* 
-            const token0 = sessionStorage.getItem('token')
-            this.http.get<any>('http://info.geodaki.com:4243/Api/clients', {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Authorization': ''+ token0
-            }),
-            responseType: 'json'
-            }).subscribe(
-            (resp) => {
-              this.UserLog=resp.filter((res:any)=>res.username==sessionStorage.getItem('user'))
-              console.log(this.UserLog);
-            },
-            (error) => {
-              console.log(error);
-            }
-            );
-              
-         */    
           
-				  //console.log('====================================',result);
-					//console.log(result.token);
-					//console.log('*************************************');
-					this.dataservice.devices(result.token)
-					
-					//console.log('====================================');
+          
+          if (localStorage.getItem('sessionIsActive')=='1') {
+            //alert('Une session est déjà active.');
+            this.router.navigate(['/er'])
+            //window.location.href='/'
+          } else {
+            // Ouvre la fenêtre et active la session
+            
+            
+            
+            //sessionStorage.setItem('load','0')
+            if (result.role!='ADMIN') {
+              this.router.navigate(['/home'])
+            } else {
+              this.router.navigate(['/acceuil'])
+            }
+            /* 
+              const token0 = sessionStorage.getItem('token')
+              this.http.get<any>('http://info.geodaki.com:4243/Api/clients', {
+              headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': ''+ token0
+              }),
+              responseType: 'json'
+              }).subscribe(
+              (resp) => {
+                this.UserLog=resp.filter((res:any)=>res.username==sessionStorage.getItem('user'))
+                console.log(this.UserLog);
+              },
+              (error) => {
+                console.log(error);
+              }
+              );
+                
+           */    
+            
+            //console.log('====================================',result);
+            //console.log(result.token);
+            //console.log('*************************************');
+            this.dataservice.devices(result.token)
+            
+            //console.log('====================================');
+          }
 		},
 				() => {
           this.notLogin=true

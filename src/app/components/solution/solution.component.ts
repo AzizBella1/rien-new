@@ -60,6 +60,16 @@ export class SolutionComponent implements OnInit {
     this.dataservice.getProbleme().subscribe(
       (data:any) => {
         this.probleme = data
+      },
+      (error:any)=>{
+        if (error.error.status==500) {
+          sessionStorage.removeItem('user'); 
+          sessionStorage.removeItem('tokenExp')
+          sessionStorage.removeItem('token'); 
+          sessionStorage.removeItem('is_admin')
+          
+          window.location.href='/'
+        }
       }
     )
 

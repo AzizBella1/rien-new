@@ -17,8 +17,8 @@ export class DashComponent implements OnInit {
   reclamation: any
   produit: any;
 
-
-  
+  load:any = 1
+  style:any = 'opacity:0.3'
 
 
   ngOnInit(): void {
@@ -52,6 +52,16 @@ export class DashComponent implements OnInit {
         
         //this.polarArea()
       
+      },
+      (error:any)=>{
+        if (error.error.status==500) {
+          sessionStorage.removeItem('user'); 
+          sessionStorage.removeItem('tokenExp')
+          sessionStorage.removeItem('token'); 
+          sessionStorage.removeItem('is_admin')
+          
+          window.location.href='/'
+        }
       }
       
     )
@@ -95,6 +105,7 @@ export class DashComponent implements OnInit {
         });
         this.lin(this.dMonth)
       })
+      
   }
   getProduit(){
     
@@ -175,23 +186,25 @@ export class DashComponent implements OnInit {
     const data = new Chart( 'bar',{
       type:'bar',
       data:{
-      labels: this.ville.map((res:any)=>res.name),
-      datasets: [{
-        label: 'Nb de Reclamation ',
-        data: x,
-        backgroundColor: [
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)'
-        ],
-        borderWidth: 2
-      }]
-    },
-    options: {
-      indexAxis: 'y',
-    }
-  })
+        labels: this.ville.map((res:any)=>res.name),
+        datasets: [{
+          label: 'Nb de Reclamation ',
+          data: x,
+          backgroundColor: [
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+      }
+    })
+
+    
   }
 
 
@@ -374,6 +387,9 @@ export class DashComponent implements OnInit {
      type: 'doughnut',
      data: data,
    })
+
+   this.load = 0
+   this.style = ''
  }
   
 

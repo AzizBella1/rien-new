@@ -1,6 +1,9 @@
 
-<h1>Not Found</h1>
+<!-- <h1 *ngIf="massage == ''">Not Found</h1> -->
 
+
+
+<h1 *ngIf="massage != ''">{{massage}}</h1>
 <!--
 
 <input type="file" class="file-upload" (change)="binary($event)">

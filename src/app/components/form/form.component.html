@@ -44,6 +44,7 @@
                       <mat-select [(ngModel)]="device.fonction" [formControl]="fonction"  name="Fonction"  placeholder="Fonction" >
                         <mat-option>
                           <ngx-mat-select-search noEntriesFoundLabel="'Aucun Fonction'" placeholderLabel="Cherche" (keyup)="fFonction($event)"></ngx-mat-select-search>
+                        <div class="cancelMatSearche"></div>
                         </mat-option>
                         <mat-option *ngFor="let item of fonctions" [value]="item">
                           {{item}}
@@ -80,6 +81,7 @@
               <mat-select  [(ngModel)]="newForm.villeId"  (selectionChange)="onSelectVille($event.value)" name="ville" placeholder="ville" >
                 <mat-option>
                   <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Ville'" placeholderLabel="Cherche" (keyup)="fVille($event)"></ngx-mat-select-search>
+                <div class="cancelMatSearche"></div>
                 </mat-option>
                 <mat-option *ngFor="let item of ville" [value]="item.id">
                   {{item.name}}
@@ -95,9 +97,10 @@
         <label class="col-sm-4  col-form-label" for=""><b>Véhicule <small *ngIf="newForm.vehiculeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b> &nbsp; &nbsp;<button *ngIf="showAddDevice" class="btn btn-sm btn-primary" (click)="addVehicule(newForm.villeId)">+</button></label>
         <div class="col-sm-5">
             <mat-form-field >
-                <mat-select  [(ngModel)]="newForm.vehiculeId"  name="vehicule" placeholder="Véhicule" >
+                <mat-select  [(ngModel)]="newForm.vehiculeId"  (selectionChange)="valider()"  name="vehicule" placeholder="Véhicule" >
                   <mat-option>
                     <ngx-mat-select-search noEntriesFoundLabel="'Aucun Véhicule'" placeholderLabel="Cherche" (keyup)="fVehicule($event)"></ngx-mat-select-search>
+                  <div class="cancelMatSearche"></div>
                   </mat-option>
                   <mat-option *ngFor="let item of vehicule" [value]="item.id">
                     {{item.name}}
@@ -118,6 +121,7 @@
                 <mat-select [(ngModel)]="newForm.produitId"  (selectionChange)="onSelectProduit($event.value);valider()" name="produit" placeholder="Produit" >
                   <mat-option>
                     <ngx-mat-select-search noEntriesFoundLabel="'Aucun Produit'" placeholderLabel="Cherche" (keyup)="fProduit($event)"></ngx-mat-select-search>
+                  <div class="cancelMatSearche"></div>
                   </mat-option>
                   <mat-option *ngFor="let item of produit" [value]="item.id">
                     {{item.name}}
@@ -129,12 +133,13 @@
     </div>
     
     <div class="form-group m-8 row">
-        <label class="col-sm-4  col-form-label" for=""><b>Probleme/Panne <small *ngIf="newForm.problemeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+        <label class="col-sm-4  col-form-label" for=""><b>Probléme/Panne <small *ngIf="newForm.problemeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
         <div class="col-sm-5">
             <mat-form-field >
                 <mat-select [(ngModel)]="newForm.problemeId"  (selectionChange)="onSelectProbleme($event.value);valider()" multiple  name="probleme" placeholder="Probleme" >
                   <mat-option>
-                    <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probleme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
+                    <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probléme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
+                  <div class="cancelMatSearche"></div>
                   </mat-option>
                   <mat-option *ngFor="let item of probleme" [value]="item.id">
                     {{item.name}}
@@ -153,6 +158,7 @@
                 <mat-select [(ngModel)]="newForm.solutionId"  (selectionChange)="valider()" multiple name="solution" placeholder="Solution" >
                   <mat-option>
                     <ngx-mat-select-search noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
+                  <div class="cancelMatSearche"></div>
                   </mat-option>
                   <mat-option *ngFor="let item of solution" [value]="item.id">
                     {{item.name}}
@@ -174,6 +180,7 @@
               <mat-select [(ngModel)]="newForm.refId" (selectionChange)="valider()" [disabled]="disableSelect.value==false" multiple name="ref" placeholder="Référence" >
                 <mat-option>
                   <ngx-mat-select-search noEntriesFoundLabel="'Aucun Référence'" placeholderLabel="Cherche" (keyup)="fRef($event)"></ngx-mat-select-search>
+                <div class="cancelMatSearche"></div>
                 </mat-option>
                 <mat-option *ngFor="let item of ref" [value]="item.id">
                   {{item.name}}
@@ -215,12 +222,15 @@
         
     </div>
     <div class="form-group m-8 row">
-        <label class="col-sm-2  col-form-label" for=""><b>Photo</b></label>
+        <label class="col-sm-2  col-form-label" for=""><b>Piéce jointe</b></label>
         <div class="col-sm-5">
             <input type="file" #inputFile  style="margin-bottom: 5px;" (click)="charge()" (cancel)="cancel()" (change)="onFileSelected($event)" id="file" class="form-control" name="file" >
+            <small class="form-text text-muted">Taille Max 20Mo </small><br>
+            <small class="form-text text-muted">Format : jpeg,mp4,word,pdf,zip </small>
             <img style="visibility:hidden;"  #loading id="loading" src="../../../assets/loading.gif.gif" width="20px" height="20px"> <h5 *ngIf="newForm.file!=''" style="color: blue;">File: '{{newForm.file}}' <mat-icon (click)="cancel()">cancel</mat-icon></h5>
 
         </div>
+        
         
     </div>
     <small *ngIf="!issetId && !allValid" id="fileHelpId" style="color: red;" class="form-text"> nb:(*) champ obligatoire</small>

@@ -295,6 +295,16 @@ testerMarrakech:any=[]
         this.ville = data,
         this.villeCopy=data
         //console.log()
+      },
+      (error:any)=>{
+        if (error.error.status==500) {
+          sessionStorage.removeItem('user'); 
+          sessionStorage.removeItem('tokenExp')
+          sessionStorage.removeItem('token'); 
+          sessionStorage.removeItem('is_admin')
+          
+          window.location.href='/'
+        }
       }
     )
     this.dataservice.getUser().subscribe((res:any)=>{
@@ -347,6 +357,7 @@ testerMarrakech:any=[]
           break;
         
       }*/
+    this.allValid=false
     this.newForm.vehiculeId=0
     this.selectedvehicule.id=0
     this.dataservice.getVehicule().subscribe((result:any)=>{
@@ -483,7 +494,7 @@ testerMarrakech:any=[]
     switch (this.newForm.statut) {
       case 0:
         
-        if (this.newForm.vehiculeId==0  || this.newForm.villeId==0 || this.newForm.produitId==0  ||this.newForm.problemeId==0 || (this.disableSelect.value==true && this.newForm.refId==0 )) {
+        if (this.newForm.vehiculeId==0  || this.newForm.villeId==0 || this.newForm.produitId==0   ) {
           this.Traite=true
           this.allValid=false
             
@@ -491,7 +502,7 @@ testerMarrakech:any=[]
         }else{
           
             
-            this.allValid=true
+          this.allValid=true
           
           this.Traite=true
           

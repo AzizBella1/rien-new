@@ -7,16 +7,18 @@ mat-table{
     border-radius: 5px;
 }
 
-/* ::ng-deep .cdk-overlay-container { z-index: 9999;} */
-
-/* ::ng-deep .cdk-overlay-pane{ z-index: 9999;}
-
-mat-form-field{
-    z-index: 99999;
-} */
 
 
 
+#cancelMatSearche{
+    height: 41px;
+    width: 56px;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    z-index: 122;
+    top: 3px;
+    left: 87%;
+}
 
 
 .backgroundBody{

@@ -17,8 +17,15 @@ export class EreurComponent implements OnInit{
   constructor(private uploadService: DataService,private http:HttpClient) {}
   selectedFile:any
 
+  massage:any = ''
+
   reclamation:any=[]
   ngOnInit(): void {
+    if (localStorage.getItem('sessionIsActive')=='1') {
+      this.massage = 'Une session est déjà ouverte !!!'
+    }else{
+      window.location.href = '/'
+    }
     //this.rec()
     //this.showAll()
     //this.getReclamation()

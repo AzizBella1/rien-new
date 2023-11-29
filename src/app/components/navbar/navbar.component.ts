@@ -19,15 +19,23 @@ export class NavbarComponent implements OnInit{
   idUser = sessionStorage.getItem('user');
   
   is_admin:any = sessionStorage.getItem('is_admin');
-
+ 
   
   tokenExp:any 
   ngOnInit(): void {
+    
+    this.openWindow()
     //this.timeOut()
     //this.test()
     this.ref()
     
   }
+
+  openWindow(): void {
+    localStorage.setItem('sessionIsActive','1')
+    
+  }
+
 
   cnt = sessionStorage.getItem('cnt');
 
@@ -80,6 +88,8 @@ export class NavbarComponent implements OnInit{
       sessionStorage.removeItem('tokenExp')
       sessionStorage.removeItem('token'); 
       sessionStorage.removeItem('is_admin')
+      localStorage.removeItem('sessionIsActive')
+      
       //sessionStorage.removeItem('cnt')
       //localStorage.setItem('user', '');
       window.location.href='/'

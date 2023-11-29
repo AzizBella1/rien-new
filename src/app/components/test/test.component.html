@@ -16,7 +16,7 @@
     </div>
 
     <div  *ngIf="traite != 0">
-        <img id="loading" src="../../../assets/loading.gif.gif" width="40px" height="40px">
+        <img id="loading" src="../../../assets/loading.gif.gif" width="60px" height="60px">
     </div>
 
     <div  *ngIf="!hide"  class="detail" #llll>
@@ -39,12 +39,12 @@
         
     </div>
     <br>
-    <div class="container reload">
+    <div style="width: 105%;" class="container reload">
         <button title="Export" mat-button (click)="exportArrayToExcel(this.dataToExport)"><i class="fa fa-download" aria-hidden="true"></i></button>
         <button title="Refresh" [style]="this.btnReload"  mat-button (click)="reload()"><i [style]="this.iconReload" class="fa fa-refresh" aria-hidden="true"></i></button>
 
-        <button style="width: 100px;height: 40px;" class="btn btn-secondary" [disabled]="tous" (click)="all(1)">all</button>&nbsp;
-        <button style="width: 100px;height: 40px;" [disabled]="mes" (click)="all(0)" class="btn btn-secondary">my</button>&nbsp;
+        <button style="width: 158px;height: auto;" class="btn btn-secondary" [disabled]="tous" (click)="all(1)">Tous réclamations</button>&nbsp;
+        <button style="width: 158px;height: auto;" [disabled]="mes" (click)="all(0)" class="btn btn-secondary">Mes réclamations</button>&nbsp;
         <!-- <a style="width: 100px;height: 40px;" class="btn btn-primary" (click)="reload()"><mat-icon>restore_page</mat-icon></a> -->
     </div>
     <div  *ngIf="traite != 1" class="container col-md-12  table-responsive" [style]="style">

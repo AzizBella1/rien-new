@@ -16,6 +16,16 @@ mat-table{
     background: #000000ad;
 }
 
+#cancelMatSearche{
+    height: 41px;
+    width: 56px;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    z-index: 122;
+    top: 3px;
+    left: 87%;
+}
+
 /*    popup    */
 
 .popup{

@@ -9,6 +9,16 @@ mat-checkbox{
     /*pointer-events:none;*/
 }
 
+.cancelMatSearche{
+    height: 41px;
+    width: 56px;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    z-index: 122;
+    top: 3px;
+    left: 87%;
+}
+
 .div{
     padding-left: 20%;
     border: 1px solid rgb(202, 202, 202);

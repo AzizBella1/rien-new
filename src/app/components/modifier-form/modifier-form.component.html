@@ -83,6 +83,7 @@
                 <mat-select [(ngModel)]="newForm.villeId"  [formControl]="selected"  (selectionChange)="onSelectVille($event.value);valider()"  name="ville" placeholder="ville" >
                   <mat-option>
                     <ngx-mat-select-search noEntriesFoundLabel="'Aucun Ville'" placeholderLabel="Cherche" (keyup)="fVille($event)"></ngx-mat-select-search>
+                  <div class="cancelMatSearche"></div>
                   </mat-option>
                   <mat-option *ngFor="let item of ville" [value]="item.id">
                     {{item.name}}
@@ -103,6 +104,7 @@
                   <mat-select [(ngModel)]="newForm.vehiculeId" [formControl]="selectedVehicule" (selectionChange)="valider()" name="vehicule" placeholder="Véhicule" >
                     <mat-option>
                       <ngx-mat-select-search noEntriesFoundLabel="'Aucun Véhicule'" placeholderLabel="Cherche" (keyup)="fVehicule($event)"></ngx-mat-select-search>
+                    <div class="cancelMatSearche"></div>
                     </mat-option>
                     <mat-option *ngFor="let item of vehicule" [value]="item.id" >
                       {{item.name}}
@@ -123,6 +125,7 @@
                   <mat-select [(ngModel)]="newForm.produitId" [formControl]="selectedProduit" (selectionChange)="onSelectProduit($event.value);valider()" name="produit" placeholder="Produit" >
                     <mat-option>
                       <ngx-mat-select-search noEntriesFoundLabel="'Aucun Produit'" placeholderLabel="Cherche" (keyup)="fProduit($event)"></ngx-mat-select-search>
+                    <div class="cancelMatSearche"></div>
                     </mat-option>
                     <mat-option *ngFor="let item of produit" [value]="item.id">
                       {{item.name}}
@@ -134,12 +137,13 @@
       </div>
       
       <div class="form-group m-8 row">
-          <label class="col-sm-4  col-form-label" for=""><b>Probleme/Panne <small *ngIf="newForm.problemeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+          <label class="col-sm-4  col-form-label" for=""><b>Probléme/Panne <small *ngIf="newForm.problemeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
           <div class="col-sm-5">
               <mat-form-field >
                   <mat-select [(ngModel)]="newForm.problemeId" [formControl]="selectedProbleme" (selectionChange)="onSelectProbleme($event.value);valider()" multiple  name="probleme" placeholder="Probleme" >
                     <mat-option>
-                      <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probleme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
+                      <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probléme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
+                    <div class="cancelMatSearche"></div>
                     </mat-option>
                     <mat-option *ngFor="let item of probleme" [value]="item.id">
                       {{item.name}}
@@ -158,6 +162,7 @@
                   <mat-select [(ngModel)]="newForm.solutionId" [formControl]="selectedSolution" (selectionChange)="valider()" multiple name="solution" placeholder="Solution" >
                     <mat-option>
                       <ngx-mat-select-search noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
+                    <div class="cancelMatSearche"></div>
                     </mat-option>
                     <mat-option *ngFor="let item of solution" [value]="item.id">
                       {{item.name}}
@@ -179,6 +184,7 @@
                 <mat-select [(ngModel)]="newForm.refId" [formControl]="selectedRef" [disabled]="disableSelect.value==false" (selectionChange)="valider()" multiple name="ref" placeholder="Référence" >
                   <mat-option>
                     <ngx-mat-select-search noEntriesFoundLabel="'Aucun Référence'" placeholderLabel="Cherche" (keyup)="fRef($event)"></ngx-mat-select-search>
+                  <div class="cancelMatSearche"></div>
                   </mat-option>
                   <mat-option *ngFor="let item of ref" [value]="item.id">
                     {{item.name}}

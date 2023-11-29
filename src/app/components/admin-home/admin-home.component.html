@@ -98,7 +98,7 @@
         
     </div>
     <div  *ngIf="load != 0" id="delete">
-        <img id="loading" src="../../../assets/loading.gif.gif" width="40px" height="40px">
+        <img id="loading" src="../../../assets/loading.gif.gif" width="60px" height="60px">
         
     </div>
     <div  *ngIf="message!=''" id="delete">
@@ -175,7 +175,7 @@
         <ng-container matColumnDef="log">
             <mat-header-cell *matHeaderCellDef> Log </mat-header-cell>
             <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> 
-                <button  (click)="log(element.id)" class="btn btn-secondary btn-sm" ><mat-icon>history</mat-icon></button> </mat-cell>
+                <button  (click)="log(element.id)"  class="btn btn-secondary btn-sm" ><mat-icon>history</mat-icon></button> </mat-cell>
         </ng-container>
         <ng-container matColumnDef="mod">
             <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>

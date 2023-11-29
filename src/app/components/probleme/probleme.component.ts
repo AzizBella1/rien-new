@@ -89,6 +89,16 @@ export class ProblemeComponent implements OnInit {
         this.solutionCopy=this.solution = data
         //console.log(data);
         
+      },
+      (error:any)=>{
+        if (error.error.status==500) {
+          sessionStorage.removeItem('user'); 
+          sessionStorage.removeItem('tokenExp')
+          sessionStorage.removeItem('token'); 
+          sessionStorage.removeItem('is_admin')
+          
+          window.location.href='/'
+        }
       }
     )
 

@@ -15,13 +15,14 @@
                         <mat-select placeholder="Solutions"  [(ngModel)]="solutions" formControlName="Solution" multiple>
                             <mat-option>
                                 <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
+                                <div id="cancelMatSearche"></div>
                             </mat-option>
                         <mat-option *ngFor="let item of solution" [value]="item.id" >{{item.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                    
                     <div class="form-group py-2">
-                        <label for="vehicule">Probleme</label>
+                        <label for="vehicule">Probléme</label>
                         <input [(ngModel)]="Probleme.name" (keyup)="chercher($event.target)" formControlName="probleme" type="text" name="probleme" class="form-control" >
                         <small *ngIf="probleme.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
                         <small *ngIf="deja" id="fileHelpId" style="color: red;" class="form-text"> * existe deja  </small>

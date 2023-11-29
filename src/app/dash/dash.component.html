@@ -1,8 +1,13 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
 
+<div  *ngIf="load != 0" id="delete">
+  <img id="loading" src="../../../assets/loading.gif.gif" width="60px" height="60px">
+  
+</div>
 <div *ngIf="idUser!=null && is_admin=='ADMIN'" class="container mt-5">
   <h2>Dashboard</h2>
-  <div class="row" style="padding-bottom: 8px;">
+  <div [style]="style">
+  <div  class="row" style="padding-bottom: 8px;">
     <!--<div class="col mt-1">
       <div class="Div">
         <div class="row" ><h2 style="text-align: center;">Nb totale des référence </h2></div>
@@ -154,7 +159,7 @@
       
     </div>
   </div>-->
-
+</div>
   
   
 </div>

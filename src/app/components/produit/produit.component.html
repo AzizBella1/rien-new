@@ -16,6 +16,7 @@
               <mat-select placeholder="Probleme"  [(ngModel)]="problemes" formControlName="Probleme" multiple>
                   <mat-option>
                       <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probleme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
+                      <div id="cancelMatSearche"></div>
                   </mat-option>
                 <mat-option *ngFor="let item of probleme" [value]="item.id" >{{item.name}}</mat-option>
               </mat-select>

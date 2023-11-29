@@ -416,6 +416,16 @@ export class ModifierFormComponent implements OnInit {
         this.ville = data,
         this.villeCopy=data
         //console.log(this.ville)
+      },
+      (error:any)=>{
+        if (error.error.status==500) {
+          sessionStorage.removeItem('user'); 
+          sessionStorage.removeItem('tokenExp')
+          sessionStorage.removeItem('token'); 
+          sessionStorage.removeItem('is_admin')
+          
+          window.location.href='/'
+        }
       }
     )
     this.dataservice.getUser().subscribe((res:any)=>{
