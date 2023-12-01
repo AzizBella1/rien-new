@@ -12,7 +12,7 @@
   <div class="popupBody">
     <form [formGroup]="addProduit">
       <div class="col-md">
-          <mat-form-field style="width: 100%;">
+          <!-- <mat-form-field style="width: 100%;">
               <mat-select placeholder="Probleme"  [(ngModel)]="problemes" formControlName="Probleme" multiple>
                   <mat-option>
                       <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probleme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
@@ -20,7 +20,7 @@
                   </mat-option>
                 <mat-option *ngFor="let item of probleme" [value]="item.id" >{{item.name}}</mat-option>
               </mat-select>
-            </mat-form-field>
+          </mat-form-field> -->
           <div class="form-group  py-2">
               <label for="produit">Produit</label>
               <input [(ngModel)]="produitSelected.name" (keyup)="chercher($event.target)" formControlName="produit" type="text" name="produit" class="form-control" >
@@ -60,7 +60,7 @@
 
   <div class="container">
       <h1>Liste Produits</h1>
-          <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
+          <input #inputText class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
       
   </div>
 

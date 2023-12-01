@@ -42,7 +42,8 @@ mat-table{
     border-radius: 3px;
     background-color: red;
     position: absolute;
-    right: 0;
+    right: 3px;
+    top: 3px;
 }
 .mat-column-num {
     flex: 0 0 12%;

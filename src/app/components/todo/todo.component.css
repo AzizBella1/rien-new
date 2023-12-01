@@ -76,7 +76,8 @@
     border-radius: 3px;
     background-color: red;
     position: absolute;
-    right: 0;
+    right: 3px;
+    top: 3px;
 }
 
 .btnCancel{

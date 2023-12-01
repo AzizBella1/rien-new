@@ -58,22 +58,58 @@ export class LoginComponent implements OnInit {
       
 
       //console.log(result);
+      var date = new Date()
       
-    
-          sessionStorage.setItem('is_admin', result.role)
-          sessionStorage.setItem('tokenExp',this.dateExp); 
-          sessionStorage.setItem('check','in')
-          sessionStorage.setItem('cnt','0')
+      var last_date = localStorage.getItem('timeToExp')
+      var current_date = date.getTime();
+      
+      
+      
+      
+        
+        // if (current_date>parseInt(last_date!)+ (1 * 60 * 1000)) {
+        //   localStorage.removeItem('sessionIsActive')
           
           
-          if (localStorage.getItem('sessionIsActive')=='1') {
+        // }
+      
+          
+          
+          
+          if (localStorage.getItem('sessionIsActive')=='1' && last_date!=null) {
             //alert('Une session est déjà active.');
-            this.router.navigate(['/er'])
+
+            if (current_date>parseInt(last_date!)+ (1 * 30 * 1000)) {
+              localStorage.removeItem('sessionIsActive')
+              //alert(last_date)
+              sessionStorage.setItem('is_admin', result.role)
+              sessionStorage.setItem('tokenExp',this.dateExp); 
+              sessionStorage.setItem('check','in')
+              sessionStorage.setItem('cnt','0')
+              
+              //sessionStorage.setItem('load','0')
+              if (result.role!='ADMIN') {
+                this.router.navigate(['/home'])
+              } else {
+                this.router.navigate(['/acceuil'])
+              }
+            
+              this.dataservice.devices(result.token)
             //window.location.href='/'
+            } else{
+              this.router.navigate(['/er'])
+            }
+            
+            
+          }else if (localStorage.getItem('sessionIsActive')=='1') {
+            this.router.navigate(['/er'])
           } else {
             // Ouvre la fenêtre et active la session
-            
-            
+            //alert(last_date)
+            sessionStorage.setItem('is_admin', result.role)
+            sessionStorage.setItem('tokenExp',this.dateExp); 
+            sessionStorage.setItem('check','in')
+            sessionStorage.setItem('cnt','0')
             
             //sessionStorage.setItem('load','0')
             if (result.role!='ADMIN') {

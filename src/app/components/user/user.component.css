@@ -10,7 +10,7 @@ mat-table{
 /*    popup    */
 
 .popup{
-    z-index: 2;
+    /* z-index: 2;
     position: fixed;
     right: 50%;
     left: 50%;
@@ -24,6 +24,24 @@ mat-table{
     height: auto;
     opacity: 1;
     display: grid;
+ */
+
+
+ z-index: 2;
+ position: fixed;
+ right: 50%;
+ left: 50%;
+ top: 49%;
+ transform: translate(-50%,-50%);
+ border: 2px solid rgb(44, 41, 41);
+ border-radius: 5px;
+ background-color: rgb(253, 252, 250);
+ width: 500px;
+ max-width: 500px;
+ opacity: 1;
+ display: grid;
+ height: 80%;
+ overflow: auto;
 }
 
 #delete{

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { range } from 'rxjs';
@@ -23,18 +23,68 @@ export class NavbarComponent implements OnInit{
   
   tokenExp:any 
   ngOnInit(): void {
-    
+    // window.addEventListener('beforeunload', (e: BeforeUnloadEvent) => {
+    //   e.preventDefault();
+    //   e.returnValue = '';
+    // });
+
+    // window.addEventListener('beforeunload', (e: BeforeUnloadEvent) => {
+    //   // Your custom action or confirmation message goes here
+    //   const confirmationMessage: string = 'Are you sure you want to leave?';
+    //   (e || window.event).returnValue = confirmationMessage; // Standard
+    //   //alert(1);
+    //   return confirmationMessage; // For some older browsers
+    // });
     this.openWindow()
     //this.timeOut()
     //this.test()
     this.ref()
     
-  }
-
-  openWindow(): void {
-    localStorage.setItem('sessionIsActive','1')
     
   }
+
+
+  openWindow(): void {
+    var date = new Date()
+    localStorage.setItem('sessionIsActive','1')
+    var bb = localStorage.getItem('timeToExp')
+    var tt = date.getTime();
+    if(bb!=null){
+      
+      if (tt>parseInt(bb)+ (2 * 60 * 1000)) {
+        this.Logout()
+        
+        
+      }
+    }
+
+    localStorage.setItem('timeToExp',date.getTime().toString())
+    
+    
+    
+    //console.log(tt + (1 * 60 * 1000));
+    
+   
+  
+   
+
+  }
+  
+
+
+
+
+
+
+// Function to convert date strings to Date objects
+convertToDateObject(dateString:any) {
+    const [day, month, year, time] = dateString.split(/\/|\s|:/);
+    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(time[0] + time[1]), parseInt(time[3] + time[4]), parseInt(time[6] + time[7]));
+}
+
+
+
+
 
 
   cnt = sessionStorage.getItem('cnt');
@@ -42,44 +92,42 @@ export class NavbarComponent implements OnInit{
   ref(){
 
     this.dataservice.getUser().subscribe((res:any)=>{
-      let user=  res.filter((res:any)=>res.name==this.idUser)
+      let user= this.user= res.filter((res:any)=>res.name==this.idUser)
       //console.log();
       sessionStorage.setItem('userID',user[0].id)
       
       
       
+    },
+    (error:any) => {
+      if (error.error.status==500) {
+        alert("session terminer")
+        this.Logout()
+      }
     })
     if (this.cnt=='0') {
       sessionStorage.setItem('cnt','1')
       window.location.reload()
-    } else {
-      this.test()
-    }
+    } 
 
-    this.dataservice.getUser().subscribe((res:any)=>{
+    // this.dataservice.getUser().subscribe((res:any)=>{
      
-      this.user= res.filter((item:any)=>item.name==this.idUser)
-    })
+    //   this.user= res.filter((item:any)=>item.name==this.idUser)
+    // })
   }
 
 
 
-  test(){
+  // test(){
     
-      this.dataservice.getReclamation().subscribe(
-        (res:any)=>{
+  //     this.dataservice.getUser().subscribe(
+  //       (res:any)=>{
 
-        },
-			  (error:any) => {
-          if (error.error.status==500) {
-            alert("session terminer")
-            this.Logout()
-          }
-			  }
-      )
+  //       }
+  //     )
       
     
-  }
+  // }
  
   message:any=''
   Logout(){
@@ -89,7 +137,7 @@ export class NavbarComponent implements OnInit{
       sessionStorage.removeItem('token'); 
       sessionStorage.removeItem('is_admin')
       localStorage.removeItem('sessionIsActive')
-      
+      localStorage.removeItem('timeToExp')
       //sessionStorage.removeItem('cnt')
       //localStorage.setItem('user', '');
       window.location.href='/'

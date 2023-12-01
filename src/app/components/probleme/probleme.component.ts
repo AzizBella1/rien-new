@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/sevices/data.service';
 import { MatTableDataSource} from '@angular/material/table';
@@ -38,6 +38,7 @@ export class ProblemeComponent implements OnInit {
     } else {
       this.style=''
     }
+    this.inputText.nativeElement.value=''
 
     this.solutions=[]
     this.hideAdd=!this.hideAdd
@@ -118,7 +119,7 @@ export class ProblemeComponent implements OnInit {
 
   addProbleme = new FormGroup({
     probleme: new FormControl('',Validators.required),
-    Solution:new FormControl('',Validators.required)
+    Solution:new FormControl()
   })
 
   get probleme() {
@@ -137,7 +138,7 @@ export class ProblemeComponent implements OnInit {
   is_admin:any = sessionStorage.getItem('is_admin');
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  @ViewChild('inputText') inputText!: ElementRef;
 
   getProbleme() {
     this.solutions=[]

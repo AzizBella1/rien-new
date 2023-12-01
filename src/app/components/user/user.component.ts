@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/sevices/data.service';
 import { MatTableDataSource} from '@angular/material/table';
@@ -29,6 +29,8 @@ export class UserComponent implements OnInit{
 
   style:any = ''
 
+  @ViewChild('inputText') inputText!: ElementRef;
+  
   add(){
     this.addButton=true
     this.userSelected = {
@@ -45,6 +47,7 @@ export class UserComponent implements OnInit{
       this.style=''
     }
 
+    this.inputText.nativeElement.value=''
     this.hideAdd=!this.hideAdd
     window.scrollTo(0,0)
     
@@ -103,7 +106,7 @@ export class UserComponent implements OnInit{
     password: new FormControl('',[Validators.required]),
     name: new FormControl('',[Validators.required]),
     adress: new FormControl('',[Validators.required]),
-    phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]*'),Validators.maxLength(10),Validators.minLength(10)]),
+    phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]*')]),// ,Validators.maxLength(10),Validators.minLength(10)
     email: new FormControl('',[Validators.required,Validators.email]),
     admin: new FormControl()
   })

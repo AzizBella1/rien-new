@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/sevices/data.service';
 import { MatTableDataSource} from '@angular/material/table';
@@ -25,6 +25,8 @@ export class SolutionComponent implements OnInit {
   style:any = ''
   
 
+  @ViewChild('inputText') inputText!: ElementRef;
+  
   hideAdd:boolean=true
   addButton:boolean=true
   valueEx: any=[]
@@ -40,6 +42,7 @@ export class SolutionComponent implements OnInit {
       this.style=''
     }
     
+    this.inputText.nativeElement.value=''
     
     this.hideAdd=!this.hideAdd
     this.addButton=true

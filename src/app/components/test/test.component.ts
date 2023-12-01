@@ -105,67 +105,38 @@ export class TestComponent implements OnInit{
     //
   }
   async showAll(s:any) {
-    
+    let problemes:any=''
+    let solutions:any=''
+    let references:any=''
+    let mydata:any = []
     //console.log("this ",this.Jornal);
+    if (s==1) {
+      let i=0
     
-    this.dataservice.getReclamation().subscribe(
       
-      async (data:any) => {
-        if (data[0]) {
-          
-              data.sort((a:any, b:any) => b.id - a.id)   // Sort
-              let problemes:any=''
-              let solutions:any=''
-              let references:any=''
-              
-              
+      mydata = this.data.filter((res:any)=>res.user==this.User)
+      
+      
+      this.dataSource = new MatTableDataSource<Element>(mydata)
+                
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort
+      this.traite=0
+    
+      this.style='opacity:1;pointer-events:all;'
+      this.btnReload = 'pointer-events: all'
+      this.style=''
+      this.iconReload = ''
+    }else{
+      this.dataservice.getReclamation().subscribe(
+      
+        async (data:any) => {
+          if (data[0]) {
             
-              if (s==1) {
-                let i=0
-                this.data=data.filter((res:any)=>res.client.name==this.User)
+                data.sort((a:any, b:any) => b.id - a.id)   // Sort
                 
-                if (this.data[0]!=undefined) {
-                  this.data.forEach((l:any) => {
-                    references=''
-                    solutions=''
-                    problemes=''
-                    let cp=0
-                    l.problemes.forEach((p:any) => {
-                      if (cp==0) {
-                        problemes = problemes+p.name
-                      } else {
-                        problemes = problemes+' + '+p.name
-                      }
-                    
-                      cp++
-                    });
-                    cp=0
-                    l.solutions.forEach((s:any) => {
-                      if (cp==0) {
-                        solutions = solutions+s.name
-                      } else {
-                        solutions = solutions+' + '+s.name
-                      }
-                    
-                      cp++
-                      
-                    });
-                    cp=0
-                    l.references.forEach((r:any) => {
-                      if (cp==0) {
-                        references = references+r.name
-                      } else {
-                        references = references+' + '+r.name
-                      }
-                      cp++
-                    });
-                    var val={j:'0',num:l.ident,imei:l.device.uniqueid,ref:references,istodo:l.istodo,solution:solutions,description:l.description,probleme:problemes,product:l.product.name,id:l.id,statut:l.statut,ville:l.device.ville.name,vehicule:l.device.name,user:l.client.name,dateCreation:l.date_creation,dateModification:l.date_modification}
-                    this.data[i]=val
-                    i++
-                  });
-                }
-                
-              } else{
+            
+              
                 let i=0
                 this.data=data
                 
@@ -208,39 +179,44 @@ export class TestComponent implements OnInit{
                   i++
                 });
                 
-              }
               
-            
-              
-              
-              this.data.forEach((l:any) => {
-                this.Jornal.forEach((x:any) => {
-                  if (x.reclamation_id==l.id) {
-                    l.j='1'
-                    //alert(123)
-                  }
-                });
-              });
-            
                 
-              //console.log("data",this.data);
-              this.dataSource = new MatTableDataSource<Element>(this.data)
+                
+                // this.data.forEach((l:any) => {
+                //   this.Jornal.forEach((x:any) => {
+                //     if (x.reclamation_id==l.id) {
+                //       l.j='1'
+                //       //alert(123)
+                //     }
+                //   });
+                // });
               
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort
-          this.traite=0
-        }else{
-          this.traite=0
-        }
-       
-      },
-      ()=>{},
-      ()=>{
-        this.style='opacity:1;pointer-events:all;'
-        this.btnReload = 'pointer-events: all'
-        this.style=''
-        this.iconReload = ''
-      })
+                  
+                //console.log("data",this.data);
+                this.dataSource = new MatTableDataSource<Element>(this.data)
+                
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort
+            this.traite=0
+          }else{
+            this.traite=0
+          }
+         
+        },
+        ()=>{},
+        ()=>{
+          this.style='opacity:1;pointer-events:all;'
+          this.btnReload = 'pointer-events: all'
+          this.style=''
+          this.iconReload = ''
+        })
+      
+      
+    }
+    
+
+
+      
 
       // let i=0
        
@@ -316,7 +292,7 @@ export class TestComponent implements OnInit{
   }
 
   async reloadAll(){
-    await this.getJournal()
+    //await this.getJournal()
     this.showAll(0)
     
   }

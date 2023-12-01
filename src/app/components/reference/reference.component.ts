@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/sevices/data.service';
 import { MatTableDataSource} from '@angular/material/table';
@@ -18,6 +18,7 @@ export class ReferenceComponent implements OnInit {
     name:''
   }
   
+  @ViewChild('inputText') inputText!: ElementRef;
   style:any = ''
   reference: any;
   references: any=[]
@@ -36,7 +37,7 @@ export class ReferenceComponent implements OnInit {
       this.style=''
     }
     
-   
+    this.inputText.nativeElement.value=''
     this.hideAdd=!this.hideAdd
     window.scrollTo(0,0)
     

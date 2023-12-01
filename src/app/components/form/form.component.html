@@ -28,14 +28,14 @@
               <div class="form-group  py-2">
                   <label for="vehicule">Nom véhicule</label>
                   <input [(ngModel)]="device.name" formControlName="name" type="text" name="name" class="form-control divAdd">
-                  <small *ngIf="name.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                  <small  id="fileHelpId" style="color: red;" class="form-text"> ** </small>
                   
               </div>
   
               <div class="form-group  py-2">
                 <label for="vehicule">Imei</label>
                 <input [(ngModel)]="device.uniqueid" formControlName="uniqueid" type="text" name="uniqueid" class="form-control divAdd">
-                <small *ngIf="uniqueid.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                <small  id="fileHelpId" style="color: red;" class="form-text"> ** </small>
                 
               </div>
                 <div class="form-group  py-2">
@@ -75,7 +75,7 @@
 <div [style]="style">
     <h2 >Ajouter Réclamation</h2>
     <div class="form-group m-8 row">
-      <label class="col-sm-4  col-form-label" for="ville"><b>Ville <small *ngIf="newForm.villeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+      <label class="col-sm-4  col-form-label" for="ville"><b>Ville <small  id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
       <div class="col-sm-5">
           <mat-form-field  >
               <mat-select  [(ngModel)]="newForm.villeId"  (selectionChange)="onSelectVille($event.value)" name="ville" placeholder="ville" >
@@ -94,7 +94,7 @@
     </div>
     <div class="form-group m-8 row">
         
-        <label class="col-sm-4  col-form-label" for=""><b>Véhicule <small *ngIf="newForm.vehiculeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b> &nbsp; &nbsp;<button *ngIf="showAddDevice" class="btn btn-sm btn-primary" (click)="addVehicule(newForm.villeId)">+</button></label>
+        <label class="col-sm-4  col-form-label" for=""><b>Véhicule <small  id="fileHelpId" style="color: red;" class="form-text">*</small></b> &nbsp; &nbsp;<button *ngIf="showAddDevice" class="btn btn-sm btn-primary" (click)="addVehicule(newForm.villeId)">+</button></label>
         <div class="col-sm-5">
             <mat-form-field >
                 <mat-select  [(ngModel)]="newForm.vehiculeId"  (selectionChange)="valider()"  name="vehicule" placeholder="Véhicule" >
@@ -115,7 +115,7 @@
     <!--{{newForm | json}}-->
 
     <div class="form-group m-8 row">
-        <label class="col-sm-4  col-form-label" for=""><b>Produit <small *ngIf="newForm.produitId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+        <label class="col-sm-4  col-form-label" for=""><b>Produit <small  id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
         <div class="col-sm-5">
             <mat-form-field >
                 <mat-select [(ngModel)]="newForm.produitId"  (selectionChange)="onSelectProduit($event.value);valider()" name="produit" placeholder="Produit" >
@@ -133,10 +133,10 @@
     </div>
     
     <div class="form-group m-8 row">
-        <label class="col-sm-4  col-form-label" for=""><b>Probléme/Panne <small *ngIf="newForm.problemeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+        <label class="col-sm-4  col-form-label" for=""><b>Probléme/Panne <small *ngIf="!Traite" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
         <div class="col-sm-5">
             <mat-form-field >
-                <mat-select [(ngModel)]="newForm.problemeId"  (selectionChange)="onSelectProbleme($event.value);valider()" multiple  name="probleme" placeholder="Probleme" >
+                <mat-select [(ngModel)]="newForm.problemeId"  (selectionChange)="valider()" multiple  name="probleme" placeholder="Probleme" >
                   <mat-option>
                     <ngx-mat-select-search noEntriesFoundLabel="'Aucun Probléme'" placeholderLabel="Cherche" (keyup)="fProbleme($event)"></ngx-mat-select-search>
                   <div class="cancelMatSearche"></div>
@@ -152,7 +152,7 @@
         
     </div>
     <div class="form-group m-8 row">
-        <label class="col-sm-4  col-form-label" for=""><b>Solution <small *ngIf="newForm.statut==1 && !Traite" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+        <label class="col-sm-4  col-form-label" for=""><b>Solution <small *ngIf="!Traite" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
         <div class="col-sm-5">
             <mat-form-field >
                 <mat-select [(ngModel)]="newForm.solutionId"  (selectionChange)="valider()" multiple name="solution" placeholder="Solution" >

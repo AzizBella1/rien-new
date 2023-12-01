@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/sevices/data.service';
 import { MatTableDataSource} from '@angular/material/table';
@@ -47,6 +47,7 @@ export class ProduitComponent implements OnInit {
       this.style=''
     }
 
+    this.inputText.nativeElement.value=''
    
     this.hideAdd=!this.hideAdd
     window.scrollTo(0,0)
@@ -140,7 +141,7 @@ export class ProduitComponent implements OnInit {
 
   addProduit = new FormGroup({
     produit: new FormControl('',Validators.required),
-    Probleme:new FormControl('',Validators.required)
+    Probleme:new FormControl()
   })
 
   get produit() {
@@ -284,7 +285,7 @@ export class ProduitComponent implements OnInit {
       })
 
       this.dataservice.editProduit(this.produitSelected).subscribe(()=>{
-      this.showAll()
+        this.showAll()
       })
       this.add()
     }
@@ -293,6 +294,8 @@ export class ProduitComponent implements OnInit {
     
   }
 
+
+  @ViewChild('inputText') inputText!: ElementRef;
 
   // supp
 

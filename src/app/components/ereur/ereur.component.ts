@@ -21,7 +21,11 @@ export class EreurComponent implements OnInit{
 
   reclamation:any=[]
   ngOnInit(): void {
-    if (localStorage.getItem('sessionIsActive')=='1') {
+    var date = new Date()
+      
+    var last_date = localStorage.getItem('timeToExp')
+    var current_date = date.getTime();
+    if (localStorage.getItem('sessionIsActive')=='1' && current_date<parseInt(last_date!)+ (1 * 60 * 1000)) {
       this.massage = 'Une session est déjà ouverte !!!'
     }else{
       window.location.href = '/'

@@ -11,7 +11,7 @@
             <form [formGroup]="addProbleme">
                 <!-- {{Probleme | json}}-->
                  <div class="col-md">
-                    <mat-form-field style="width: 100%;">
+                    <!-- <mat-form-field style="width: 100%;">
                         <mat-select placeholder="Solutions"  [(ngModel)]="solutions" formControlName="Solution" multiple>
                             <mat-option>
                                 <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Solution'" placeholderLabel="Cherche" (keyup)="fSolution($event)"></ngx-mat-select-search>
@@ -19,7 +19,7 @@
                             </mat-option>
                         <mat-option *ngFor="let item of solution" [value]="item.id" >{{item.name}}</mat-option>
                         </mat-select>
-                    </mat-form-field>
+                    </mat-form-field> -->
                    
                     <div class="form-group py-2">
                         <label for="vehicule">Probléme</label>
@@ -68,7 +68,7 @@
         
         <div class="container">
             <h1>Liste Problemes</h1>
-                <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
+                <input #inputText class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
             
         </div>
         

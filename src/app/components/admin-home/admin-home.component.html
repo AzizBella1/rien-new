@@ -14,7 +14,7 @@
 
     <div class="container" >
         <h1>Liste Réclamations</h1>
-        <input class="form-control" #inputField id="filterInput" (keyup)="filter($event.target)" placeholder="Filter">
+        <input  class="form-control" #inputField id="filterInput" (keyup)="filter($event.target)" placeholder="Filter">
         <i *ngIf="searcheIcon" class="fa fa-search" id="filterInputIconeSearche" aria-hidden="true"></i>
         <i *ngIf="!searcheIcon" style="cursor: pointer;" (click)="clearSearcheInput()" class="fa fa-times-circle" id="filterInputIconeCancel" aria-hidden="true"></i>
 

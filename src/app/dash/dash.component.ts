@@ -25,8 +25,7 @@ export class DashComponent implements OnInit {
     
     this.getVilles()
     this.reclamationFun()
-    this.vehecule()
-    this.getProduit()
+    
 
    
     
@@ -104,6 +103,8 @@ export class DashComponent implements OnInit {
           
         });
         this.lin(this.dMonth)
+        this.vehecule()
+        this.getProduit()
       })
       
   }
@@ -121,7 +122,9 @@ export class DashComponent implements OnInit {
   }
   pro:any=[]
   getRecl(pro:any){
-    this.dataservice.getReclamation().subscribe(
+    console.log(this.reclamation);
+    var tableData = [this.reclamation]
+    tableData.forEach(
       (data:any) => {
 
       let i = 0
@@ -143,11 +146,14 @@ export class DashComponent implements OnInit {
         this.pro[index]=this.produit[index]
       }
       this.pro.sort((a:any, b:any) => b.rec - a.rec)
-      console.log(this.pro);
+      //console.log(this.pro);
       
     })
 
-    this.dataservice.getReclamation().subscribe(
+
+    
+
+    tableData.forEach(
       (data:any) => {
         
         
@@ -214,23 +220,31 @@ export class DashComponent implements OnInit {
   vehecule(){
     this.dataservice.getVehicule().subscribe((data:any)=>{
       this.vehicule=data
-      let i = 0
-      this.ville.forEach((v:any) => {
-        let c = 0
-        data.forEach((veh:any) => {
-          if (v.id==veh.ville.id) {
+      //let i = 0
+      // this.ville.forEach((v:any) => {
+      //   let c = 0
+      //   data.forEach((veh:any) => {
+      //     if (v.id==veh.ville.id) {
             
-            c++
-          }
-        });
+      //       c++
+      //     }
+      //   });
         
-        this.ville[i].vx=c
+      //   this.ville[i].vx=c
         
-        i++
+      //   i++
         
         
-      })
+      // })
       
+
+      this.ville.forEach((v:any, i:any) => {
+        let c = data.reduce((count:any, veh:any) => {
+          return count + (v.id === veh.ville.id ? 1 : 0);
+        }, 0);
+        
+        this.ville[i].vx = c;
+      });
       
       this.radar()
     });

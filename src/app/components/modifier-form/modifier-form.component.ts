@@ -149,13 +149,22 @@ export class ModifierFormComponent implements OnInit {
     //this.showRef()
     
     
-    
+    this.getSolution()
     this.changeButton()
     //this.valider()
     //this.editReclamation();
     
     
     
+  }
+
+  getSolution() {
+    this.dataservice.getSolution().subscribe(
+      (data:any) => {
+        this.solution=this.solutionCopy = data
+      }
+    )
+
   }
 
   selectedFile: any; 
@@ -282,7 +291,7 @@ export class ModifierFormComponent implements OnInit {
         if (res.statut=='traité') {
           // console.log("===",res.solution.id);
           //this.selectedSolution.setValue(res.solutions)
-          
+          this.valider()
         }else{
           this.newForm.statut=0
           this.newForm.solutionId=0
@@ -322,6 +331,8 @@ export class ModifierFormComponent implements OnInit {
       
   }
 
+
+
   showProbleme(id:any,reclamation:any) {
 
     let problemes:any=[]
@@ -337,23 +348,23 @@ export class ModifierFormComponent implements OnInit {
       //console.warn(res);
       
       
-      this.produit.forEach((p:any) => {
-        if (p.id==id) {
-          p.problemes.forEach((pr:any) => {
-            res.forEach((r:any) => {
-              if (r.id==pr.id) {
-                this.problemeCopy.push(r)
-              }
-            });
+      // this.produit.forEach((p:any) => {
+      //   if (p.id==id) {
+      //     p.problemes.forEach((pr:any) => {
+      //       res.forEach((r:any) => {
+      //         if (r.id==pr.id) {
+      //           this.problemeCopy.push(r)
+      //         }
+      //       });
             
             
             
-          })
-        }
+      //     })
+      //   }
         
         
-      })
-      this.probleme=this.problemeCopy
+      // })
+      this.probleme=this.problemeCopy = res
     
       this.showSolution(reclamation)
     })
@@ -371,39 +382,16 @@ export class ModifierFormComponent implements OnInit {
     
 
     let arSol:any=[]
-    
-    this.dataservice.getSolution().subscribe((res:any)=>{
-      this.selectedProbleme.value.forEach((i:any) => {
-        this.probleme.forEach((p:any) => {
-          
-          if (i==p.id) {
-            p.solutions.forEach((sol:any) => {
-              res.forEach((r:any) => {
-                if (r.id==sol.id && arSol.indexOf(sol.id) < 0) {
-                  
-                  this.solutionCopy.push(r)
-                }
-              });
-              
-              
-              
-            })
-          }
-  
-  
-        });
-        this.solutionCopy.forEach((s:any) => {
-          arSol.push(s.id)
-        });
-        
-      })
-      
-      
 
-      this.solution=this.solutionCopy
+
+    this.dataservice.getSolution().subscribe((res:any)=>{
+      
+      this.solution=this.solutionCopy = res
       //console.log("++",this.solutionCopy);
       
     })
+    
+    
     this.selectedSolution.setValue(solutions)
 
   }
@@ -499,37 +487,39 @@ export class ModifierFormComponent implements OnInit {
 
   onSelectProduit(id:any){
     this.changeProduit=true
-    this.dataservice.getProbleme().subscribe((res:any)=>{
-      this.newForm.problemeId=0
-      this.probleme.id=0
-      this.newForm.solutionId=0
-      this.newForm.refId=0
-      this.solution.id=0
-      this.disableSelect.setValue(false)
+    this.newForm.solutionId=0
+    this.newForm.problemeId=0
+    // this.dataservice.getProbleme().subscribe((res:any)=>{
+    //   this.newForm.problemeId=0
+    //   this.probleme.id=0
+    //   this.newForm.solutionId=0
+    //   this.newForm.refId=0
+    //   this.solution.id=0
+    //   this.disableSelect.setValue(false)
       
-      this.Traite=false
+    //   this.Traite=false
 
-      this.problemeCopy=[]
-      this.produit.forEach((p:any) => {
-        if (p.id==id) {
-          p.problemes.forEach((pr:any) => {
-            res.forEach((r:any) => {
-              if (r.id==pr.id) {
-                this.problemeCopy.push(r)
-              }
-            });
+    //   this.problemeCopy=[]
+    //   this.produit.forEach((p:any) => {
+    //     if (p.id==id) {
+    //       p.problemes.forEach((pr:any) => {
+    //         res.forEach((r:any) => {
+    //           if (r.id==pr.id) {
+    //             this.problemeCopy.push(r)
+    //           }
+    //         });
             
             
             
-          })
-        }
+    //       })
+    //     }
         
         
-      })
-      this.probleme=this.problemeCopy
-      //console.log("++",this.problemeCopy);
+    //   })
+    //   this.probleme=this.problemeCopy
+    //   //console.log("++",this.problemeCopy);
       
-    })
+    // })
    
   }
 
@@ -605,7 +595,7 @@ export class ModifierFormComponent implements OnInit {
     
     switch (this.newForm.statut) {
       case 0:
-        if (this.newForm.vehiculeId==0  || this.newForm.villeId==0 || this.newForm.produitId==0  ||this.newForm.problemeId==0 || (this.disableSelect.value==true && this.newForm.refId==0 )) {
+        if (this.newForm.vehiculeId==0  || this.newForm.villeId==0 || this.newForm.produitId==0  ) {
           this.Traite=true
           this.allValid=false
             
@@ -625,11 +615,11 @@ export class ModifierFormComponent implements OnInit {
       
           
           this.allValid=false
-          if (this.newForm.solutionId==0) {
-            this.Traite=false
-          }else{
-            this.Traite=true
-          }
+          this.Traite=false
+          // if (this.newForm.solutionId==0) {
+          // }else{
+          //   this.Traite=true
+          // }
           
             
           
@@ -638,7 +628,7 @@ export class ModifierFormComponent implements OnInit {
             this.Traite=false
             this.allValid=false
           }else{
-            this.Traite=true
+            this.Traite=false
             this.allValid=true
           }
           

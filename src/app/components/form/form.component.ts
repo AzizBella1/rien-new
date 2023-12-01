@@ -233,8 +233,9 @@ export class FormComponent implements OnInit {
     // }
     this.showAll();
     this.showAllProduit();
+    this.getSolution()
     //this.showAllSolution();
-    //this.showAllProbleme();
+    this.showAllProbleme();
     //this.showProbleme()
     //this.showSolution()
     this.showRef()
@@ -258,6 +259,17 @@ export class FormComponent implements OnInit {
     
 
   }
+  
+  getSolution() {
+    this.dataservice.getSolution().subscribe(
+      (data:any) => {
+        this.solution=this.solutionCopy = data
+      }
+    )
+
+  }
+  
+  
   lastRec:any
   
 testerTanger:any=[]
@@ -323,6 +335,16 @@ testerMarrakech:any=[]
 
   }
 
+  showAllProbleme(){
+    this.dataservice.getProbleme().subscribe(
+      (data:any) => {
+        this.probleme = data,
+        this.problemeCopy=data
+       // console.log(this.produit)
+      }
+    )
+  }
+
   
 
   showRef() {
@@ -379,38 +401,46 @@ testerMarrakech:any=[]
   }
 
   onSelectProduit(id:any){
+    this.newForm.problemeId=0
+    //this.probleme.id=0
+    this.newForm.solutionId=0
+    this.newForm.refId=0
+    //this.solution.id=0
     
-    this.dataservice.getProbleme().subscribe((res:any)=>{
-      this.newForm.problemeId=0
-      //this.probleme.id=0
-      this.newForm.solutionId=0
-      this.newForm.refId=0
-      //this.solution.id=0
-      
-      
-      this.Traite=false
+    
+    //this.Traite=false
 
-      this.problemeCopy=[]
-      this.produit.forEach((p:any) => {
-        if (p.id==id) {
-          p.problemes.forEach((pr:any) => {
-            res.forEach((r:any) => {
-              if (r.id==pr.id) {
-                this.problemeCopy.push(r)
-              }
-            });
-            
-            
-            
-          })
-        }
-        
-        
-      })
-      this.probleme=this.problemeCopy
-     //console.log("++",this.problemeCopy);
+    // this.dataservice.getProbleme().subscribe((res:any)=>{
+    //   this.newForm.problemeId=0
+    //   //this.probleme.id=0
+    //   //this.newForm.solutionId=0
+    //   this.newForm.refId=0
+    //   //this.solution.id=0
       
-    })
+      
+    //   this.Traite=false
+
+    //   this.problemeCopy=[]
+    //   this.produit.forEach((p:any) => {
+    //     if (p.id==id) {
+    //       p.problemes.forEach((pr:any) => {
+    //         res.forEach((r:any) => {
+    //           if (r.id==pr.id) {
+    //             this.problemeCopy.push(r)
+    //           }
+    //         });
+            
+            
+            
+    //       })
+    //     }
+        
+        
+    //   })
+    //   this.probleme=this.problemeCopy
+    //  //console.log("++",this.problemeCopy);
+      
+    // })
    
   }
 
@@ -418,7 +448,7 @@ testerMarrakech:any=[]
    
     
     this.dataservice.getSolution().subscribe((res:any)=>{
-      this.newForm.solutionId=0
+      //this.newForm.solutionId=0
       
       this.Traite=false
       //console.log(this.vehicule)
@@ -481,10 +511,12 @@ testerMarrakech:any=[]
 
   allValid:boolean=true
   Traite:boolean=true
+
   clearSol(n:any){
     if (n==0) {
       
       this.newForm.solutionId=0
+      //this.Traite=!this.Traite
     }
     this.valider()
   }   
@@ -514,11 +546,11 @@ testerMarrakech:any=[]
       
           
           this.allValid=false
-          if (this.newForm.solutionId==0) {
-            this.Traite=false
-          }else{
-            this.Traite=true
-          }
+          this.Traite=false
+          // if (this.newForm.solutionId==0) {
+          // }else{
+          //   this.Traite=true
+          // }
           
             
           
@@ -527,7 +559,7 @@ testerMarrakech:any=[]
             this.Traite=false
             this.allValid=false
           }else{
-            this.Traite=true
+            this.Traite=false
             this.allValid=true
           }
           

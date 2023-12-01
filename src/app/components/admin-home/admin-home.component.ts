@@ -256,8 +256,8 @@ export class AdminHomeComponent implements OnInit {
   ngOnInit(): void {
     
     //this.router.navigate(['/acceuil'])
-    this.showAll()
     this.loaded()
+    this.showAll()
     //this.dw()
     //console.log(this.cnt);
     //this.timer.subscribe((t) => this.showAll());

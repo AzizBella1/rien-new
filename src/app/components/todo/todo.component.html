@@ -14,7 +14,7 @@
         
       <div class="col-md">
           <div class="form-group row">
-              <label class="col-sm-4  col-form-label" for="ville"><b>Technicien <small *ngIf="todo.get('user')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small> </b></label>
+              <label class="col-sm-4  col-form-label" for="ville"><b>Technicien <small  id="fileHelpId" style="color: red;" class="form-text">*</small> </b></label>
               <div class="col-sm">
                   <mat-form-field  style="width: 100%;">
                       <mat-select formControlName="user" name="user" placeholder="technicien" >
@@ -32,7 +32,7 @@
             
           </div>
           <div class="form-group  row">
-              <label class="col-sm-4  col-form-label" for="ville"><b>Ville <small *ngIf="todo.get('ville')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+              <label class="col-sm-4  col-form-label" for="ville"><b>Ville <small  id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
               <div class="col-sm">
                   <mat-form-field  style="width: 100%;">
                       <mat-select formControlName="ville" (selectionChange)="onSelectVille($event.value)" name="ville" placeholder="ville" >
@@ -50,7 +50,7 @@
             </div>
             <div class="form-group row">
                 
-                <label class="col-sm-4  col-form-label" for=""><b>Véhicule <small *ngIf="todo.get('vehicule')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+                <label class="col-sm-4  col-form-label" for=""><b>Véhicule <small  id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
                 <div class="col-sm">
                     <mat-form-field style="width: 100%;">
                         <mat-select formControlName="vehicule" name="vehicule" placeholder="Véhicule" >
@@ -70,7 +70,9 @@
             <!--{{newForm | json}}-->
         
             <div class="form-group row">
-                <label class="col-sm-4  col-form-label" for=""><b>Produit <small *ngIf="todo.get('produit')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+              <!-- <label class="col-sm-4  col-form-label" for=""><b>Produit <small *ngIf="todo.get('produit')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label> -->
+  
+              <label class="col-sm-4  col-form-label" for=""><b>Produit <small  id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
                 <div class="col-sm">
                     <mat-form-field style="width: 100%;">
                         <mat-select formControlName="produit" (selectionChange)="onSelectProduit($event.value)" name="produit" placeholder="Produit" >
@@ -129,6 +131,7 @@
           </div>
          
       </div>
+      <small *ngIf="todo.invalid" id="fileHelpId" style="color: red;" class="form-text"> nb:(*) champ obligatoire</small>
   </form>
       
  
@@ -151,7 +154,7 @@
     <div class="container">
         <h1>To Do</h1>
 
-        <input class="form-control" #inputField id="filterInput" (keyup)="filter($event.target)" placeholder="Filter">
+        <input #inputText class="form-control" #inputField id="filterInput" (keyup)="filter($event.target)" placeholder="Filter">
             
         
     </div>

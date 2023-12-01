@@ -18,6 +18,7 @@ export class TodoComponent implements OnInit{
   constructor(private dataservice:DataService){}
   ngOnInit(): void {
     this.showAllProduit()
+    this.showAllProbleme()
     this.showVille()
   }
 
@@ -210,6 +211,16 @@ export class TodoComponent implements OnInit{
 
 
 
+  showAllProbleme(){
+    this.dataservice.getProbleme().subscribe(
+      (data:any) => {
+        this.Probleme=this.problemeCopy = data
+        
+       // console.log(this.produit)
+      }
+    )
+  }
+
   showAllProduit() {
     this.dataservice.getProduit().subscribe(
       (data:any) => {
@@ -248,34 +259,34 @@ export class TodoComponent implements OnInit{
   }
 
   onSelectProduit(id:any){
+    this.todo.get('probleme')!.setValue('')
+    this.todo.get('solution')!.setValue('')
     
-    this.dataservice.getProbleme().subscribe((res:any)=>{
+    // this.dataservice.getProbleme().subscribe((res:any)=>{
       
-      this.todo.get('probleme')!.setValue('')
-      this.todo.get('solution')!.setValue('')
       
 
-      this.problemeCopy=[]
-      this.Produit.forEach((p:any) => {
-        if (p.id==id) {
-          p.problemes.forEach((pr:any) => {
-            res.forEach((r:any) => {
-              if (r.id==pr.id) {
-                this.problemeCopy.push(r)
-              }
-            });
+    //   this.problemeCopy=[]
+    //   this.Produit.forEach((p:any) => {
+    //     if (p.id==id) {
+    //       p.problemes.forEach((pr:any) => {
+    //         res.forEach((r:any) => {
+    //           if (r.id==pr.id) {
+    //             this.problemeCopy.push(r)
+    //           }
+    //         });
             
             
             
-          })
-        }
+    //       })
+    //     }
         
         
-      })
-      this.Probleme=this.problemeCopy
+    //   })
+    //   this.Probleme=this.problemeCopy
       
       
-    })
+    // })
    
   }
 
