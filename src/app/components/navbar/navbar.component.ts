@@ -47,18 +47,18 @@ export class NavbarComponent implements OnInit{
   openWindow(): void {
     var date = new Date()
     localStorage.setItem('sessionIsActive','1')
-    var bb = localStorage.getItem('timeToExp')
-    var tt = date.getTime();
-    if(bb!=null){
+    // var bb = localStorage.getItem('timeToExp')
+    // var tt = date.getTime();
+    // if(bb!=null){
       
-      if (tt>parseInt(bb)+ (2 * 60 * 1000)) {
-        this.Logout()
+    //   if (tt>parseInt(bb)+ (2 * 60 * 1000)) {
+    //     this.Logout()
         
         
-      }
-    }
+    //   }
+    // }
 
-    localStorage.setItem('timeToExp',date.getTime().toString())
+    // localStorage.setItem('timeToExp',date.getTime().toString())
     
     
     

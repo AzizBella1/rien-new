@@ -10,4 +10,10 @@ export class AppComponent {
   
   title = 'my-app';
   idUser = sessionStorage.getItem('user');
+
+
+  testClose(){
+    alert(1)
+    return false;
+  }
 }

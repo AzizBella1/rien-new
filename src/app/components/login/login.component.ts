@@ -63,7 +63,27 @@ export class LoginComponent implements OnInit {
       var last_date = localStorage.getItem('timeToExp')
       var current_date = date.getTime();
       
-      
+      if (localStorage.getItem('sessionIsActive')=='1') {
+        //alert('Une session est déjà active.');
+        
+        this.router.navigate(['/er'])
+        //window.location.href='/'
+      }else{
+        sessionStorage.setItem('is_admin', result.role)
+          sessionStorage.setItem('tokenExp',this.dateExp); 
+          sessionStorage.setItem('check','in')
+          sessionStorage.setItem('cnt','0')
+          
+          //sessionStorage.setItem('load','0')
+          if (result.role!='ADMIN') {
+            this.router.navigate(['/home'])
+          } else {
+            this.router.navigate(['/acceuil'])
+          }
+         
+       
+          this.dataservice.devices(result.token)
+      }
       
       
         
@@ -76,74 +96,62 @@ export class LoginComponent implements OnInit {
           
           
           
-          if (localStorage.getItem('sessionIsActive')=='1' && last_date!=null) {
-            //alert('Une session est déjà active.');
+          // if (localStorage.getItem('sessionIsActive')=='1' && last_date!=null) {
+          //   //alert('Une session est déjà active.');
 
-            if (current_date>parseInt(last_date!)+ (1 * 30 * 1000)) {
-              localStorage.removeItem('sessionIsActive')
-              //alert(last_date)
-              sessionStorage.setItem('is_admin', result.role)
-              sessionStorage.setItem('tokenExp',this.dateExp); 
-              sessionStorage.setItem('check','in')
-              sessionStorage.setItem('cnt','0')
+          //   if (current_date>parseInt(last_date!)+ (1 * 30 * 1000)) {
+          //     localStorage.removeItem('sessionIsActive')
+          //     //alert(last_date)
+          //     sessionStorage.setItem('is_admin', result.role)
+          //     sessionStorage.setItem('tokenExp',this.dateExp); 
+          //     sessionStorage.setItem('check','in')
+          //     sessionStorage.setItem('cnt','0')
               
-              //sessionStorage.setItem('load','0')
-              if (result.role!='ADMIN') {
-                this.router.navigate(['/home'])
-              } else {
-                this.router.navigate(['/acceuil'])
-              }
+          //     //sessionStorage.setItem('load','0')
+          //     if (result.role!='ADMIN') {
+          //       this.router.navigate(['/home'])
+          //     } else {
+          //       this.router.navigate(['/acceuil'])
+          //     }
             
-              this.dataservice.devices(result.token)
-            //window.location.href='/'
-            } else{
-              this.router.navigate(['/er'])
-            }
+          //     this.dataservice.devices(result.token)
+          //   //window.location.href='/'
+          //   } else{
+          //     this.router.navigate(['/er'])
+          //   }
             
             
-          }else if (localStorage.getItem('sessionIsActive')=='1') {
-            this.router.navigate(['/er'])
-          } else {
-            // Ouvre la fenêtre et active la session
-            //alert(last_date)
-            sessionStorage.setItem('is_admin', result.role)
-            sessionStorage.setItem('tokenExp',this.dateExp); 
-            sessionStorage.setItem('check','in')
-            sessionStorage.setItem('cnt','0')
+          // }else if (localStorage.getItem('sessionIsActive')=='1') {
+          //   this.router.navigate(['/er'])
+          // } else {
+          //   // Ouvre la fenêtre et active la session
+          //   //alert(last_date)
+          //   sessionStorage.setItem('is_admin', result.role)
+          //   sessionStorage.setItem('tokenExp',this.dateExp); 
+          //   sessionStorage.setItem('check','in')
+          //   sessionStorage.setItem('cnt','0')
             
-            //sessionStorage.setItem('load','0')
-            if (result.role!='ADMIN') {
-              this.router.navigate(['/home'])
-            } else {
-              this.router.navigate(['/acceuil'])
-            }
-            /* 
-              const token0 = sessionStorage.getItem('token')
-              this.http.get<any>('http://info.geodaki.com:4243/Api/clients', {
-              headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': ''+ token0
-              }),
-              responseType: 'json'
-              }).subscribe(
-              (resp) => {
-                this.UserLog=resp.filter((res:any)=>res.username==sessionStorage.getItem('user'))
-                console.log(this.UserLog);
-              },
-              (error) => {
-                console.log(error);
-              }
-              );
-                
-           */    
+          //   //sessionStorage.setItem('load','0')
+          //   if (result.role!='ADMIN') {
+          //     this.router.navigate(['/home'])
+          //   } else {
+          //     this.router.navigate(['/acceuil'])
+          //   }
+           
+         
+          //   this.dataservice.devices(result.token)
             
-            //console.log('====================================',result);
-            //console.log(result.token);
-            //console.log('*************************************');
-            this.dataservice.devices(result.token)
-            
-            //console.log('====================================');
-          }
+          //   //console.log('====================================');
+          // }
+
+
+          // if (localStorage.getItem('sessionIsActive')=='1' ){
+          //   this.router.navigate(['/er'])
+          // }else{
+
+          // }
+          
+          
 		},
 				() => {
           this.notLogin=true
