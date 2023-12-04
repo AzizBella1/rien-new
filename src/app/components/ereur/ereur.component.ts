@@ -25,7 +25,7 @@ export class EreurComponent implements OnInit{
       
     var last_date = localStorage.getItem('timeToExp')
     var current_date = date.getTime();
-    if (localStorage.getItem('sessionIsActive')=='1') {//if (localStorage.getItem('sessionIsActive')=='1' && current_date<parseInt(last_date!)+ (1 * 60 * 1000)) {
+    if (localStorage.getItem('sessionIsActive')=='1' && current_date<parseInt(last_date!)+ (1 * 5 * 1000)) {//if (localStorage.getItem('sessionIsActive')=='1' && current_date<parseInt(last_date!)+ (1 * 60 * 1000)) {
       this.massage = 'Une session est déjà ouverte !!!'
     }else{
       window.location.href = '/'

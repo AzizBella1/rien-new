@@ -24,6 +24,11 @@ export class NavbarComponent implements OnInit{
   tokenExp:any 
   ngOnInit(): void {
     // window.addEventListener('beforeunload', (e: BeforeUnloadEvent) => {
+    //   console.log(e.currentTarget!);
+    //   if (e.currentTarget!) {
+        
+    //   }
+      
     //   e.preventDefault();
     //   e.returnValue = '';
     // });
@@ -35,11 +40,11 @@ export class NavbarComponent implements OnInit{
     //   //alert(1);
     //   return confirmationMessage; // For some older browsers
     // });
-    this.openWindow()
     //this.timeOut()
     //this.test()
     this.ref()
     
+    this.openWindow()
     
   }
 
@@ -47,18 +52,29 @@ export class NavbarComponent implements OnInit{
   openWindow(): void {
     var date = new Date()
     localStorage.setItem('sessionIsActive','1')
-    // var bb = localStorage.getItem('timeToExp')
-    // var tt = date.getTime();
-    // if(bb!=null){
-      
-    //   if (tt>parseInt(bb)+ (2 * 60 * 1000)) {
-    //     this.Logout()
-        
-        
-    //   }
-    // }
+    var uuidLast = localStorage.getItem('uuid')
+    sessionStorage.getItem(uuidLast!)
 
-    // localStorage.setItem('timeToExp',date.getTime().toString())
+    if ( sessionStorage.getItem(uuidLast!) == null) {
+      
+      if (localStorage.getItem('userConnect') != this.idUser) {
+        this.Logout()
+      }
+      
+    }
+    
+    var bb = localStorage.getItem('timeToExp')
+    var tt = date.getTime();
+    if(bb!=null){
+      
+      if (tt>parseInt(bb)+ (10 * 60 * 1000)) {
+        this.Logout()
+        
+        
+      }
+    }
+
+    localStorage.setItem('timeToExp',date.getTime().toString())
     
     
     
@@ -90,25 +106,27 @@ convertToDateObject(dateString:any) {
   cnt = sessionStorage.getItem('cnt');
 
   ref(){
-
-    this.dataservice.getUser().subscribe((res:any)=>{
-      let user= this.user= res.filter((res:any)=>res.name==this.idUser)
-      //console.log();
-      sessionStorage.setItem('userID',user[0].id)
-      
-      
-      
-    },
-    (error:any) => {
-      if (error.error.status==500) {
-        alert("session terminer")
-        this.Logout()
-      }
-    })
-    if (this.cnt=='0') {
+    if (this.cnt!='1') {
       sessionStorage.setItem('cnt','1')
       window.location.reload()
-    } 
+    } else{
+
+      this.dataservice.getUser().subscribe((res:any)=>{
+        let user= this.user= res.filter((res:any)=>res.name==this.idUser)
+        //console.log();
+        sessionStorage.setItem('userID',user[0].id)
+       
+        
+        
+      },
+      (error:any) => {
+        if (error.error.status==500) {
+          alert("session terminer")
+          this.Logout()
+        }
+      })
+    }
+   
 
     // this.dataservice.getUser().subscribe((res:any)=>{
      
@@ -138,6 +156,7 @@ convertToDateObject(dateString:any) {
       sessionStorage.removeItem('is_admin')
       localStorage.removeItem('sessionIsActive')
       localStorage.removeItem('timeToExp')
+      sessionStorage.setItem('cnt','0')
       //sessionStorage.removeItem('cnt')
       //localStorage.setItem('user', '');
       window.location.href='/'

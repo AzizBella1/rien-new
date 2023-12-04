@@ -44,6 +44,21 @@ export class LoginComponent implements OnInit {
   }
 
   notLogin:boolean=false
+  generateUUID() {
+    // Generate a random hexadecimal string of 32 characters
+    
+    var characters = '0123456789abcdef';
+    var uuid = '';
+    for (var i = 0; i < 32; i++) {
+        uuid += characters.charAt(Math.floor(Math.random() * 16));
+    }
+
+    // Insert hyphens at the appropriate positions to create a valid UUID
+    uuid = uuid.substr(0, 8) + '-' + uuid.substr(8, 4) + '-' + '4' + uuid.substr(13, 3) + '-' + '89ab'[Math.floor(Math.random() * 2)] + uuid.substr(16, 3) + '-' + uuid.substr(19);
+    
+
+    return uuid;
+  }
 
 
   doSignin() {
@@ -62,36 +77,60 @@ export class LoginComponent implements OnInit {
       
       var last_date = localStorage.getItem('timeToExp')
       var current_date = date.getTime();
+      var uuid = this.generateUUID()
       
-      if (localStorage.getItem('sessionIsActive')=='1') {
-        //alert('Une session est déjà active.');
-        
-        this.router.navigate(['/er'])
-        //window.location.href='/'
-      }else{
+
+      //if (current_date>parseInt(last_date!)+ (1 * 5 * 1000) || last_date==null) {
+        localStorage.setItem('uuid',uuid)
+        sessionStorage.setItem(uuid,uuid)
+        localStorage.setItem('userConnect',this.login.get('username')?.value!)
         sessionStorage.setItem('is_admin', result.role)
-          sessionStorage.setItem('tokenExp',this.dateExp); 
-          sessionStorage.setItem('check','in')
-          sessionStorage.setItem('cnt','0')
+        sessionStorage.setItem('tokenExp',this.dateExp); 
+        sessionStorage.setItem('check','in')
+        sessionStorage.setItem('cnt','0')
+        
+        //sessionStorage.setItem('load','0')
+        if (result.role!='ADMIN') {
+          this.router.navigate(['/home'])
+        } else {
+          this.router.navigate(['/acceuil'])
+        }
+        
+      
+        this.dataservice.devices(result.token)
+        
+      //}
+      // else{
+      //   this.router.navigate(['/er'])
+      //   // if (localStorage.getItem('sessionIsActive')=='1') {
+      //   //   //alert('Une session est déjà active.');
           
-          //sessionStorage.setItem('load','0')
-          if (result.role!='ADMIN') {
-            this.router.navigate(['/home'])
-          } else {
-            this.router.navigate(['/acceuil'])
-          }
-         
-       
-          this.dataservice.devices(result.token)
-      }
+      //   //   this.router.navigate(['/er'])
+      //   //   //window.location.href='/'
+      //   // }else{
+      //   //   localStorage.setItem('uuid',this.generateUUID())
+      //   //   sessionStorage.setItem(this.generateUUID(),this.generateUUID())
+      //   //   sessionStorage.setItem('is_admin', result.role)
+      //   //   sessionStorage.setItem('tokenExp',this.dateExp); 
+      //   //   sessionStorage.setItem('check','in')
+      //   //   sessionStorage.setItem('cnt','0')
+          
+      //   //   //sessionStorage.setItem('load','0')
+      //   //   if (result.role!='ADMIN') {
+      //   //     this.router.navigate(['/home'])
+      //   //   } else {
+      //   //     this.router.navigate(['/acceuil'])
+      //   //   }
+          
+        
+      //   //   this.dataservice.devices(result.token)
+      //   // }
+      // }
+      
       
       
         
-        // if (current_date>parseInt(last_date!)+ (1 * 60 * 1000)) {
-        //   localStorage.removeItem('sessionIsActive')
-          
-          
-        // }
+        
       
           
           
