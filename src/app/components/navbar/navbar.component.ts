@@ -42,9 +42,9 @@ export class NavbarComponent implements OnInit{
     // });
     //this.timeOut()
     //this.test()
+    this.openWindow()
     this.ref()
     
-    this.openWindow()
     
   }
 
@@ -57,9 +57,9 @@ export class NavbarComponent implements OnInit{
 
     if ( sessionStorage.getItem(uuidLast!) == null) {
       
-      if (localStorage.getItem('userConnect') != this.idUser) {
-        this.Logout()
-      }
+        
+      this.Logout()
+      
       
     }
     
@@ -67,7 +67,8 @@ export class NavbarComponent implements OnInit{
     var tt = date.getTime();
     if(bb!=null){
       
-      if (tt>parseInt(bb)+ (10 * 60 * 1000)) {
+      if (tt>parseInt(bb)+ (4 * 60 * 60 * 1000)) {
+       
         this.Logout()
         
         
@@ -115,7 +116,34 @@ convertToDateObject(dateString:any) {
         let user= this.user= res.filter((res:any)=>res.name==this.idUser)
         //console.log();
         sessionStorage.setItem('userID',user[0].id)
-       
+
+        const year = this.curDate.getFullYear();
+        const month = String(this.curDate.getMonth() + 1).padStart(2, '0'); // Ajoute un zéro si le mois est < 10
+        const day = String(this.curDate.getDate()).padStart(2, '0'); // Ajoute un zéro si le jour est < 10
+        
+        const formattedDate = `${year}-${month}-${day} 00:00:00`;
+        let data = {
+          client:{id:user[0].id},
+          date:formattedDate
+        }
+
+        console.log(data);
+        
+        this.dataservice.isCheckIn(data).subscribe((item:any)=>{
+          console.log(item[item.length-1]);
+          if (item.length != 0) {
+            
+            if (item[item.length-1].checkValue != 'IN') {
+              sessionStorage.setItem('check','in')
+              this.checkStatus='in'
+            }else{
+              //this.checkOut=true
+              this.checkStatus='out'
+              sessionStorage.setItem('check','out')
+            }
+          }
+          
+        })
         
         
       },
@@ -157,13 +185,16 @@ convertToDateObject(dateString:any) {
       localStorage.removeItem('sessionIsActive')
       localStorage.removeItem('timeToExp')
       sessionStorage.setItem('cnt','0')
+
+      localStorage.clear()
+      sessionStorage.clear()
       //sessionStorage.removeItem('cnt')
       //localStorage.setItem('user', '');
       window.location.href='/'
-    //} else {
-      //this.message="N'oubliez pas le check out !!"
-      //setTimeout(()=>{this.message=''},4000)
-    //}
+    // } else {
+    //   this.message="N'oubliez pas le check out !!"
+    //   setTimeout(()=>{this.message=''},4000)
+    // }
     
    
    
@@ -207,6 +238,7 @@ convertToDateObject(dateString:any) {
   checkOut:boolean=false
   checkStatus:any=sessionStorage.getItem('check')
   check(){
+    
     let user = {user:{id:this.user[0].id}}
     //console.log(this.checkStatus);
     this.checkOut=false
@@ -243,14 +275,14 @@ convertToDateObject(dateString:any) {
         this.journalMessage="Il faut d'abord remplir le journal !"
         this.style='opacity:0.5;'
         
-      } else {
-        this.dataservice.addCheck(user,'out').subscribe((res)=>{
-          //console.log(res);
-          
-          sessionStorage.setItem('check','in')
-          this.checkStatus='in'
-        })
-      }
+      } 
+      this.dataservice.addCheck(user,'out').subscribe((res)=>{
+        //console.log(res);
+        
+        sessionStorage.setItem('check','in')
+        this.checkStatus='in'
+      })
+      
       
     })
    
@@ -263,38 +295,44 @@ convertToDateObject(dateString:any) {
   ran(){
     
     
-    // if (navigator.geolocation) {
+    if (navigator.geolocation) {
       
-    //   navigator.geolocation.getCurrentPosition(
-    //     (p)=>{
-    //       //this.check()
-    //       let pointLatitude = p.coords.latitude
-    //       let pointLongitude = p.coords.longitude
-    //       let centerLatitude = 33.99832179952015;
-    //       let centerLongitude = -6.861067938071202;
-    //       let circleRadius = 5000;
-    //       let test = this.isPointInsideCircle(
-    //         pointLatitude,
-    //         pointLongitude,
-    //         centerLatitude,
-    //         centerLongitude,
-    //         circleRadius
-    //       );
+      navigator.geolocation.getCurrentPosition(
+        (p)=>{
+          //this.check()
+          let pointLatitude = p.coords.latitude
+          let pointLongitude = p.coords.longitude
+          let centerLatitude = 33.99832179952015;
+          let centerLongitude = -6.861067938071202;
+          let circleRadius = 5000;
+          let test = this.isPointInsideCircle(
+            pointLatitude,
+            pointLongitude,
+            centerLatitude,
+            centerLongitude,
+            circleRadius
+          );
 
-    //       if (!test) {
-    //         this.falsePosition=true
-    //         this.positionMessage='Position incorrecte !!'
-    //       }else{
-    //         this.check()
-    //       } 
-    //     },()=>{
-    //       this.positionMessage='Activer geolocation du navigateur !!'
-    //     });
-    // } else {
-    //   alert("Geolocation is not supported by this browser.")
-    // }
+          if (!test) {
+            this.falsePosition=true
+            this.positionMessage='Position incorrecte !!'
+          }else{
+            this.check()
+          } 
+        },()=>{
+          this.positionMessage='Activer geolocation du navigateur !!'
+          setTimeout(()=>{
+            this.positionMessage=''
+          },3000)
+        });
+    } else {
+      alert("Geolocation is not supported by this browser.")
+    }
 
-    this.check()
+
+    console.log(this.positionMessage);
+    
+    // this.check()
   }
   
 

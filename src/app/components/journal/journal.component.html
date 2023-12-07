@@ -1,6 +1,154 @@
 <app-navbar *ngIf="idUser!=null "></app-navbar>
+<div *ngIf="!hideAdd && idUser!=null && is_admin!='ADMIN' " class="popup">
+  <button class="btnCancel" (click)="add()">X</button>
+  <br>
+  <div  class="popupHeader">
+      <h2 *ngIf="addButton"  >Ajouter Journale</h2>
+      <h2 *ngIf="!addButton"  >Modifier Journale</h2>
+  </div>
+  <hr>
+  <div class="popupBody">
+    <form [formGroup]="todo">
+            
+      <div class="col-md">
+          <div class="form-group m-8 row">
+              <label class="col-sm-4  col-form-label" for="reclamation"><b>Réclamation <small *ngIf="todo.get('reclamation')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+              <div class="col-sm">
+                  <mat-form-field style="width: 100%;" >
+                      <mat-select formControlName="reclamation" name="reclamation" placeholder="réclamation" >
+                        <mat-option>
+                          <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Réclamation'" placeholderLabel="Cherche" (keyup)="fReclamation($event)"></ngx-mat-select-search>
+                          <div id="cancelMatSearche"></div>
+                        </mat-option>
+                        <mat-option *ngFor="let item of Reclamation" [value]="item.id">
+                          {{item.ident}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                  
+              </div>
+            
+          </div>
+          
+          <div class="form-group m-8 row">
+              <label class="col-sm-4  col-form-label" for=""><b>Durée <small *ngIf="todo.get('duree')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+              <div class="col-sm">
+                  <mat-form-field style="width: 100%;">
+                      <mat-select  formControlName="duree"  name="duree" placeholder="duree" >
+                        
+                        <mat-option *ngFor="let item of Duree" [value]="item.duree">
+                          {{item.duree}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                  
+                  
+              </div>
+              
+          </div>
+          <div class="form-group m-8 row py-2">
+              <label class="col-sm-4  col-form-label" for="description"><b>Description</b></label>
+              <div class="col-sm">
+                  <textarea style="width: 100%;" formControlName="description" class="form-control" placeholder="Description" name="description" id="" rows="3"></textarea>
+              </div>
+          </div>
+         
+      </div>
+    </form>
+     
 
-<div *ngIf="idUser!=null && is_admin!='ADMIN' " class="container mt-5">
+  </div>
+  <hr>
+  <div class="popupFouter">
+  <button type="button" style="margin-right: 10px" class="btn btn-secondary" (click)="add()" >Annuler</button>
+  <button *ngIf="addButton" class="btn btn-success " (click)="addNew()"  [disabled]="todo.invalid" type="submit">Ajouter</button>
+  <button *ngIf="!addButton" class="btn btn-warning " (click)="modTodo()" [disabled]="todo.invalid" type="submit">Modifier</button>
+
+
+  
+  </div>
+</div>
+
+<div *ngIf="!hideAdd && idUser!=null && is_admin=='ADMIN' " class="popup">
+  <button class="btnCancel" (click)="add()">X</button>
+  <br>
+  <div  class="popupHeader">
+      <h2   >Info reclamation</h2>
+      
+  </div>
+  <hr>
+  <div class="popupBody">
+    <!-- <div *ngIf="selectedRec" style="word-wrap: break-word;" class="container">
+      <p><b>Imei &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{selectedRec.imei}}</p>
+      <p><b>Produit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{selectedRec.product}}</p>
+      <p><b>Panne &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{selectedRec.probleme}}</p>
+      <p><b>Solution &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{selectedRec.solution}}</p>
+      <p><b>Composant &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{selectedRec.ref}}</p>
+      <p><b>Description &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{selectedRec.description}}</p>
+      <p><b>Statut &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{selectedRec.statut}}</p>
+      <p><b>Date creation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{selectedRec.dateCreation}}</p>
+      <p><b>Date modification &nbsp;&nbsp;&nbsp;: </b>{{selectedRec.dateModification}}</p>
+  
+    </div> -->
+
+    <div *ngIf="selectedRec" style="word-wrap: break-word;" class="container">
+      <table>
+        <tr>
+          <td class="td td_padding"><b>Date journale</b></td>
+          <td class="td_padding">: {{selectedRec?.dateJournale}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Durée</b></td>
+          <td class="td_padding">: {{selectedRec?.dureeJ}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Imei</b></td>
+          <td class="td_padding">: {{selectedRec?.imei}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Produit</b></td>
+          <td class="td_padding">: {{selectedRec?.product}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Panne</b></td>
+          <td class="td_padding">: {{selectedRec?.probleme}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Solution</b></td>
+          <td class="td_padding">: {{selectedRec?.solution}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Composant</b></td>
+          <td class="td_padding">: {{selectedRec?.ref}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Description</b></td>
+          <td class="td_padding">: {{selectedRec?.description}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Statut</b></td>
+          <td class="td_padding">: {{selectedRec?.statut}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Date creation</b></td>
+          <td class="td_padding">: {{selectedRec?.dateCreation}}</td>
+        </tr>
+        <tr>
+          <td class="td td_padding"><b>Date modification</b></td>
+          <td class="td_padding">: {{selectedRec?.dateModification}}</td>
+        </tr>
+        
+      </table>
+      
+  
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!hideAdd" class="backgroundBody">
+
+</div>
+<div *ngIf="idUser!=null && is_admin!='ADMIN' " class="container mt-4" [style]="style">
 
    
     <div class="container">
@@ -8,7 +156,7 @@
             
         
     </div>
-    <div *ngIf="hideAdd" class="container py-4"> 
+    <div *ngIf="hideAdd" class="container py-2"> 
         
         <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button>
      
@@ -22,68 +170,7 @@
     </div>
   <br>
 
-    <div *ngIf="!hideAdd" class="container mt-5">
-  
-        <form [formGroup]="todo">
-            
-            <div class="col-md-6 ml-md-auto">
-                <div class="form-group m-8 row">
-                    <label class="col-sm-4  col-form-label" for="reclamation"><b>Réclamation <small *ngIf="todo.get('reclamation')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
-                    <div class="col-sm-5">
-                        <mat-form-field  >
-                            <mat-select formControlName="reclamation" name="reclamation" placeholder="réclamation" >
-                              <mat-option>
-                                <ngx-mat-select-search  noEntriesFoundLabel="'Aucun Réclamation'" placeholderLabel="Cherche" (keyup)="fReclamation($event)"></ngx-mat-select-search>
-                              </mat-option>
-                              <mat-option *ngFor="let item of Reclamation" [value]="item.id">
-                                {{item.ident}}
-                              </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        
-                    </div>
-                  
-                </div>
-                
-                <div class="form-group m-8 row">
-                    <label class="col-sm-4  col-form-label" for=""><b>Durée <small *ngIf="todo.get('duree')!.invalid" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
-                    <div class="col-sm-5">
-                        <mat-form-field >
-                            <mat-select  formControlName="duree"  name="duree" placeholder="duree" >
-                              
-                              <mat-option *ngFor="let item of Duree" [value]="item.duree">
-                                {{item.duree}}
-                              </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        
-                        
-                    </div>
-                    
-                </div>
-                <div class="form-group m-8 row py-2">
-                    <label class="col-sm-4  col-form-label" for="description"><b>Description</b></label>
-                    <div class="col-sm-5">
-                        <textarea formControlName="description" class="form-control" placeholder="Description" name="description" id="" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNew()" [disabled]="todo.invalid" type="submit">Ajouter</button>
-                            <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modTodo()" [disabled]="todo.invalid" type="submit">Modifier</button>
-                        </div>
-                        <div class="col">
-                            <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
-                        </div>
-                    </div>
-                    
-                    
-                </div> 
-            </div>
-        </form>
-        <hr>
-    </div>
+    
 
     
     
@@ -98,7 +185,7 @@
 
    
     <div class="container">
-        <h1>User Journale</h1>
+        <h1>User Journal</h1>
             
         <div class="col-sm-5">
             <mat-form-field  >
@@ -137,8 +224,16 @@
     
 </div>
 
-<div  *ngIf=" is_admin!='ADMIN' " class="container" style="z-index: 1 !important;" name="cala" id='cala'></div>
-<div  *ngIf=" is_admin=='ADMIN' " class="container" style="z-index: 1 !important;" name="cala" id='cala-admin'></div>
+<div  *ngIf="load != 0" id="delete">
+  <img id="loading" src="../../../assets/loading.gif.gif" width="60px" height="60px">
+</div>
+
+<div>
+  <div  *ngIf=" is_admin!='ADMIN' " class="container" style="z-index: 1 !important;" name="cala" id='cala'></div>
+  <div  *ngIf=" is_admin=='ADMIN' " class="container" style="z-index: 1 !important;" name="cala" id='cala-admin'></div>
+
+</div>
+
 
 <div style="height: 30px;"></div>
 

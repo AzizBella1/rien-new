@@ -48,14 +48,17 @@ export class DataService {
 
 	signin(request: Request): Observable<any> {
     //console.log(request);
-		return this.http.post<any>(this.baseUrl + 'signin', request, {headers: new HttpHeaders({ 'Content-Type': 'application/json' })}).pipe(map((resp) => {
-			sessionStorage.setItem('user', request.username);
+		return this.http.post<any>(this.baseUrl + 'signin', request, {headers: new HttpHeaders({ 'Content-Type': 'application/json' })})
+    
+    // .pipe(map((resp) => {
+		// 	sessionStorage.setItem('user', request.username);
      
-			sessionStorage.setItem('token', 'HTTP_TOKEN ' + resp.token);
-      //console.log("++++",resp);
+		// 	sessionStorage.setItem('token', 'HTTP_TOKEN ' + resp.token);
+    //   //console.log("++++",resp);
       
-			return resp;
-		}));
+    //     return resp;
+      
+		// }));
 	}
   
 
@@ -386,6 +389,17 @@ export class DataService {
 
   addCheck(user:any,st:any){
     return this.http.post<any>(this.baseUrl + 'Api/checks/' + st, user,{
+			headers: new HttpHeaders({
+			  'Content-Type': 'application/json',
+			  'Authorization': ''+ this.token0
+			}),
+			responseType: 'json'
+		});
+  }
+
+
+  isCheckIn(data:any): any {
+    return this.http.post<any>(this.baseUrl + 'Api/checks/byuser' ,data,{
 			headers: new HttpHeaders({
 			  'Content-Type': 'application/json',
 			  'Authorization': ''+ this.token0

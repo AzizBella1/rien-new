@@ -121,3 +121,12 @@ mat-table{
     align-items: flex-end;
     justify-content: flex-end;
 }
+
+.backgroundBody{
+    position: fixed;
+    top: 0px;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background: #000000ad;
+}

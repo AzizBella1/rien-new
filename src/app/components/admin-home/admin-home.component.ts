@@ -14,6 +14,8 @@ import {saveAs} from 'file-saver';
 
 import * as XLSX from "xlsx";
 
+
+
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
@@ -272,9 +274,11 @@ export class AdminHomeComponent implements OnInit {
     
     var wb = XLSX.utils.book_new();
     var ws = XLSX.utils.json_to_sheet(arr);
-    XLSX.utils.book_append_sheet(wb, ws, 'test');
+    XLSX.utils.book_append_sheet(wb, ws, 'data');
     XLSX.writeFile(wb, `exp.xlsx`);
   }
+
+
 
   
   
@@ -306,6 +310,8 @@ export class AdminHomeComponent implements OnInit {
   
 
   data:any=[]
+
+
    showAll() {
     /*
     this.dataservice.getReclamation().subscribe(
@@ -394,11 +400,16 @@ export class AdminHomeComponent implements OnInit {
             vehicule: l.device.name,
             user: l.client.name,
             dateCreation: l.date_creation,
-            dateModification: l.date_modification
+            dateModification: l.date_modification,
+            selected:''
           };
           this.data.push(item);
+          
         }
       }
+
+     
+      
 
       this.dataSource = new MatTableDataSource(this.data);
       
@@ -413,6 +424,8 @@ export class AdminHomeComponent implements OnInit {
           sessionStorage.removeItem('tokenExp')
           sessionStorage.removeItem('token'); 
           sessionStorage.removeItem('is_admin')
+          localStorage.clear()
+      sessionStorage.clear()
           
           window.location.href='/'
         }
@@ -457,6 +470,20 @@ export class AdminHomeComponent implements OnInit {
       res.forEach((item: any) => {
         item.befor = item.befor.split("|");
       });
+
+      var dataTree = this.data
+      dataTree.map((dd:any)=>{
+        if (dd.id == id) {
+          
+          dd.selected = '1'
+        }else{
+          dd.selected = ''
+        }
+      })
+
+   
+
+      this.dataSource.filteredData = dataTree
       
     })
   }
@@ -586,7 +613,25 @@ export class AdminHomeComponent implements OnInit {
     //console.log(desc);
     this.description=recl
     this.style='opacity:0.5;pointer-events:none;'
+    // console.log(recl);
     
+    var dataTree = this.data
+    dataTree.map((dd:any)=>{
+      if (dd.id == recl.id) {
+        
+        dd.selected = '1'
+      }else{
+        dd.selected = ''
+      }
+    })
+
+   
+
+    this.dataSource.filteredData = dataTree
+
+
+    
+
     
     
     
@@ -631,12 +676,29 @@ export class AdminHomeComponent implements OnInit {
   hideLOG(){
     this.style='opacity:1;'
     this.hideLog=true
+
+    setTimeout(()=>{
+      this.data.map((dd:any)=>{
+        dd.selected = ''
+        
+      })
+      this.dataSource.filteredData = this.data
+    },1000)
   }
 
   hideDetail(){
     this.style='opacity:1;'
     this.hide=true
     this.Sup=false
+    
+
+    setTimeout(()=>{
+      this.data.map((dd:any)=>{
+        dd.selected = ''
+        
+      })
+      this.dataSource.filteredData = this.data
+    },1000)
   }
 
   hideDetailLog(){

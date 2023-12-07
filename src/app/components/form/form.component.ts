@@ -263,7 +263,7 @@ export class FormComponent implements OnInit {
   getSolution() {
     this.dataservice.getSolution().subscribe(
       (data:any) => {
-        this.solution=this.solutionCopy = data
+        this.solution=this.solutionCopy = data.filter((res:any)=>res.id != 18)
       }
     )
 
@@ -338,8 +338,8 @@ testerMarrakech:any=[]
   showAllProbleme(){
     this.dataservice.getProbleme().subscribe(
       (data:any) => {
-        this.probleme = data,
-        this.problemeCopy=data
+        this.probleme = this.problemeCopy=data.filter((res:any)=>res.id != 16)
+        
        // console.log(this.produit)
       }
     )
@@ -350,7 +350,7 @@ testerMarrakech:any=[]
   showRef() {
     this.dataservice.getReference().subscribe(
       (data:any) => {
-        this.refCopy=this.ref = data.filter((res:any)=>res.id != 1)
+        this.refCopy=this.ref = data.filter((res:any)=>res.id != 3)
       
         //console.log(this.ref)
       }
@@ -612,10 +612,15 @@ testerMarrakech:any=[]
 
       
       let Problemes:any=[]
-      this.newForm.problemeId.forEach((id:any) => {
-          
-        Problemes.push({id:id})
-      });
+      if (this.newForm.problemeId==0) {
+        Problemes.push({id:16})
+      }else{
+
+        this.newForm.problemeId.forEach((id:any) => {
+            
+          Problemes.push({id:id})
+        });
+      }
 
       let Solutions:any=[]
       
@@ -670,6 +675,8 @@ testerMarrakech:any=[]
           client: { id: this.user[0].id }
         };
       }
+
+      
 
       this.encour='encour'
       this.style='opacity:0.5;pointer-events:none;'

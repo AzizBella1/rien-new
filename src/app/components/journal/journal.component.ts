@@ -52,11 +52,13 @@ export class JournalComponent implements OnInit{
   reclamationCopy:any=[]
   user:any
   users: any;
+  
+  load:any = 1
 
   fReclamation(e:any){
     //console.log(e.target.value);
     this.Reclamation=this.reclamationCopy
-    this.Reclamation=this.Reclamation.filter((v:any) => v.ident.toLowerCase().indexOf(e.target.value) > -1)
+    this.Reclamation=this.Reclamation.filter((v:any) => v.ident.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1)
        
   }
 
@@ -163,6 +165,8 @@ export class JournalComponent implements OnInit{
           
           window.location.href='/'
         }
+      },()=>{
+       this.load=0
       }
     )
 
@@ -186,6 +190,8 @@ export class JournalComponent implements OnInit{
     this.todo.get('description')!.setValue('')
     //console.log(this.Jornal);
     this.hideAdd=!this.hideAdd
+
+    this.style = (this.hideAdd == false) ? 'opacity:0.5;pointer-events:none;' : ''
     window.scrollTo(0,0)
     
   }
@@ -197,6 +203,7 @@ export class JournalComponent implements OnInit{
     this.hideAdd=false
     //console.log(rec.event._def.publicId);
 
+    
     this.dataservice.getIdJornale(rec.event._def.publicId).subscribe((j:any)=>{
       this.dataservice.getIdReclamation(j.reclamation_id).subscribe((r:any)=>{
         this.dateJoornale=j.date
@@ -219,6 +226,75 @@ export class JournalComponent implements OnInit{
     
     //console.log(rec.event._context.options.events[0])
     window.scrollTo(0,0)
+  }
+
+  selectedRec:any
+  infoReclamation(rec:any){
+ 
+    this.addButton=false
+    this.hideAdd=false
+    this.dataservice.getIdJornale(rec.event._def.publicId).subscribe((j:any)=>{
+      var selectedRec = this.Reclamation.filter((res:any)=>res.id == j.reclamation_id) 
+      let i=0
+      //console.log(j);
+    
+      var references:any
+      var solutions:any
+      var problemes:any
+      selectedRec.forEach((l:any) => {
+        references=''
+        solutions=''
+        problemes=''
+        let cp=0
+        l.problemes.forEach((p:any) => {
+          if (cp==0) {
+            problemes = problemes+p.name
+          } else {
+            problemes = problemes+' + '+p.name
+          }
+        
+          cp++
+        });
+        cp=0
+        l.solutions.forEach((s:any) => {
+          if (cp==0) {
+            solutions = solutions+s.name
+          } else {
+            solutions = solutions+' + '+s.name
+          }
+        
+          cp++
+          
+        });
+        cp=0
+        l.references.forEach((r:any) => {
+          if (cp==0) {
+            references = references+r.name
+          } else {
+            references = references+' + '+r.name
+          }
+          cp++
+        });
+
+        let dateM = l.date_modification.substring(0,10)+' '+l.date_modification.substring(11,19)
+        let dateC = l.date_creation.substring(0,10)+' '+l.date_creation.substring(11,19)
+        let dateJ = j.date.substring(0,10)+' '+j.date.substring(11,19)
+
+        var val={dateJournale:dateJ,dureeJ:j.durree,j:'0',num:l.ident,imei:l.device.uniqueid,ref:references,istodo:l.istodo,solution:solutions,description:l.description,probleme:problemes,product:l.product.name,id:l.id,statut:l.statut,ville:l.device.ville.name,vehicule:l.device.name,user:l.client.name,dateCreation:dateC,dateModification:dateM}
+        this.selectedRec=val
+        i++
+      });
+      
+
+      //console.log(this.selectedRec);
+      
+    },
+    (error:any)=>{
+      this.error='Error !!!'
+    })
+    //this.reclamation.filter((res:any)=>res.ident == '') 
+    
+    
   }
 
   onChangeUser(user:any){
@@ -265,6 +341,8 @@ export class JournalComponent implements OnInit{
       },
       (error)=>{
         this.error='Error Add Journal !!!'
+      },()=>{
+        this.style=''
       })
   }
     
@@ -347,10 +425,9 @@ export class JournalComponent implements OnInit{
   
   calendarOptions: CalendarOptions ={
   
+  }
 
-}
-
-color:any=['#66ccff','#8080ff','#379006','#4da6ff','#a3a3c2']
+  color:any=['#66ccff','#8080ff','#379006','#4da6ff','#a3a3c2']
 
   jsc(){
     //console.log(this.color[Math.floor(Math.random() * this.color.length)]);
@@ -379,7 +456,7 @@ color:any=['#66ccff','#8080ff','#379006','#4da6ff','#a3a3c2']
       editable: true,
       selectable: true,
       selectMirror: true,
-      dayMaxEvents: true,
+      dayMaxEvents: true
       
     })
     calendar.render()
@@ -394,7 +471,7 @@ color:any=['#66ccff','#8080ff','#379006','#4da6ff','#a3a3c2']
     const calendar = new Calendar(calendarEl!, {
       plugins: [dayGridPlugin,interactionPlugin ],
       events:this.JornalAdmin,
-      eventClick:this.onMod.bind(this),
+      eventClick:this.infoReclamation.bind(this),
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
@@ -414,9 +491,10 @@ color:any=['#66ccff','#8080ff','#379006','#4da6ff','#a3a3c2']
       editable: true,
       selectable: true,
       selectMirror: true,
-      dayMaxEvents: true,
+      dayMaxEvents: true
       
     })
     calendar.render()
+
   }
 }

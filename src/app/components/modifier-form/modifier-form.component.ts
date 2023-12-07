@@ -161,7 +161,7 @@ export class ModifierFormComponent implements OnInit {
   getSolution() {
     this.dataservice.getSolution().subscribe(
       (data:any) => {
-        this.solution=this.solutionCopy = data
+        this.solution=this.solutionCopy = data.filter((res:any)=>res.id != 18)
       }
     )
 
@@ -364,7 +364,7 @@ export class ModifierFormComponent implements OnInit {
         
         
       // })
-      this.probleme=this.problemeCopy = res
+      this.probleme=this.problemeCopy = res.filter((res:any)=>res.id != 16)
     
       this.showSolution(reclamation)
     })
@@ -406,14 +406,14 @@ export class ModifierFormComponent implements OnInit {
         //console.log(this.ville)
       },
       (error:any)=>{
-        if (error.error.status==500) {
-          sessionStorage.removeItem('user'); 
-          sessionStorage.removeItem('tokenExp')
-          sessionStorage.removeItem('token'); 
-          sessionStorage.removeItem('is_admin')
+        // if (error.error.status==500) {
+        //   sessionStorage.removeItem('user'); 
+        //   sessionStorage.removeItem('tokenExp')
+        //   sessionStorage.removeItem('token'); 
+        //   sessionStorage.removeItem('is_admin')
           
-          window.location.href='/'
-        }
+        //   window.location.href='/'
+        // }
       }
     )
     this.dataservice.getUser().subscribe((res:any)=>{
@@ -438,7 +438,7 @@ export class ModifierFormComponent implements OnInit {
     let references:any=[]
     this.dataservice.getReference().subscribe(
       (data:any) => {
-        this.refCopy= this.ref = data.filter((res:any)=>res.id != 1)
+        this.refCopy= this.ref = data.filter((res:any)=>res.id != 3)
         this.refCopy.forEach((l:any) => {
         
           ref.forEach((r:any) => {
@@ -685,10 +685,17 @@ export class ModifierFormComponent implements OnInit {
      
 
       let Problemes:any=[]
-      this.newForm.problemeId.forEach((id:any) => {
+
+      if (this.newForm.problemeId==0) {
+        Problemes.push({id:16})
+      }else{
+
+        this.newForm.problemeId.forEach((id:any) => {
           
-        Problemes.push({id:id})
-      });
+          Problemes.push({id:id})
+        });
+      }
+      
 
       let Solutions:any=[]
       

@@ -128,71 +128,76 @@
         <br>
         <mat-table  class="tt" #table matSort  [dataSource]="dataSource" >
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="num">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.num}} </mat-cell>
-        </ng-container>
+            <!-- Position Column -->
+            <ng-container matColumnDef="num">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.num}} </mat-cell>
+            </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="user">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Utilisateur </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}" > {{element.user}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="ville">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.ville}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="vehicule">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Véhicule </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.vehicule}} </mat-cell>
-        </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="user">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Utilisateur </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}" > {{element.user}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="ville">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.ville}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="vehicule">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Véhicule </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.vehicule}} </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="dateCreation">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Date de creation </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.dateCreation | date:'yyyy-MM-dd HH:mm'}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="dateModification">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Date de modification </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.dateModification | date:'yyyy-MM-dd HH:mm'}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="img">
+                <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}">
+                    <img *ngIf="element.id==idDw && end" id="" src="../../../assets/loading.gif.gif" width="20px" height="20px">
+                    <mat-icon  style="font-size: 22px;" *ngIf="element.img!=null && (!end || (element.id!=idDw && end))" (click)="download(element)">cloud_download</mat-icon> &nbsp;
+                    <b style="font-size: 12px;" *ngIf="element.img!=null && (!end || (element.id!=idDw && end))" >{{element.ext}}</b>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}">  
+                    <button (click)="detail(element)" *ngIf="element.selected == ''" class="btn btn-primary btn-sm" >
+                        <mat-icon>description</mat-icon>
+                    </button>
+                    <button (click)="detail(element)" *ngIf="element.selected == '1'" class="btn btn-outline-primary btn-sm" >
+                        <mat-icon>description</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="log">
+                <mat-header-cell *matHeaderCellDef> Log </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> 
+                    <button  (click)="log(element.id)"  *ngIf="element.selected == ''" class="btn btn-secondary btn-sm" ><mat-icon>history</mat-icon></button> 
+                    <button  (click)="log(element.id)" *ngIf="element.selected == '1'"  class="btn btn-outline-secondary btn-sm" ><mat-icon>history</mat-icon></button> 
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="mod">
+                <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> <a  type="button" *ngIf="element.statut != 'valider'" class="btn btn-warning" href="mod/{{element.id}}" >Mod</a></mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="valider">
+                <mat-header-cell *matHeaderCellDef> Supp / Valider </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}">    <button  (click)="toSupp(element.id)" class="btn btn-danger btn-sm" ><mat-icon>delete_forever</mat-icon></button>  &nbsp; &nbsp; <button (click)="invalider(element.id)" *ngIf="element.statut=='valider'" style="width: 90px;" class="btn btn-outline-danger" >Invalider</button><button *ngIf="element.statut=='traité'" style="width: 90px;" (click)="valider(element.id)" class="btn btn-success" >Valider</button></mat-cell>
+            </ng-container>
         
-        <ng-container matColumnDef="dateCreation">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Date de creation </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.dateCreation | date:'yyyy-MM-dd HH:mm'}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="dateModification">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Date de modification </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> {{element.dateModification | date:'yyyy-MM-dd HH:mm'}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="img">
-            <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}">
-                <img *ngIf="element.id==idDw && end" id="" src="../../../assets/loading.gif.gif" width="20px" height="20px">
-                <mat-icon  style="font-size: 22px;" *ngIf="element.img!=null && (!end || (element.id!=idDw && end))" (click)="download(element)">cloud_download</mat-icon> &nbsp;
-                <b style="font-size: 12px;" *ngIf="element.img!=null && (!end || (element.id!=idDw && end))" >{{element.ext}}</b>
-            </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="description">
-            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}">  
-                <button (click)="detail(element)"  class="btn btn-primary btn-sm" >
-                    <mat-icon>description</mat-icon>
-                </button>
-            </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="log">
-            <mat-header-cell *matHeaderCellDef> Log </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> 
-                <button  (click)="log(element.id)"  class="btn btn-secondary btn-sm" ><mat-icon>history</mat-icon></button> </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="mod">
-            <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}"> <a  type="button" *ngIf="element.statut != 'valider'" class="btn btn-warning" href="mod/{{element.id}}" >Mod</a></mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="valider">
-            <mat-header-cell *matHeaderCellDef> Supp / Valider </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 'en cours' ,'traite': element.statut == 'traité'}">    <button  (click)="toSupp(element.id)" class="btn btn-danger btn-sm" ><mat-icon>delete_forever</mat-icon></button>  &nbsp; &nbsp; <button (click)="invalider(element.id)" *ngIf="element.statut=='valider'" style="width: 90px;" class="btn btn-outline-danger" >Invalider</button><button *ngIf="element.statut=='traité'" style="width: 90px;" (click)="valider(element.id)" class="btn btn-success" >Valider</button></mat-cell>
-        </ng-container>
-       
-       
-
         
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+            
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
     <mat-paginator #paginator
     [pageSize]="15"
     [showFirstLastButtons]="true">

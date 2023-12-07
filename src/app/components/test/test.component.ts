@@ -51,6 +51,7 @@ export class TestComponent implements OnInit{
  
   ngOnInit(): void {
     
+    this.reloadAll()
     this.getJournal()
     
     //this.redirect()
@@ -61,7 +62,6 @@ export class TestComponent implements OnInit{
       
     //}
     
-    this.reloadAll()
     //this.showAll(0)
     //console.log(this.cnt);
   }
@@ -92,30 +92,30 @@ export class TestComponent implements OnInit{
       },
       (error:any)=>{
         if (error.error.status==500) {
-          sessionStorage.removeItem('user'); 
-          sessionStorage.removeItem('tokenExp')
-          sessionStorage.removeItem('token'); 
-          sessionStorage.removeItem('is_admin')
+          // sessionStorage.removeItem('user'); 
+          // sessionStorage.removeItem('tokenExp')
+          // sessionStorage.removeItem('token'); 
+          // sessionStorage.removeItem('is_admin')
           
-          window.location.href='/'
+          // window.location.href='/'
         }
       }
       )
       //
     //
   }
-  async showAll(s:any) {
-    let problemes:any=''
-    let solutions:any=''
-    let references:any=''
+
+  noReclam:any=''
+  allReclamation(s:any){
     let mydata:any = []
-    //console.log("this ",this.Jornal);
     if (s==1) {
-      let i=0
-    
-      
       mydata = this.data.filter((res:any)=>res.user==this.User)
       
+      console.log(mydata.length , mydata);
+      
+      if (mydata.length == 0) {
+        this.noReclam='1'
+      }
       
       this.dataSource = new MatTableDataSource<Element>(mydata)
                 
@@ -127,7 +127,44 @@ export class TestComponent implements OnInit{
       this.btnReload = 'pointer-events: all'
       this.style=''
       this.iconReload = ''
-    }else{
+    } else {
+      this.dataSource = new MatTableDataSource<Element>(this.data)
+                
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort
+      this.traite=0
+    
+      this.style='opacity:1;pointer-events:all;'
+      this.btnReload = 'pointer-events: all'
+      this.style=''
+      this.iconReload = ''
+    }
+  }
+
+  async showAll(s:any) {
+    let problemes:any=''
+    let solutions:any=''
+    let references:any=''
+    let mydata:any = []
+    //console.log("this ",this.Jornal);
+    // if (s==1) {
+    //   let i=0
+    
+      
+    //   mydata = this.data.filter((res:any)=>res.user==this.User)
+      
+      
+    //   this.dataSource = new MatTableDataSource<Element>(mydata)
+                
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort
+    //   this.traite=0
+    
+    //   this.style='opacity:1;pointer-events:all;'
+    //   this.btnReload = 'pointer-events: all'
+    //   this.style=''
+    //   this.iconReload = ''
+    // }else{
       this.dataservice.getReclamation().subscribe(
       
         async (data:any) => {
@@ -174,10 +211,13 @@ export class TestComponent implements OnInit{
                     }
                     cp++
                   });
-                  var val={j:'0',num:l.ident,imei:l.device.uniqueid,ref:references,istodo:l.istodo,solution:solutions,description:l.description,probleme:problemes,product:l.product.name,id:l.id,statut:l.statut,ville:l.device.ville.name,vehicule:l.device.name,user:l.client.name,dateCreation:l.date_creation,dateModification:l.date_modification}
+                  var val={selected:'',j:'0',num:l.ident,imei:l.device.uniqueid,ref:references,istodo:l.istodo,solution:solutions,description:l.description,probleme:problemes,product:l.product.name,id:l.id,statut:l.statut,ville:l.device.ville.name,vehicule:l.device.name,user:l.client.name,dateCreation:l.date_creation,dateModification:l.date_modification}
                   this.data[i]=val
                   i++
                 });
+
+
+                this.allReclamation(0)
                 
               
                 
@@ -192,27 +232,49 @@ export class TestComponent implements OnInit{
                 // });
               
                   
-                //console.log("data",this.data);
-                this.dataSource = new MatTableDataSource<Element>(this.data)
                 
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort
-            this.traite=0
+                // var xv = this.data.filter((r:any)=>
+                  
+                //   (r.num+'') == ('A2023/12/4/22')
+                // )
+
+                // this.data[xv[0].j].num = 'hhhhhhhh'
+                
+
+               
+            //     this.dataSource = new MatTableDataSource<Element>(this.data)
+                
+            // this.dataSource.paginator = this.paginator;
+            // this.dataSource.sort = this.sort
+            // this.traite=0
           }else{
             this.traite=0
           }
          
         },
-        ()=>{},
+        (error)=>{
+          if (error.error.status==500) {
+            sessionStorage.removeItem('user'); 
+            sessionStorage.removeItem('tokenExp')
+            sessionStorage.removeItem('token'); 
+            sessionStorage.removeItem('is_admin')
+            localStorage.clear()
+      sessionStorage.clear()
+            
+            window.location.href='/'
+          }
+        },
         ()=>{
           this.style='opacity:1;pointer-events:all;'
           this.btnReload = 'pointer-events: all'
           this.style=''
           this.iconReload = ''
+
+
         })
       
       
-    }
+    //}
     
 
 
@@ -310,11 +372,12 @@ export class TestComponent implements OnInit{
     }
     this.searcheIcon=true
     
-
+    this.noReclam=''
     if (this.tous==true) {
       this.showAll(0)
     } else {
-      this.showAll(1)
+
+      this.allReclamation(1)
     }
   }
 
@@ -337,7 +400,19 @@ export class TestComponent implements OnInit{
     this.style='opacity:0.5;pointer-events:none;'
     
     
-    
+    var dataTree = this.data
+      dataTree.map((dd:any)=>{
+        if (dd.id == recl.id) {
+          
+          dd.selected = '1'
+        }else{
+          dd.selected = ''
+        }
+      })
+
+   
+
+      this.dataSource.filteredData = dataTree
     
     //this.elem.first.nativeElement.setAttribute("style", "opacity:0.5;")
     
@@ -346,6 +421,14 @@ export class TestComponent implements OnInit{
   hideDetail(){
     this.style='opacity:1;'
     this.hide=true
+
+    setTimeout(()=>{
+      this.data.map((dd:any)=>{
+        dd.selected = ''
+        
+      })
+      this.dataSource.filteredData = this.data
+    },500)
   }
 
   
@@ -383,14 +466,15 @@ export class TestComponent implements OnInit{
  
   all(s:any){
     this.style='opacity:0.3;pointer-events:none;'
+    this.noReclam=''
     if (s==0) {
       this.tous=false
       this.mes=true
-      this.showAll(1)
+      this.allReclamation(1)
     } else {
       this.tous=true
       this.mes=false
-      this.showAll(0)
+      this.allReclamation(0)
     }
   }
 

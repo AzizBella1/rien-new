@@ -72,9 +72,15 @@ export class LoginComponent implements OnInit {
 		this.dataservice.signin(request).subscribe((result:any)=> {
       
 
-      //console.log(result);
+      console.log(result);
+      sessionStorage.setItem('user', result.username);
+      sessionStorage.setItem('token', 'HTTP_TOKEN ' + result.token);
+      // return ;
+
       var date = new Date()
       
+     
+			sessionStorage.setItem('token', 'HTTP_TOKEN ' + result.token);
       var last_date = localStorage.getItem('timeToExp')
       var current_date = date.getTime();
       var uuid = this.generateUUID()
