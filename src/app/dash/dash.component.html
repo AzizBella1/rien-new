@@ -1,10 +1,11 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
 
+<div style="position: relative;top: 58px;">
 <div  *ngIf="load != 0" id="delete">
   <img id="loading" src="../../../assets/loading.gif.gif" width="60px" height="60px">
   
 </div>
-<div *ngIf="idUser!=null && is_admin=='ADMIN'" class="container mt-5">
+<div *ngIf="idUser!=null && is_admin=='ADMIN'" class="container mt-2">
   <h2>Dashboard</h2>
   <div [style]="style">
   <div  class="row" style="padding-bottom: 8px;">
@@ -162,4 +163,7 @@
 </div>
   
   
+</div>
+
+
 </div>

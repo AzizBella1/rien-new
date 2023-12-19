@@ -148,12 +148,7 @@ export class TodoComponent implements OnInit{
       //data.sort((a:any, b:any) => b.id - a.id)
       this.rec = data.filter((res:any)=>res.istodo==true).sort((a:any, b:any) => b.id - a.id)
       
-      this.lastRec=data[0]
-      if (this.lastRec.date_creation.substring(8,10)==this.curDate.getDate()) {
-        this.lastRec=data[0]
-      } else {
-        this.lastRec=undefined
-      }
+      
       let problemes:any=''
       let solutions:any=''
       let references:any=''
@@ -410,35 +405,42 @@ export class TodoComponent implements OnInit{
   addNew(){
     // reclamation => response.id
     this.load = 1
-      let data:any={}
-      
-      //console.log(this.todo.get('vehicule')!.value);
+    this.dataservice.getLastReclamation().subscribe((r:any)=>{
+    
       let last
       let cnt 
-      let probleme
-      let solution
-      if (this.lastRec==undefined) {
-        cnt='01'
-      }else{
-        last= this.lastRec.ident.split("/")
+      
+      
+      
+
+      if (r.date_creation.substring(8,10)==this.curDate.getDate()) {
+        last= r.ident.split("/")
         
         if (parseInt(last[3])<9) {
           cnt='0'+(parseInt(last[3])+1)
         } else {
           cnt=parseInt(last[3])+1
         }
+      } else {
+        cnt='01'
       }
 
+      let data:any={}
+      
+     
+      let probleme
+      let solution
+  
       let Problemes:any=[]
       
-
+  
       let Solutions:any=[]
       
-
+  
       let Reference:any=[{id:3}]
   
-
-
+  
+  
       if (this.todo.get('probleme')!.value=='') {
         Problemes.push({id:16})
         Solutions.push({id:18})
@@ -447,7 +449,7 @@ export class TodoComponent implements OnInit{
           
           Problemes.push({id:id})
         });
-
+  
         // this.todo.get('solution')!.value.forEach((id:any) => {
           
         //   Solutions.push({id:id})
@@ -488,34 +490,38 @@ export class TodoComponent implements OnInit{
       //   };
       // }
       
-
-
+  
+  
       //console.log(data);
       
-
+  
       let log:any={}
+     
+      console.log(data);
       
-      this.dataservice.addForm(data).subscribe(
-        (response)  => {
+      // this.dataservice.addForm(data).subscribe(
+      //   (response)  => {
           
           
-      //     log = {
-      //       id_rec: response.id ,
+      // //     log = {
+      // //       id_rec: response.id ,
             
-      //       op: 'CREATE'
-      //     };
-      //     //console.log(log);
-      //     // this.dataservice.addLog(log).subscribe(()=>{
-        //     //   
-        //     // })
+      // //       op: 'CREATE'
+      // //     };
+      // //     //console.log(log);
+      // //     // this.dataservice.addLog(log).subscribe(()=>{
+      //   //     //   
+      //   //     // })
         
         
-       this.add()
+      //  this.add()
       
-       this.showVille()
+      //  this.showVille()
           
-
-      })
+  
+      // })
+    })
+    
   }
     
 

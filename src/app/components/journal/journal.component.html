@@ -1,4 +1,6 @@
 <app-navbar *ngIf="idUser!=null "></app-navbar>
+
+<div style="position: relative;top: 58px;">
 <div *ngIf="!hideAdd && idUser!=null && is_admin!='ADMIN' " class="popup">
   <button class="btnCancel" (click)="add()">X</button>
   <br>
@@ -148,7 +150,7 @@
 <div *ngIf="!hideAdd" class="backgroundBody">
 
 </div>
-<div *ngIf="idUser!=null && is_admin!='ADMIN' " class="container mt-4" [style]="style">
+<div *ngIf="idUser!=null && is_admin!='ADMIN' " class="container mt-2" [style]="style">
 
    
     <div class="container">
@@ -181,7 +183,7 @@
     
 </div>
 
-<div *ngIf="idUser!=null && is_admin=='ADMIN' " class="container mt-5">
+<div *ngIf="idUser!=null && is_admin=='ADMIN' " class="container mt-2">
 
    
     <div class="container">
@@ -237,3 +239,4 @@
 
 <div style="height: 30px;"></div>
 
+</div>

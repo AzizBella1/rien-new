@@ -1,4 +1,6 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
+
+<div style="position: relative;top: 58px;">
     <div *ngIf="!hideAdd" class="popup">
         <button class="btnCancel" (click)="add()">X</button>
         <br>
@@ -116,4 +118,4 @@
         
 </div>
         
-    
+</div>

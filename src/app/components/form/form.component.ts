@@ -242,20 +242,9 @@ export class FormComponent implements OnInit {
     //this.editReclamation();
     this.changeButton()
     this.valider()
-    this.dataservice.getReclamation().subscribe((data:any)=>{
-      data.sort((a:any, b:any) => b.id - a.id)
-      
-      if (data[0].date_creation.substring(8,10)==this.curDate.getDate()) {
-        this.lastRec=data[0]
-      } else {
-        this.lastRec=undefined
-      }
-      
-      
-
-     })
+   
      
-
+   
     
 
   }
@@ -580,33 +569,37 @@ testerMarrakech:any=[]
   statut:any
   lastFormId:any
   error:any=''
+  
   addReclamation(){
     // reclamation => response.id
-    
-    let last
-    let cnt 
-    if (this.lastRec==undefined) {
-      cnt='01'
-    }else{
-      last= this.lastRec.ident.split("/")
-      if (parseInt(last[3])<9) {
-        cnt='0'+(parseInt(last[3])+1)
-      } else {
-        cnt=parseInt(last[3])+1
-      }
-    }
+    this.dataservice.getLastReclamation().subscribe((r:any)=>{
+      let last
+      let cnt 
       
-
-   // if (this.allValid) {
+      if (r.date_creation.substring(8,10)==this.curDate.getDate()) {
+        this.lastRec=r
+        last= r.ident.split("/")
+        if (parseInt(last[3])<9) {
+          cnt='0'+(parseInt(last[3])+1)
+        } else {
+          cnt=parseInt(last[3])+1
+        }
+      } else {
+        cnt='01'
+      }
+      
+        
+  
+  
       switch (this.newForm.statut) {
         case 0:
-           this.statut='en cours'
+            this.statut='en cours'
           break;
         case 1:
-           this.statut='traité'
+            this.statut='traité'
           break;
       }
-
+  
       let data:any={}
       
 
@@ -637,9 +630,9 @@ testerMarrakech:any=[]
           Reference.push({id:id})
         });
       }
-
-      
+  
         
+          
       if (this.newForm.solutionId==0) {
         data = {
           device: { id: this.newForm.vehiculeId },
@@ -675,9 +668,10 @@ testerMarrakech:any=[]
           client: { id: this.user[0].id }
         };
       }
-
+  
       
-
+        
+  
       this.encour='encour'
       this.style='opacity:0.5;pointer-events:none;'
       //console.log(data);
@@ -717,7 +711,7 @@ testerMarrakech:any=[]
             },1000)
             this.uploadFile(response.id)
           },(error)=>{
-           this.error='Error Log!!!'
+            this.error='Error Log!!!'
           })
           
           
@@ -732,13 +726,15 @@ testerMarrakech:any=[]
           //alert('Reclamation created successfully'+ response);
           
           //alert(1)
-           // Handle the response here
-         },(error)=>{
+            // Handle the response here
+          },(error)=>{
           //console.log(error);
           
           this.error='Error Add !!!'
         })
-        
+          
+    })
+    
         
       
       

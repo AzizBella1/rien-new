@@ -58,24 +58,36 @@ export class NavbarComponent implements OnInit{
     if ( sessionStorage.getItem(uuidLast!) == null) {
       
         
-      this.Logout()
+      window.location.href='/'
       
       
     }
     
     var bb = localStorage.getItem('timeToExp')
     var tt = date.getTime();
-    if(bb!=null){
+
+
+    setInterval(()=>{
+      let uuidLast = localStorage.getItem('uuid')
+      if ( sessionStorage.getItem(uuidLast!) == null) {
       
-      if (tt>parseInt(bb)+ (4 * 60 * 60 * 1000)) {
-       
-        this.Logout()
+        
+        window.location.href='/'
         
         
       }
-    }
+    },60000)
+    // if(bb!=null){
+      
+    //   if (tt>parseInt(bb)+ (4 * 60 * 60 * 1000)) {
+       
+    //     this.Logout()
+        
+        
+    //   }
+    // }
 
-    localStorage.setItem('timeToExp',date.getTime().toString())
+    // localStorage.setItem('timeToExp',date.getTime().toString())
     
     
     
@@ -127,10 +139,10 @@ convertToDateObject(dateString:any) {
           date:formattedDate
         }
 
-        console.log(data);
+        //console.log(data);
         
         this.dataservice.isCheckIn(data).subscribe((item:any)=>{
-          console.log(item[item.length-1]);
+          //console.log(item[item.length-1]);
           if (item.length != 0) {
             
             if (item[item.length-1].checkValue != 'IN') {
@@ -164,37 +176,23 @@ convertToDateObject(dateString:any) {
 
 
 
-  // test(){
-    
-  //     this.dataservice.getUser().subscribe(
-  //       (res:any)=>{
-
-  //       }
-  //     )
-      
-    
-  // }
  
   message:any=''
   Logout(){
-    //if (this.checkStatus!='out') {
-      sessionStorage.removeItem('user'); 
-      sessionStorage.removeItem('tokenExp')
-      sessionStorage.removeItem('token'); 
-      sessionStorage.removeItem('is_admin')
-      localStorage.removeItem('sessionIsActive')
-      localStorage.removeItem('timeToExp')
-      sessionStorage.setItem('cnt','0')
+    
+      // sessionStorage.removeItem('user'); 
+      // sessionStorage.removeItem('tokenExp')
+      // sessionStorage.removeItem('token'); 
+      // sessionStorage.removeItem('is_admin')
+      // localStorage.removeItem('sessionIsActive')
+      // localStorage.removeItem('timeToExp')
+      // sessionStorage.setItem('cnt','0')
 
       localStorage.clear()
       sessionStorage.clear()
-      //sessionStorage.removeItem('cnt')
-      //localStorage.setItem('user', '');
+     
       window.location.href='/'
-    // } else {
-    //   this.message="N'oubliez pas le check out !!"
-    //   setTimeout(()=>{this.message=''},4000)
-    // }
+   
     
    
    
@@ -272,7 +270,7 @@ convertToDateObject(dateString:any) {
       
       if (this.journalUser[0]==undefined) {
         this.checkOut=true
-        this.journalMessage="Il faut d'abord remplir le journal !"
+        this.journalMessage="N'oubliez pas de remplir le journal !"
         this.style='opacity:0.5;'
         
       } 
@@ -300,10 +298,13 @@ convertToDateObject(dateString:any) {
       navigator.geolocation.getCurrentPosition(
         (p)=>{
           //this.check()
-          let pointLatitude = p.coords.latitude
-          let pointLongitude = p.coords.longitude
+          let pointLatitude = p.coords.latitude //33.99832179952015 
+          let pointLongitude = p.coords.longitude //-6.861067938071202 
           let centerLatitude = 33.99832179952015;
           let centerLongitude = -6.861067938071202;
+
+          console.log(pointLatitude,pointLongitude);
+          
           let circleRadius = 5000;
           let test = this.isPointInsideCircle(
             pointLatitude,

@@ -146,7 +146,7 @@ export class ModifierFormComponent implements OnInit {
     
     this.showAll();
     this.showAllProduit();
-    //this.showRef()
+    this.showRef(null)
     
     
     this.getSolution()
@@ -439,14 +439,18 @@ export class ModifierFormComponent implements OnInit {
     this.dataservice.getReference().subscribe(
       (data:any) => {
         this.refCopy= this.ref = data.filter((res:any)=>res.id != 3)
-        this.refCopy.forEach((l:any) => {
-        
-          ref.forEach((r:any) => {
-            if (r.id == l.id) {
-              references.push(l.id)
-            }
+
+        if (ref != null) {
+          
+          this.refCopy.forEach((l:any) => {
+          
+            ref.forEach((r:any) => {
+              if (r.id == l.id) {
+                references.push(l.id)
+              }
+            });
           });
-        });
+        }
 
         
 

@@ -208,6 +208,16 @@ export class DataService {
 		  });
   }
 
+  getLastReclamation(): Observable<any[]> {
+    return this.http.get<any>(this.baseUrl + 'Api/reclamations/last', {
+			headers: new HttpHeaders({
+			  'Content-Type': 'application/json',
+			  'Authorization': ''+ this.token0
+			}),
+			responseType: 'json'
+		  });
+  }
+  
   addForm(form:any){
     
     return this.http.post<any>(this.baseUrl + 'Api/reclamations', form,{

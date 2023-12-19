@@ -1,5 +1,6 @@
 <app-navbar *ngIf="idUser!=null && is_admin!='ADMIN'"></app-navbar>
 
+<div style="position: relative;top: 58px;">
 <div *ngIf="idUser!=null && is_admin!='ADMIN'"  class="container div" >
   <div  *ngIf="message!=''" id="delete">
     <!--<img id="loading" src="../../../assets/loading.gif.gif" width="40px" height="40px">-->
@@ -249,6 +250,7 @@
   </div>
 </div>
 <div style="height: 20px;"></div>
+</div>
 <!-- <pre>
   {{dataLog | json}}
 </pre> -->

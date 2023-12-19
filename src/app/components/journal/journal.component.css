@@ -105,6 +105,9 @@
         width: 80%;
     }
 
+    ::ng-deep .fc .fc-toolbar.fc-header-toolbar {
+        display: grid;
+    }
     
 }
 
@@ -148,11 +151,8 @@
 }
 
 
-::ng-deep .fc-header-toolbar{
-    display: grid;
-}
-
-
 ::ng-deep .cdk-overlay-container{
 z-index: 10003 !important;
 }
+
+

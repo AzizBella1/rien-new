@@ -427,7 +427,7 @@ export class AdminHomeComponent implements OnInit {
           localStorage.clear()
       sessionStorage.clear()
           
-          window.location.href='/'
+         // window.location.href='/'
         }
       },
       ()=>{
@@ -593,7 +593,23 @@ export class AdminHomeComponent implements OnInit {
     //console.log(log);
     this.dataservice.addLog(log).subscribe(()=>{
       this.dataservice.deleteReclamation(id).subscribe((response)=>{
-        this.success()
+        this.data = this.data.filter((r:any) => r.id !== id);
+
+        //this.dataSource.filteredData = this.data
+        
+        this.dataSource = new MatTableDataSource(this.data);
+      
+        this.dataToExport = this.dataSource.filteredData
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        //this.success()
+        this.message='Supp success'
+        this.style='opacity:0.5;pointer-events:none;'
+        setTimeout(()=>{
+          this.message=''
+          this.style=''
+        },1000)
         
       })
     },(error)=>{

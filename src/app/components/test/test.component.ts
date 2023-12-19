@@ -50,9 +50,9 @@ export class TestComponent implements OnInit{
   constructor(private dataservice:DataService, private activateRoute: ActivatedRoute,private router: Router){}
  
   ngOnInit(): void {
-    
+    this.showAll(0)
     this.reloadAll()
-    this.getJournal()
+    //this.getJournal()
     
     //this.redirect()
 
@@ -105,6 +105,8 @@ export class TestComponent implements OnInit{
     //
   }
 
+  centent:any = 'display: contents;'
+
   noReclam:any=''
   allReclamation(s:any){
     let mydata:any = []
@@ -124,7 +126,8 @@ export class TestComponent implements OnInit{
       this.traite=0
     
       this.style='opacity:1;pointer-events:all;'
-      this.btnReload = 'pointer-events: all'
+      this.btnReload = 'pointer-events: all;'
+      this.btnReloadContenet = 'pointer-events: all;display: contents;'
       this.style=''
       this.iconReload = ''
     } else {
@@ -136,6 +139,7 @@ export class TestComponent implements OnInit{
     
       this.style='opacity:1;pointer-events:all;'
       this.btnReload = 'pointer-events: all'
+      this.btnReloadContenet = 'pointer-events: all;display: contents;'
       this.style=''
       this.iconReload = ''
     }
@@ -146,25 +150,7 @@ export class TestComponent implements OnInit{
     let solutions:any=''
     let references:any=''
     let mydata:any = []
-    //console.log("this ",this.Jornal);
-    // if (s==1) {
-    //   let i=0
     
-      
-    //   mydata = this.data.filter((res:any)=>res.user==this.User)
-      
-      
-    //   this.dataSource = new MatTableDataSource<Element>(mydata)
-                
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort
-    //   this.traite=0
-    
-    //   this.style='opacity:1;pointer-events:all;'
-    //   this.btnReload = 'pointer-events: all'
-    //   this.style=''
-    //   this.iconReload = ''
-    // }else{
       this.dataservice.getReclamation().subscribe(
       
         async (data:any) => {
@@ -222,31 +208,7 @@ export class TestComponent implements OnInit{
               
                 
                 
-                // this.data.forEach((l:any) => {
-                //   this.Jornal.forEach((x:any) => {
-                //     if (x.reclamation_id==l.id) {
-                //       l.j='1'
-                //       //alert(123)
-                //     }
-                //   });
-                // });
               
-                  
-                
-                // var xv = this.data.filter((r:any)=>
-                  
-                //   (r.num+'') == ('A2023/12/4/22')
-                // )
-
-                // this.data[xv[0].j].num = 'hhhhhhhh'
-                
-
-               
-            //     this.dataSource = new MatTableDataSource<Element>(this.data)
-                
-            // this.dataSource.paginator = this.paginator;
-            // this.dataSource.sort = this.sort
-            // this.traite=0
           }else{
             this.traite=0
           }
@@ -254,19 +216,20 @@ export class TestComponent implements OnInit{
         },
         (error)=>{
           if (error.error.status==500) {
-            sessionStorage.removeItem('user'); 
-            sessionStorage.removeItem('tokenExp')
-            sessionStorage.removeItem('token'); 
-            sessionStorage.removeItem('is_admin')
-            localStorage.clear()
-      sessionStorage.clear()
+            // sessionStorage.removeItem('user'); 
+            // sessionStorage.removeItem('tokenExp')
+            // sessionStorage.removeItem('token'); 
+            // sessionStorage.removeItem('is_admin')
+            // localStorage.clear()
+            // sessionStorage.clear()
             
-            window.location.href='/'
+            //window.location.href='/'
           }
         },
         ()=>{
           this.style='opacity:1;pointer-events:all;'
           this.btnReload = 'pointer-events: all'
+          this.btnReloadContenet = 'pointer-events: all;display: contents;'
           this.style=''
           this.iconReload = ''
 
@@ -360,12 +323,14 @@ export class TestComponent implements OnInit{
   }
 
   btnReload:any = 'pointer-events: all'
+  btnReloadContenet:any = 'pointer-events: all;display: contents;'
   iconReload:any = ''
 
   reload(){
     
     this.style='opacity:0.5;pointer-events: none'
     this.btnReload = 'background: #80808017;pointer-events: none'
+    this.btnReloadContenet = 'background: #80808017;pointer-events: none;display: contents;'
     this.iconReload = 'transform: rotate(180deg);transition: 3s ease-in-out;'
     if (this.inputField) {
       this.inputField.nativeElement.value = ''; 
@@ -477,6 +442,7 @@ export class TestComponent implements OnInit{
       this.allReclamation(0)
     }
   }
+
 
   
   // ngOnInit(): void {

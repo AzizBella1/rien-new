@@ -1,4 +1,4 @@
-<nav style="padding-left: 5px;" class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav style="padding-left: 5px;position: fixed;top:0 ;width: 100%;z-index: 10000;" class="navbar navbar-expand-sm navbar-dark bg-dark">
 
   
  
@@ -56,31 +56,32 @@
         
     </div>
 </nav>
-<div *ngIf="style!=''" class="divBody" [style]="style">
-</div>
-<div *ngIf="checkOut" class="detail" #llll>
-    
-    <br><br>
-    <div  class="container">
-        <div class="alert alert-warning" role="alert">
-            <strong>{{journalMessage}}</strong>
-        </div>
-        <div class="form-group row " style="display: grid;place-content: center;">
-            <div class="col-sm py-1">
-                <button (click)="cancel()" class="btn btn-sm btn-danger ok" >X</button>
+<div style="position: relative;top: 58px;">
+    <div *ngIf="style!=''" class="divBody" [style]="style">
+    </div>
+    <div *ngIf="checkOut" class="detail" #llll>
+        
+        <br><br>
+        <div  class="container">
+            <div class="alert alert-warning" role="alert">
+                <strong>{{journalMessage}}</strong>
             </div>
+            <div class="form-group row " style="display: grid;place-content: center;">
+                <div class="col-sm py-1">
+                    <button (click)="cancel()" class="btn btn-sm btn-danger ok" >X</button>
+                </div>
+            </div>
+            
         </div>
+    
         
     </div>
-   
-    
-</div>
 
-<div *ngIf="message!=''" class="alert alert-warning" role="alert">
-    <strong>{{message}}</strong>
+    <div *ngIf="message!=''" class="alert alert-warning" role="alert">
+        <strong>{{message}}</strong>
+    </div>
+    <div *ngIf="positionMessage!=''" class="alert alert-warning" role="alert">
+        <strong>{{positionMessage}}</strong>
+    </div>
 </div>
-<div *ngIf="positionMessage!=''" class="alert alert-warning" role="alert">
-    <strong>{{positionMessage}}</strong>
-</div>
-
 <script></script>
