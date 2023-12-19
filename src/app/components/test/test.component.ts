@@ -113,28 +113,31 @@ export class TestComponent implements OnInit{
     if (s==1) {
       mydata = this.data.filter((res:any)=>res.user==this.User)
       
-      console.log(mydata.length , mydata);
+      //console.log(mydata.length , mydata);
       
       if (mydata.length == 0) {
         this.noReclam='1'
       }
       
-      this.dataSource = new MatTableDataSource<Element>(mydata)
+      // this.dataSource = new MatTableDataSource<Element>(mydata)
                 
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort
-      this.traite=0
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort
+      // this.traite=0
     
-      this.style='opacity:1;pointer-events:all;'
-      this.btnReload = 'pointer-events: all;'
-      this.btnReloadContenet = 'pointer-events: all;display: contents;'
-      this.style=''
-      this.iconReload = ''
+      // this.style='opacity:1;pointer-events:all;'
+      // this.btnReload = 'pointer-events: all;'
+      // this.btnReloadContenet = 'pointer-events: all;display: contents;'
+      // this.style=''
+      // this.iconReload = ''
     } else {
-      this.dataSource = new MatTableDataSource<Element>(this.data)
-                
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort
+    }
+    this.dataSource = new MatTableDataSource<Element>(this.data)
+              
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort
+    setTimeout(()=>{
+
       this.traite=0
     
       this.style='opacity:1;pointer-events:all;'
@@ -142,7 +145,7 @@ export class TestComponent implements OnInit{
       this.btnReloadContenet = 'pointer-events: all;display: contents;'
       this.style=''
       this.iconReload = ''
-    }
+    },1000)
   }
 
   async showAll(s:any) {
