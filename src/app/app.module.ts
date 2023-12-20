@@ -45,6 +45,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { TodoComponent } from './components/todo/todo.component';
 import { JournalComponent } from './components/journal/journal.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { CheckinComponent } from './components/checkin/checkin.component';
 
 
 
@@ -70,7 +71,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     DashComponent,
     ReferenceComponent,
     TodoComponent,
-    JournalComponent
+    JournalComponent,
+    CheckinComponent
   ],
   imports: [
     BrowserModule,

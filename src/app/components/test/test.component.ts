@@ -50,9 +50,9 @@ export class TestComponent implements OnInit{
   constructor(private dataservice:DataService, private activateRoute: ActivatedRoute,private router: Router){}
  
   ngOnInit(): void {
-    this.showAll(0)
+    
     this.reloadAll()
-    //this.getJournal()
+    this.getJournal()
     
     //this.redirect()
 
@@ -119,25 +119,24 @@ export class TestComponent implements OnInit{
         this.noReclam='1'
       }
       
-      // this.dataSource = new MatTableDataSource<Element>(mydata)
+      this.dataSource = new MatTableDataSource<Element>(mydata)
                 
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort
-      // this.traite=0
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort
+      this.traite=0
     
-      // this.style='opacity:1;pointer-events:all;'
-      // this.btnReload = 'pointer-events: all;'
-      // this.btnReloadContenet = 'pointer-events: all;display: contents;'
-      // this.style=''
-      // this.iconReload = ''
+      this.style='opacity:1;pointer-events:all;'
+      this.btnReload = 'pointer-events: all;'
+      this.btnReloadContenet = 'pointer-events: all;display: contents;'
+      this.style=''
+      this.iconReload = ''
     } else {
-    }
-    this.dataSource = new MatTableDataSource<Element>(this.data)
-              
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort
-    setTimeout(()=>{
-
+      this.dataSource = new MatTableDataSource<Element>(this.data)
+                
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort
+      
+  
       this.traite=0
     
       this.style='opacity:1;pointer-events:all;'
@@ -145,7 +144,8 @@ export class TestComponent implements OnInit{
       this.btnReloadContenet = 'pointer-events: all;display: contents;'
       this.style=''
       this.iconReload = ''
-    },1000)
+     
+    }
   }
 
   async showAll(s:any) {
@@ -223,10 +223,10 @@ export class TestComponent implements OnInit{
             // sessionStorage.removeItem('tokenExp')
             // sessionStorage.removeItem('token'); 
             // sessionStorage.removeItem('is_admin')
-            // localStorage.clear()
-            // sessionStorage.clear()
+            localStorage.clear()
+            sessionStorage.clear()
             
-            //window.location.href='/'
+            window.location.href='/'
           }
         },
         ()=>{

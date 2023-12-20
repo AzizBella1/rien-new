@@ -12,8 +12,5 @@ export class AppComponent {
   idUser = sessionStorage.getItem('user');
 
 
-  testClose(){
-    alert(1)
-    return false;
-  }
+  
 }

@@ -420,14 +420,11 @@ export class AdminHomeComponent implements OnInit {
       },
       (error)=>{
         if (error.error.status==500) {
-          sessionStorage.removeItem('user'); 
-          sessionStorage.removeItem('tokenExp')
-          sessionStorage.removeItem('token'); 
-          sessionStorage.removeItem('is_admin')
+         
           localStorage.clear()
-      sessionStorage.clear()
+          sessionStorage.clear()
           
-         // window.location.href='/'
+          window.location.href='/'
         }
       },
       ()=>{

@@ -17,6 +17,7 @@ import { DashComponent } from './dash/dash.component';
 import { ReferenceComponent } from './components/reference/reference.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { JournalComponent } from './components/journal/journal.component';
+import { CheckinComponent } from './components/checkin/checkin.component';
 
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path:'home' ,component:TestComponent},
   { path:'todo' ,component:TodoComponent},
   { path:'er' ,component:EreurComponent},
+  { path:'check' ,component:CheckinComponent},
   { path:'mod/:form' ,component:ModifierFormComponent},
   {
     path: '**',

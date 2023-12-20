@@ -48,7 +48,16 @@ export class DataService {
 
 	signin(request: Request): Observable<any> {
     //console.log(request);
-		return this.http.post<any>(this.baseUrl + 'signin', request, {headers: new HttpHeaders({ 'Content-Type': 'application/json' })})
+		return this.http.post<any>(this.baseUrl + 'signin', request, {headers: new HttpHeaders({ 'Content-Type': 'application/json'})})
+
+  // const combinedReferrerPolicy = 'no-referrer, no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url';
+
+  // return this.http.post<any>(this.baseUrl + 'signin', request, {
+  //     headers: new HttpHeaders({ 
+  //         'Content-Type': 'application/json', 
+  //         'Referrer-Policy': combinedReferrerPolicy
+  //     })
+  // });
     
     // .pipe(map((resp) => {
 		// 	sessionStorage.setItem('user', request.username);
@@ -388,7 +397,7 @@ export class DataService {
 
 
   getCheck(): any {
-    return this.http.get<any>(this.baseUrl + 'Api/checks', {
+    return this.http.get<any>(this.baseUrl + 'Api/checks/all', {
 			headers: new HttpHeaders({
 			  'Content-Type': 'application/json',
 			  'Authorization': ''+ this.token0
