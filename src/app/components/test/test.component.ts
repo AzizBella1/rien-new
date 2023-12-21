@@ -50,9 +50,9 @@ export class TestComponent implements OnInit{
   constructor(private dataservice:DataService, private activateRoute: ActivatedRoute,private router: Router){}
  
   ngOnInit(): void {
-    
-    this.reloadAll()
-    this.getJournal()
+    this.showAll(0)
+    // this.reloadAll()
+    // this.getJournal()
     
     //this.redirect()
 
@@ -130,11 +130,31 @@ export class TestComponent implements OnInit{
       this.btnReloadContenet = 'pointer-events: all;display: contents;'
       this.style=''
       this.iconReload = ''
+    }else if(s==2) {
+      this.dataSource = new MatTableDataSource<Element>(this.data)
+                
+      setTimeout(() => {
+        this.dataSource.paginator = this.paginator;
+        
+        this.dataSource.sort = this.sort
+      }, 500);
+      
+  
+      this.traite=0
+    
+      this.style='opacity:1;pointer-events:all;'
+      this.btnReload = 'pointer-events: all'
+      this.btnReloadContenet = 'pointer-events: all;display: contents;'
+      this.style=''
+      this.iconReload = ''
     } else {
       this.dataSource = new MatTableDataSource<Element>(this.data)
                 
       this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort
+      setTimeout(() => {
+        
+        this.dataSource.sort = this.sort
+      }, 500);
       
   
       this.traite=0
@@ -206,7 +226,7 @@ export class TestComponent implements OnInit{
                 });
 
 
-                this.allReclamation(0)
+                this.allReclamation(2)
                 
               
                 
@@ -435,6 +455,7 @@ export class TestComponent implements OnInit{
   all(s:any){
     this.style='opacity:0.3;pointer-events:none;'
     this.noReclam=''
+    this.clearSearcheInput()
     if (s==0) {
       this.tous=false
       this.mes=true

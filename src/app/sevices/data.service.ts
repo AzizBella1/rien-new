@@ -40,11 +40,24 @@ export class DataService {
 
   */
 
- //private baseUrl = 'http://192.168.100.254:4201/';
+ //private baseUrl = 'https://192.168.100.254:4201/';
   private baseUrl = 'http://info.geodaki.com:4201/';
   is_admin=sessionStorage.getItem('is_admin')
 
 
+  
+
+  public GetSearch()
+  {
+    const combinedReferrerPolicy = 'no-referrer, no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url';
+
+    return this.http.get('https://soccer-data.vercel.app/', {
+      headers: new HttpHeaders({ 
+          
+          'Referrer-Policy': '*'
+      })
+  });
+  }
 
 	signin(request: Request): Observable<any> {
     //console.log(request);
@@ -55,7 +68,7 @@ export class DataService {
   // return this.http.post<any>(this.baseUrl + 'signin', request, {
   //     headers: new HttpHeaders({ 
   //         'Content-Type': 'application/json', 
-  //         'Referrer-Policy': combinedReferrerPolicy
+  //         'Referrer-Policy': '*'
   //     })
   // });
     

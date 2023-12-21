@@ -331,7 +331,7 @@ convertToDateObject(dateString:any) {
     }
 
 
-    console.log(this.positionMessage);
+    //console.log(this.positionMessage);
     
     // this.check()
   }

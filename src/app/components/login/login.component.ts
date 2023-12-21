@@ -27,7 +27,12 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
-    
+    this.dataservice.GetSearch().subscribe(res=> {
+      console.log(res);
+      
+    });
+
+   
   }
 
   login = new FormGroup({

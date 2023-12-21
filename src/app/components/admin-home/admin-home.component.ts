@@ -258,7 +258,7 @@ export class AdminHomeComponent implements OnInit {
   ngOnInit(): void {
     
     //this.router.navigate(['/acceuil'])
-    this.loaded()
+    //this.loaded()
     this.showAll()
     //this.dw()
     //console.log(this.cnt);
@@ -342,6 +342,7 @@ export class AdminHomeComponent implements OnInit {
         
       }
     )*/
+    this.style='opacity:0.0;pointer-events: none'
     this.dataservice.getReclamation().subscribe(
       (data: any) => {
       data.sort((a: any, b: any) => b.id - a.id); // Sort data based on 'id' in descending order
@@ -416,6 +417,11 @@ export class AdminHomeComponent implements OnInit {
       this.dataToExport = this.dataSource.filteredData
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
+      // setTimeout(() => {
+      //   this.dataSource.paginator = this.paginator;
+      //   this.dataSource.sort = this.sort;
+      // }, 300);
      
       },
       (error)=>{
@@ -696,7 +702,7 @@ export class AdminHomeComponent implements OnInit {
         
       })
       this.dataSource.filteredData = this.data
-    },1000)
+    },500)
   }
 
   hideDetail(){

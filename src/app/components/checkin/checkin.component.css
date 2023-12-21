@@ -1,0 +1,49 @@
+#filterInputIconeCancel, #filterInputIconeSearche{
+    position: relative;
+    transform: translate(-10px, -29px);
+    left: 98%;
+
+}
+
+#delete{
+    z-index: 1;
+    position: fixed;
+    right: 50%;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%,-50%);
+    width: 30%;
+}
+
+@media only screen and (max-width: 480px) {
+    
+    #filterInputIconeCancel, #filterInputIconeSearche{
+        position: relative;
+        transform: translate(-15px, -29px);
+        left: 98%;
+    
+    }
+}
+
+.mat-column-checkValue {
+    flex: 0 0 14%;
+}
+
+.tt{
+    width: 420px;
+    border: 1px solid #0000001f;
+    border-radius: 3px;
+    border-collapse: collapse;
+}
+
+.OUT{
+    color: #edb508;
+}
+
+.IN{
+    color: rgb(0 179 0);
+}
+
+
+
+
