@@ -1,4 +1,4 @@
-<nav style="padding-left: 5px;position: fixed;top:0 ;width: 100%;z-index: 10000;" class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav style="padding-left: 5px;position: fixed;top:0 ;width: 100vw;z-index: 10000;" class="navbar navbar-expand-sm navbar-dark bg-dark">
 
   
  
@@ -7,6 +7,7 @@
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" style="margin-top: -4px;" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li *ngIf="is_admin!='ADMIN'" routerLinkActive="active" routerLink="/home" class="nav-item active">
@@ -80,10 +81,10 @@
         
     </div>
 
-    <div *ngIf="message!=''" class="alert alert-warning" role="alert">
+    <div style="z-index: 10001;" *ngIf="message!=''" class="alert alert-warning" role="alert">
         <strong>{{message}}</strong>
     </div>
-    <div *ngIf="positionMessage!=''" class="alert alert-warning" role="alert">
+    <div style="z-index: 10001;" *ngIf="positionMessage!=''" class="alert alert-warning" role="alert">
         <strong>{{positionMessage}}</strong>
     </div>
 </div>

@@ -1,6 +1,6 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
 
-<div style="position: relative;top: 58px;">
+<div style="position: relative;top: 58px;overflow: auto;height: -webkit-fill-available;">
 <div  *ngIf="load != 0" id="delete">
   <img id="loading" src="../../../assets/loading.gif.gif" width="60px" height="60px">
   
@@ -165,5 +165,5 @@
   
 </div>
 
-
+<div style="height: 75px;"></div>
 </div>

@@ -37,7 +37,8 @@ export class UserComponent implements OnInit{
       username:'',password:'',appRoles: [{ id: 2}],name:'',
       adress:'',
       phone:'',
-      email:''
+      email:'',
+      parcs:[]
     }
 
    
@@ -62,7 +63,24 @@ export class UserComponent implements OnInit{
 
   }
 
+  parcs:any
+  parcsCopy:any
+  fParcs(e:any){
+    
+    this.parcs=this.parcsCopy
+    this.parcs=this.parcs.filter((v:any) => v.name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1)
+       
+  }
 
+  showParcs(){
+    this.dataservice.getParcs().subscribe((data:any)=>{
+      this.parcs = data
+      this.parcsCopy = data
+     
+
+      
+    })
+  }
   
   showAll() {
     this.dataservice.getUser().subscribe((res:any)=>{
@@ -80,7 +98,8 @@ export class UserComponent implements OnInit{
         
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort
-      //console.log(this.users[6]);
+      //console.log(this.users);
+      this.showParcs()
       //console.log('------',this.userSelected);
     },
     (error:any)=>{
@@ -108,7 +127,8 @@ export class UserComponent implements OnInit{
     adress: new FormControl('',[Validators.required]),
     phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]*')]),// ,Validators.maxLength(10),Validators.minLength(10)
     email: new FormControl('',[Validators.required,Validators.email]),
-    admin: new FormControl()
+    admin: new FormControl(),
+    parcs: new FormControl()
   })
 
   get username() {
@@ -148,6 +168,13 @@ export class UserComponent implements OnInit{
   @ViewChild(MatSort) sort!: MatSort;
 
   addNew(){
+    let userParcs:any = []
+
+
+    this.userSelected.parcs.forEach((p:any )=> {
+      userParcs.push({id:p})
+    });
+    this.userSelected.parcs = userParcs
     
     this.dataservice.addUser( this.userSelected).subscribe(
       (data:any) => {
@@ -163,8 +190,15 @@ export class UserComponent implements OnInit{
 
 
   onMod(user:any){
+    
+   
     this.addButton=false
     this.hideAdd=false
+    let userParcs:any = []
+
+    user.parcs.forEach((p:any )=> {
+      userParcs.push(p.id)
+    });
     
     this.userSelected = {
       id:user.id,
@@ -174,14 +208,24 @@ export class UserComponent implements OnInit{
       name:user.name,
       adress:user.adress,
       phone:user.phone,
-      email:user.email
+      email:user.email,
+      parcs:userParcs
     }
+
+    
 
     window.scrollTo(0,0)
   }
 
   modUser(){
-   
+    let userParcs:any = []
+
+    this.userSelected.parcs.forEach((p:any )=> {
+      userParcs.push({id:p})
+    });
+
+    this.userSelected.parcs = userParcs
+
     this.dataservice.addUser( this.userSelected).subscribe(
       (data:any) => {
         this.ngOnInit()
@@ -215,8 +259,16 @@ export class UserComponent implements OnInit{
 
   onDelete(id:any){
     this.dataservice.deleteUser(id).subscribe(
-      ()=>{this.showAll()}
+      (data)=>{
+        this.ngOnInit()
+      }
+      // ,()=>{
+      //   this.ngOnInit()
+      //   //window.location.reload()
+      // }
     )
+
+    
     this.hideDetail()
   }
 

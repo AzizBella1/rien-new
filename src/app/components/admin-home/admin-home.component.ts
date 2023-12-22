@@ -427,10 +427,10 @@ export class AdminHomeComponent implements OnInit {
       (error)=>{
         if (error.error.status==500) {
          
-          localStorage.clear()
-          sessionStorage.clear()
+          // localStorage.clear()
+          // sessionStorage.clear()
           
-          window.location.href='/'
+          // window.location.href='/'
         }
       },
       ()=>{

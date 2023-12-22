@@ -1,7 +1,7 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
 
 
-<div style="position: relative;top: 58px;">
+<div style="position: relative;top: 58px;overflow: auto;height: -webkit-fill-available;">
 <div *ngIf="idUser!=null && is_admin=='ADMIN'" >
 
    <!--<div *ngIf="hideAdd" class="container py-1"> 
@@ -82,5 +82,5 @@
 
 
 </div>
-
+<div style="height: 75px;"></div>
 </div>

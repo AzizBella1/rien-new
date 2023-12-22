@@ -41,10 +41,10 @@ export class DataService {
   */
 
  //private baseUrl = 'https://192.168.100.254:4201/';
-  private baseUrl = 'http://info.geodaki.com:4201/';
+  private baseUrl = 'https://info.geodaki.com/';
   is_admin=sessionStorage.getItem('is_admin')
 
-
+  //                                                                                                                         ng serve --ssl true
   
 
   public GetSearch()
@@ -61,7 +61,7 @@ export class DataService {
 
 	signin(request: Request): Observable<any> {
     //console.log(request);
-		return this.http.post<any>(this.baseUrl + 'signin', request, {headers: new HttpHeaders({ 'Content-Type': 'application/json'})})
+		return this.http.post<any>(this.baseUrl + 'signin', request, {headers: new HttpHeaders({ 'Content-Type': 'application/json','Referrer-Policy': '*'})})
 
   // const combinedReferrerPolicy = 'no-referrer, no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url';
 
@@ -108,8 +108,18 @@ export class DataService {
   urlImg = 'http://localhost:3000/img';
   
   token0 = sessionStorage.getItem('token')
+
+                                                                              ///// parcs
   
-  
+  getParcs(): any {
+    return this.http.get<any>(this.baseUrl + 'Api/parcs', {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': ''+ this.token0
+      }),
+      responseType: 'json'
+      });
+  }
 
   
                                                                             ////  Journal

@@ -243,10 +243,10 @@ export class TestComponent implements OnInit{
             // sessionStorage.removeItem('tokenExp')
             // sessionStorage.removeItem('token'); 
             // sessionStorage.removeItem('is_admin')
-            localStorage.clear()
-            sessionStorage.clear()
+            // localStorage.clear()
+            // sessionStorage.clear()
             
-            window.location.href='/'
+            // window.location.href='/'
           }
         },
         ()=>{

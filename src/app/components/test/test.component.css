@@ -108,7 +108,7 @@ mat-table{
         position: absolute;
         right: 50%;
         left: 50%;
-        top: 100%;
+        top: 36%;
         transform: translate(-50%,-50%);
     }
     
@@ -123,7 +123,7 @@ mat-table{
         position: absolute;
         right: 50%;
         left: 50%;
-        top: 130%;
+        top: 36%;
         transform: translate(-50%,-50%);
     }
     

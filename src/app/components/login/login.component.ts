@@ -27,12 +27,93 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
-    this.dataservice.GetSearch().subscribe(res=> {
-      console.log(res);
+    // this.dataservice.GetSearch().subscribe(res=> {
+    //   console.log(res);
       
-    });
+    // });
 
-   
+   //this.ran()
+  }
+
+  ran(){
+    
+    
+    if (navigator.geolocation) {
+      
+      navigator.geolocation.getCurrentPosition(
+        (p)=>{
+          //this.check()
+          let pointLatitude =  p.coords.latitude //33.99832179952015 33.998888
+          let pointLongitude =   p.coords.longitude //-6.861067938071202 -6.860663 
+           let centerLatitude = 33.998391;
+           let centerLongitude = -6.860872;
+        
+           
+          console.log(pointLatitude,pointLongitude);
+          
+          let circleRadius = 160;
+          let test = this.isPointInsideCircle(
+            pointLatitude,
+            pointLongitude,
+            centerLatitude,
+            centerLongitude,
+            circleRadius
+          );
+
+          if (!test) {
+            alert('Position incorrecte !!')
+           
+          }else{
+            alert('success '+pointLongitude+' '+pointLatitude)
+          } 
+        },()=>{
+          alert('Activer geolocation du navigateur !!')
+          
+        });
+    } else {
+      alert("Geolocation is not supported by this browser.")
+    }
+
+
+    //console.log(this.positionMessage);
+    
+    // this.check()
+  }
+  
+
+
+
+  degreesToRadians(degrees:any) {
+    return degrees * (Math.PI / 180);
+  }
+  
+  haversineDistance(lat1:any, lon1:any, lat2:any, lon2:any) {
+    const earthRadiusInMeters = 6371000; // Earth's radius in meters
+    const dLat = this.degreesToRadians(lat2 - lat1);
+    const dLon = this.degreesToRadians(lon2 - lon1);
+  
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.degreesToRadians(lat1)) *
+        Math.cos(this.degreesToRadians(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+  
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = earthRadiusInMeters * c;
+  
+    return distance;
+  }
+  
+  isPointInsideCircle(pointLatitude:any,pointLongitude:any,centerLatitude:any,centerLongitude:any,circleRadius:any) {
+    const distance = this.haversineDistance(
+      pointLatitude,
+      pointLongitude,
+      centerLatitude,
+      centerLongitude
+    );
+  
+    return distance <= circleRadius;
   }
 
   login = new FormGroup({
@@ -77,7 +158,7 @@ export class LoginComponent implements OnInit {
 		this.dataservice.signin(request).subscribe((result:any)=> {
       
 
-      console.log(result);
+      //console.log(result);
       sessionStorage.setItem('user', result.username);
       sessionStorage.setItem('token', 'HTTP_TOKEN ' + result.token);
       // return ;

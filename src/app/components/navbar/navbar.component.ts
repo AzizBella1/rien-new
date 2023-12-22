@@ -288,6 +288,14 @@ convertToDateObject(dateString:any) {
     
   }
 
+
+  showNav:any = '0'
+
+
+  onTouchStart(e:any){
+    this.showNav = '1'
+  }
+
   falsePosition:boolean=false
   positionMessage:any=''
   ran(){
@@ -300,26 +308,40 @@ convertToDateObject(dateString:any) {
           //this.check()
           let pointLatitude = p.coords.latitude //33.99832179952015 
           let pointLongitude = p.coords.longitude //-6.861067938071202 
-          let centerLatitude = 33.99832179952015;
-          let centerLongitude = -6.861067938071202;
-
-          console.log(pointLatitude,pointLongitude);
+          //console.log(this.user[0]);
           
-          let circleRadius = 5000;
-          let test = this.isPointInsideCircle(
-            pointLatitude,
-            pointLongitude,
-            centerLatitude,
-            centerLongitude,
-            circleRadius
-          );
+          let inPos:boolean = false
+          this.user[0].parcs.forEach((p:any) => {
+            
+            let centerLatitude = p.lat
+            let centerLongitude = p.lon;
+            //console.log(pointLatitude,pointLongitude);
+            
+            let circleRadius = 160;
+            let test = this.isPointInsideCircle(
+              pointLatitude,
+              pointLongitude,
+              centerLatitude,
+              centerLongitude,
+              circleRadius
+            );
+  
+            if (test) {
+              inPos = true
+            } 
+          });
 
-          if (!test) {
+
+          if (!inPos) {
             this.falsePosition=true
             this.positionMessage='Position incorrecte !!'
+            setTimeout(()=>{
+              this.positionMessage=''
+            },3000)
           }else{
-            this.check()
+           this.check()
           } 
+
         },()=>{
           this.positionMessage='Activer geolocation du navigateur !!'
           setTimeout(()=>{

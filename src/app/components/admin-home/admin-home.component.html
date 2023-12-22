@@ -1,5 +1,5 @@
 <app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
-<div style="position: relative;top: 58px;">
+<div style="position: relative;top: 58px;overflow: auto;height: -webkit-fill-available;">
 <div *ngIf="!hideLog || !hide || Sup" class="backgroundBody">
 
 </div>
@@ -8,9 +8,7 @@
     <button (click)="supp()" class="btn btn-danger" style="width: 200px;">Supp</button><br>
     <button (click)="hideDetail()" class="btn btn-warning" style="width: 200px;">Annuler</button>
 </div>
-<div *ngIf="idUser!=null && is_admin=='ADMIN'" class="container py-4">
-
-    
+<div *ngIf="idUser!=null && is_admin=='ADMIN'" class="container py-4" style="overflow: hidden;" >
 
     <div class="container" >
         <h1>Liste Réclamations</h1>
@@ -18,8 +16,6 @@
         <i *ngIf="searcheIcon" class="fa fa-search" id="filterInputIconeSearche" aria-hidden="true"></i>
         <i *ngIf="!searcheIcon" style="cursor: pointer;" (click)="clearSearcheInput()" class="fa fa-times-circle" id="filterInputIconeCancel" aria-hidden="true"></i>
 
-
-        
     </div>
     <div *ngIf="!hide"  class="detail" #llll>
         <button (click)="hideDetail()">X</button>
@@ -33,10 +29,7 @@
             <p><b>Description &nbsp;: </b>{{description.description}}</p>
             <p><b>Statut &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b>{{description.statut}}</p>
         </div>
-       
-        
          
-        
     </div>
     <div *ngIf="!HideLog"  class="detail" #llll>
         <button (click)="hideDetailLog()">X</button>
@@ -53,9 +46,6 @@
        
         </div>
        
-        
-         
-        
     </div>
     <div   *ngIf="!hideLog"  class="detail" #llll>
         <button  (click)="hideLOG()">X</button>
@@ -125,7 +115,7 @@
         
         
        
-        <br>
+        
         <mat-table  class="tt" #table matSort  [dataSource]="dataSource" >
 
             <!-- Position Column -->
