@@ -1,7 +1,5 @@
-<nav style="padding-left: 5px;position: fixed;top:0 ;width: 100vw;z-index: 10000;" class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav style="padding-left: 5px;position: fixed;top:0 ;width: 100vw;z-index: 10000;border-radius: 0px 0px 3px 3px;" class="navbar navbar-expand-sm navbar-dark bg-dark">
 
-  
- 
     <a class="navbar-brand" style="font-family: 'Times New Roman', Times, serif; font-size: 25px;">ISPPS</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -11,20 +9,20 @@
     <div class="collapse navbar-collapse" style="margin-top: -4px;" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li *ngIf="is_admin!='ADMIN'" routerLinkActive="active" routerLink="/home" class="nav-item active">
-                <a  class="nav-link" href="/home"><b>Home</b></a>
+                <a class="nav-link" href="/home"><b>Home</b></a>
             </li>
             
             <li *ngIf="is_admin=='ADMIN'" routerLinkActive="active" routerLink="/acceuil" class="nav-item active">
-                <a  class="nav-link" href="/acceuil"><b>Home</b></a>
+                <a class="nav-link" href="/acceuil"><b>Home</b></a>
             </li>
             <li *ngIf="is_admin=='ADMIN'" routerLinkActive="active" routerLink="/todo" class="nav-item active">
-                <a  class="nav-link" href="/todo"><b>toDo</b></a>
+                <a class="nav-link" href="/todo"><b>ToDo</b></a>
             </li>
             <li *ngIf="is_admin=='ADMIN'" routerLinkActive="active" routerLink="/check" class="nav-item active">
-                <a  class="nav-link" href="/check"><b>Check</b></a>
+                <a class="nav-link" href="/check"><b>Check</b></a>
             </li>
             <li routerLinkActive="active" routerLink="/journal" class="nav-item active">
-                <a  class="nav-link" href="/journal"><b>Journal</b></a>
+                <a class="nav-link" href="/journal"><b>Journal</b></a>
             </li>
             <!--<li *ngIf="is_admin!='ADMIN'" routerLinkActive="active" class="nav-item active">
                 <a  class="nav-link" routerLink="/forms" href="/forms"><b>Réclamation</b></a>
@@ -33,18 +31,18 @@
                 <div class="dropdown">
                     <a class="nav-link bg-dark"><b>Gestion</b></a>
                     <div class="dropdown-content bg-dark">
-                        <a  class="nav-link" routerLink="/gestion/user" href="/gestion/user"><b>User</b></a>
-                        <a  class="nav-link" routerLink="/gestion/ville" href="/gestion/ville"><b>Ville</b></a>
-                        <a  class="nav-link" routerLink="/gestion/vehicule" href="/gestion/vehicule"><b>Véhicule</b></a>
-                        <a  class="nav-link" routerLink="/gestion/produit" href="/gestion/produit"><b>Produit</b></a>
-                        <a  class="nav-link" routerLink="/gestion/probleme" href="/gestion/probleme"><b>Probleme</b></a>
-                        <a  class="nav-link" routerLink="/gestion/solution" href="/gestion/solution"><b>Solution</b></a>
-                        <a  class="nav-link" routerLink="/gestion/ref" href="/gestion/ref"><b>Composant</b></a>
+                        <a class="nav-link" routerLink="/gestion/user" href="/gestion/user"><b>User</b></a>
+                        <a class="nav-link" routerLink="/gestion/ville" href="/gestion/ville"><b>Ville</b></a>
+                        <a class="nav-link" routerLink="/gestion/vehicule" href="/gestion/vehicule"><b>Véhicule</b></a>
+                        <a class="nav-link" routerLink="/gestion/produit" href="/gestion/produit"><b>Produit</b></a>
+                        <a class="nav-link" routerLink="/gestion/probleme" href="/gestion/probleme"><b>Probleme</b></a>
+                        <a class="nav-link" routerLink="/gestion/solution" href="/gestion/solution"><b>Solution</b></a>
+                        <a class="nav-link" routerLink="/gestion/ref" href="/gestion/ref"><b>Composant</b></a>
                     </div>
                 </div>
             </li>
             <li *ngIf="is_admin=='ADMIN'" routerLinkActive="active" class="nav-item active">
-                <a  class="nav-link" routerLink="/dashboard" href="/dashboard"><b>Dashboard</b></a>
+                <a class="nav-link" routerLink="/dashboard" href="/dashboard"><b>Dashboard</b></a>
             </li>
             
             <li *ngIf="is_admin!='ADMIN'" class="nav-item ">
@@ -72,7 +70,7 @@
             </div>
             <div class="form-group row " style="display: grid;place-content: center;">
                 <div class="col-sm py-1">
-                    <button (click)="cancel()" class="btn btn-sm btn-danger ok" >X</button>
+                    <button (click)="cancel()" class="btn btn-sm btn-danger ok">X</button>
                 </div>
             </div>
             

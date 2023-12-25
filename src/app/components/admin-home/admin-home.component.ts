@@ -259,6 +259,7 @@ export class AdminHomeComponent implements OnInit {
     
     //this.router.navigate(['/acceuil'])
     //this.loaded()
+    
     this.showAll()
     //this.dw()
     //console.log(this.cnt);

@@ -32,6 +32,11 @@ export class UserComponent implements OnInit{
   @ViewChild('inputText') inputText!: ElementRef;
   
   add(){
+    this.dataSource = new MatTableDataSource<Element>(this.users)
+        
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort
+    
     this.addButton=true
     this.userSelected = {
       username:'',password:'',appRoles: [{ id: 2}],name:'',
@@ -45,6 +50,7 @@ export class UserComponent implements OnInit{
     if (this.style=='') {
       this.style='opacity:0.5;pointer-events:none;'
     } else {
+      
       this.style=''
     }
 

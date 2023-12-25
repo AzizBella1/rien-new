@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit {
       navigator.geolocation.getCurrentPosition(
         (p)=>{
           //this.check()
-          let pointLatitude =  p.coords.latitude //33.99832179952015 33.998888
-          let pointLongitude =   p.coords.longitude //-6.861067938071202 -6.860663 
+          let pointLatitude = 33.998391 // p.coords.latitude //33.99832179952015 33.998888
+          let pointLongitude = -6.860872 //  p.coords.longitude //-6.861067938071202 -6.860663 
            let centerLatitude = 33.998391;
            let centerLongitude = -6.860872;
         
@@ -182,12 +182,17 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('cnt','0')
         
         //sessionStorage.setItem('load','0')
+        // setInterval(()=>{
+        //   if (sessionStorage.getItem('token')) {
+            
+        //   }
+        // },500)
+        
         if (result.role!='ADMIN') {
           this.router.navigate(['/home'])
         } else {
           this.router.navigate(['/acceuil'])
         }
-        
       
         this.dataservice.devices(result.token)
         

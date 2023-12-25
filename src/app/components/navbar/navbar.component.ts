@@ -124,6 +124,34 @@ convertToDateObject(dateString:any) {
       window.location.reload()
     } else{
 
+      // const year = this.curDate.getFullYear();
+      // const month = String(this.curDate.getMonth() + 1).padStart(2, '0'); // Ajoute un zéro si le mois est < 10
+      // const day = String(this.curDate.getDate()).padStart(2, '0'); // Ajoute un zéro si le jour est < 10
+      
+      // const formattedDate = `${year}-${month}-${day} 00:00:00`;
+      // let data = {
+      //   client:{id:sessionStorage.getItem('userID')},
+      //   date:formattedDate
+      // }
+
+      // //console.log(data);
+      
+      // this.dataservice.isCheckIn(data).subscribe((item:any)=>{
+      //   //console.log(item[item.length-1]);
+      //   if (item.length != 0) {
+          
+      //     if (item[item.length-1].checkValue != 'IN') {
+      //       sessionStorage.setItem('check','in')
+      //       this.checkStatus='in'
+      //     }else{
+      //       //this.checkOut=true
+      //       this.checkStatus='out'
+      //       sessionStorage.setItem('check','out')
+      //     }
+      //   }
+        
+      // })
+
       this.dataservice.getUser().subscribe((res:any)=>{
         let user= this.user= res.filter((res:any)=>res.name==this.idUser)
         //console.log();
@@ -245,11 +273,13 @@ convertToDateObject(dateString:any) {
       sessionStorage.setItem('check','out')
       //
     }else{
-      sessionStorage.setItem('check','out')
-      this.checkStatus='out'
+      // sessionStorage.setItem('check','out')
+      // this.checkStatus='out'
       
       this.dataservice.addCheck(user,'in').subscribe((res)=>{
         //console.log(res);
+        sessionStorage.setItem('check','out')
+        this.checkStatus='out'
         
         
       })
@@ -269,9 +299,9 @@ convertToDateObject(dateString:any) {
       //console.log(this.journalUser);
       
       if (this.journalUser[0]==undefined) {
-        this.checkOut=true
-        this.journalMessage="N'oubliez pas de remplir le journal !"
-        this.style='opacity:0.5;'
+        this.checkOut = true
+        this.journalMessage = "N'oubliez pas de remplir le journal !"
+        this.style = 'opacity:0.5;'
         
       } 
       this.dataservice.addCheck(user,'out').subscribe((res)=>{
@@ -306,8 +336,9 @@ convertToDateObject(dateString:any) {
       navigator.geolocation.getCurrentPosition(
         (p)=>{
           //this.check()
-          let pointLatitude = p.coords.latitude //33.99832179952015 
-          let pointLongitude = p.coords.longitude //-6.861067938071202 
+          
+          let pointLatitude = 33.998391 // p.coords.latitude //33.99832179952015 
+          let pointLongitude = -6.860872 // p.coords.longitude //-6.861067938071202 
           //console.log(this.user[0]);
           
           let inPos:boolean = false
@@ -325,6 +356,9 @@ convertToDateObject(dateString:any) {
               centerLongitude,
               circleRadius
             );
+            
+            //console.log(p.name,test , pointLatitude,pointLongitude);
+            
   
             if (test) {
               inPos = true
